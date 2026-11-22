@@ -8,6 +8,7 @@ seed) see exactly the same sequences in the same order.
 """
 from __future__ import annotations
 
+import os
 import time
 from multiprocessing import Pool
 from pathlib import Path
@@ -60,7 +61,10 @@ def train_stream(k: int, regime: str, seed: int, n: int = STEPS * BATCH, workers
                ans=np.array([r[2] for r in res], dtype=np.int16), src=np.array([r[3] for r in res], dtype=np.int16),
                index=np.arange(base, base + n))
     path.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(path, **out)
+    tmp = path.with_name(path.name + ".tmp")
+    with open(tmp, "wb") as f:  # atomic: a disconnect never leaves a truncated stream cache behind
+        np.savez_compressed(f, **out)
+    os.replace(tmp, path)
     print(f"generated {path.name} in {time.time() - t0:.0f}s", flush=True)
     return out
 

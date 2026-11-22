@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import torch
 
-from pa4.common.utils import environment_record, out_dir, time_fn, write_json, write_jsonl
+from pa4.common.utils import JsonlAppender, environment_record, out_dir, read_json, time_fn, write_json, write_jsonl
 from pa4.task2.attention import SDPA_BACKENDS, dense_attention, detect_sdpa_kernel, sdpa_attention, tiled_attention
 
 B, H, D = 2, 4, 64
@@ -76,20 +76,28 @@ def reference(L, dev):
 def bench(args):
     dev = torch.device("cuda")
     od = out_dir("task2", "attention")
-    rows = []
-    backends = {}
+    log = JsonlAppender(od / "bench_rows.jsonl", key_fn=lambda r: (r["impl"], r["L"], r["dtype"]))
+    rows = log.records
+    bk_file = od / "backends_partial.json"
+    backends = read_json(bk_file) if bk_file.exists() else {}
+    names = list(impls())
     for L in LENGTHS:
+        if all((n, L, dt) in log.done for n in names for dt in ("float32", "float16")) and (L != 1024 or len(backends) == 2):
+            continue
         ref_name, ref = reference(L, dev)
         for dtype in (torch.float32, torch.float16):
             (q, k, v), g = make_qkv(L, dtype, dev)
-            if L == 1024:
+            if L == 1024 and str(dtype) not in backends:
                 backends[str(dtype)] = detect_sdpa_kernel(q, k, v)
+                write_json(bk_file, backends)
             for name, fn in impls().items():
+                if (name, L, str(dtype).replace("torch.", "")) in log.done:
+                    continue
                 rec = dict(impl=name, L=L, dtype=str(dtype).replace("torch.", ""), B=B, H=H, d=D, reference=ref_name,
                            reps=args.reps, warmup=3, unit="ms")
                 if name == "tiled" and L > args.tiled_max_len:
                     rec["status"] = f"skipped (> {args.tiled_max_len})"
-                    rows.append(rec); continue
+                    log.append(rec); continue
                 try:
                     with torch.no_grad():
                         out = fn(q, k, v)
@@ -119,11 +127,11 @@ def bench(args):
                     rec["status"] = "OOM" if is_oom(e) else f"unsupported: {str(e).splitlines()[0][:200]}"
                 gc.collect(); torch.cuda.empty_cache()
                 print(rec["impl"], L, rec["dtype"], rec["status"], f"{rec.get('fwd_ms', float('nan')):.2f}ms", flush=True)
-                rows.append(rec)
+                log.append(rec)
         del ref
         gc.collect(); torch.cuda.empty_cache()
     write_jsonl(od / "bench.jsonl", rows)
-    write_json(od / "backends.json", dict(default_dispatch_L1024=backends, env=environment_record()))
+    write_json(od / "backends.json", dict(default_dispatch_L1024=backends, env=environment_record(dict(note="dtype per row; backend per row"))))
 
 
 def tiles_and_edges():
@@ -183,7 +191,8 @@ def main():
     ap.add_argument("--tiled-max-len", type=int, default=8192)
     ap.add_argument("--only", choices=["bench", "tiles"], default=None)
     a = ap.parse_args()
-    if a.only in (None, "tiles"):
+    od = out_dir("task2", "attention")
+    if a.only in (None, "tiles") and not ((od / "tiles.json").exists() and (od / "edge_cases.json").exists()):
         tiles_and_edges()
     if a.only in (None, "bench"):
         bench(a)

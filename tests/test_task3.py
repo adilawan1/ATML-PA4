@@ -103,6 +103,48 @@ class DistillTests(unittest.TestCase):
             DS.TOKENS_PER_UPDATE = old_t
             DS.CAP.update(math=192, short=32)
 
+    def test_resume_after_disconnect_matches_uninterrupted(self):
+        """Kill an on-policy run mid-way, resume from its checkpoint: logs/presentations equal an uninterrupted run."""
+        import tempfile
+
+        teacher = tiny_qwen(seed=1, vocab=300)
+        old_q, old_t = dict(DS.QUOTA), DS.TOKENS_PER_UPDATE
+        DS.QUOTA.update(math=60, short=20); DS.TOKENS_PER_UPDATE = 16; DS.CAP.update(math=12, short=4)
+        try:
+            prompts = {f"m{i}": dict(ids=list(range(10 + i, 20 + i)), category="math") for i in range(5)}
+            prompts.update({f"s{i}": dict(ids=list(range(30 + i, 36 + i)), category="short") for i in range(3)})
+            perms = DS.build_schedule([k for k in prompts if k[0] == "m"], [k for k in prompts if k[0] == "s"])
+            ref = DS.distill("on", 6304, teacher, tiny_qwen(seed=2, vocab=300), StubTok(), prompts, perms, None,
+                             log=lambda *a: None)
+            ck = Path(tempfile.mkdtemp()) / "run.pt"
+            orig_next, calls = DS.Scheduler.next, [0]
+
+            def crashing_next(self_):
+                calls[0] += 1
+                if calls[0] > 7:
+                    raise RuntimeError("simulated Colab disconnect")
+                return orig_next(self_)
+
+            DS.Scheduler.next = crashing_next
+            with self.assertRaises(RuntimeError):
+                DS.distill("on", 6304, teacher, tiny_qwen(seed=2, vocab=300), StubTok(), prompts, perms, None,
+                           log=lambda *a: None, ckpt_path=ck, ckpt_every=1)
+            DS.Scheduler.next = orig_next
+            self.assertTrue(ck.exists())
+            res = DS.distill("on", 6304, teacher, tiny_qwen(seed=2, vocab=300), StubTok(), prompts, perms, None,
+                             log=lambda *a: None, ckpt_path=ck, ckpt_every=1)
+            self.assertTrue(res["result"]["resumed_from_updates"])
+            a, b = ref["result"]["logs"], res["result"]["logs"]
+            self.assertEqual(len(a), len(b))
+            for x, y in zip(a, b):
+                self.assertEqual(x["scored_tokens"], y["scored_tokens"])
+                self.assertAlmostEqual(x["kl_per_token"], y["kl_per_token"], places=4)
+            self.assertEqual([p["response_ids"] for p in ref["presentations"]],
+                             [p["response_ids"] for p in res["presentations"]])
+        finally:
+            DS.Scheduler.next = DS.Scheduler.next
+            DS.QUOTA.update(old_q); DS.TOKENS_PER_UPDATE = old_t; DS.CAP.update(math=192, short=32)
+
     def test_kl(self):
         a = torch.randn(4, 50)
         self.assertLess(float(DS.token_kl(a, a).abs().max()), 1e-6)

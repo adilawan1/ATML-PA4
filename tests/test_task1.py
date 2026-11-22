@@ -130,6 +130,23 @@ class ModelTests(unittest.TestCase):
         self.assertLessEqual(meta["bytes"], budget)
         self.assertTrue(set(bits.values()) <= {2, 3, 4, 8})
 
+    def test_probe_resume(self):
+        import tempfile
+
+        from pa4.common.utils import read_json, write_json
+
+        fis = fisher_diagonal(self.m, self.ids[:2])
+        part = Path(tempfile.mkdtemp()) / "probe_partial.json"
+        full = probe(self.m, self.ids, fis["F"], batch_size=4, bits=[3], partial_path=part)
+        st = read_json(part)  # simulate a disconnect after block 0
+        st["units"] = {k: v for k, v in st["units"].items() if v["layer"] == 0}
+        st["blocks"] = {k: v for k, v in st["blocks"].items() if k == "0"}
+        write_json(part, st)
+        res = probe(self.m, self.ids, fis["F"], batch_size=4, bits=[3], partial_path=part)
+        for u, v in full["units"].items():
+            self.assertAlmostEqual(v["prune_fisher"][10], res["units"][u]["prune_fisher"][10], places=6)
+            self.assertAlmostEqual(v["quant"]["3"]["out_err"], res["units"][u]["quant"]["3"]["out_err"], places=4)
+
     def test_window_nll(self):
         wins = [dict(token_ids=self.ids[i].tolist(), score_target_offsets=[1, 64], scored_tokens=63) for i in range(3)]
         r = window_nll(self.m, wins, batch_size=2)

@@ -16,6 +16,7 @@ All probes use the 128 C4 calibration sequences only.
 from __future__ import annotations
 
 import time
+from pathlib import Path
 from typing import Dict, List
 
 import numpy as np
@@ -65,11 +66,20 @@ def fisher_diagonal(model, calib_ids: torch.Tensor, loss_scale: float = 1024.0) 
 
 @torch.no_grad()
 def probe(model, calib_ids: torch.Tensor, F: Dict[str, torch.Tensor], batch_size: int = 8,
-          bits: List[int] = BITS, grid=ALPHA_GRID) -> dict:
+          bits: List[int] = BITS, grid=ALPHA_GRID, partial_path=None) -> dict:
+    """partial_path: per-block results are saved atomically after each block; finished blocks are skipped on
+    resume (the dense forward propagation through them is cheap and recomputed)."""
+    from ..common.utils import read_json, write_json
+
     out: Dict[str, dict] = {}
     blocks: Dict[int, dict] = {}
+    if partial_path is not None and Path(partial_path).exists():
+        st = read_json(partial_path)
+        out, blocks = st["units"], {int(k): v for k, v in st["blocks"].items()}
 
     def block_fn(li, layer, inputs, ctx):
+        if li in blocks:
+            return {}
         lins = block_linears(layer)
         scores = {}
         for p, lin in lins.items():
@@ -137,6 +147,8 @@ def probe(model, calib_ids: torch.Tensor, F: Dict[str, torch.Tensor], batch_size
             u = unit_name(li, p)
             X = inputs[next(g for g, ps in INPUT_GROUPS.items() if p in ps)]["X"]
             out[u]["out_energy"] = _err_only(lins[p].weight.data, torch.zeros_like(lins[p].weight.data), X)
+        if partial_path is not None:
+            write_json(partial_path, dict(units=out, blocks=blocks))
         return {}
 
     t0 = time.perf_counter()

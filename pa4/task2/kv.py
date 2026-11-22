@@ -355,6 +355,10 @@ def compress(method: str, ctx_K, ctx_V, scores: Optional[torch.Tensor], cfg, evi
 
 @torch.no_grad()
 def run_policy(model, tok, case: dict, comp: dict, ref_logits: Optional[torch.Tensor]) -> dict:
+    """ref_logits: FP16-reference log-probabilities [len(suffix)+len(code), V] of the teacher-forced pass, or None.
+
+    Returns the post-prefill (first answer token) KL and the mean teacher-forced KL(FP16 || policy) over every
+    teacher-forced position (question suffix + gold code), plus exact match, gold-code NLL, timings and bytes."""
     dev = comp["K"][0].device
     cfg = model.config
     L, s = case["L_ctx"], len(case["suffix"])
@@ -376,10 +380,12 @@ def run_policy(model, tok, case: dict, comp: dict, ref_logits: Optional[torch.Te
     if dev.type == "cuda":
         torch.cuda.synchronize()
     t_suffix = time.perf_counter() - t0
-    kl = None
+    kl = tf_kl = None
     if ref_logits is not None:
-        pr = torch.log_softmax(ref_logits, -1)
-        kl = float((pr.exp() * (pr - first)).sum())
+        pr = ref_logits  # already log-probabilities, same positions as lp
+        kl_pos = (pr.exp() * (pr - lp)).sum(-1)
+        kl = float(kl_pos[s - 1])
+        tf_kl = float(kl_pos.mean())
     # greedy decode
     gen = [int(first.argmax())]
     t0 = time.perf_counter()
@@ -398,12 +404,17 @@ def run_policy(model, tok, case: dict, comp: dict, ref_logits: Optional[torch.Te
     pred = extract_code(text)
     nl, H, d = kv_dims(cfg)
     n_new = s + len(gen) - 1  # tokens appended after the context (suffix + generated, last not cached)
+    # shared decode-time component: the identical question suffix + generated tokens, as FP16 (same for every policy)
+    shared = 4 * nl * H * d * n_new
     if stream is not None:
+        # INT4 layouts keep quantizing complete 64-token groups, so the actual live total can be below
+        # context + shared (the context's FP16 tail may join a group completed by suffix tokens)
         live = stream.live_bytes(cache, cfg)
-        shared = None
     else:
-        shared = 4 * nl * H * d * n_new
         live = comp["meta"]["bytes"] + shared
     return dict(gen_ids=gen, text=text, pred=pred, correct=pred == case["code"], first_token_logit_kl=kl,
-                code_nll=code_nll, first_logits=first, t_suffix=t_suffix, t_decode=t_dec, n_generated=len(gen),
-                shared_decode_bytes_fp16=shared, live_cache_bytes_end=live, finite=bool(torch.isfinite(first).all()))
+                teacher_forced_kl_mean=tf_kl, n_teacher_forced=len(tf),
+                code_nll=code_nll, tf_logprobs=lp, t_suffix=t_suffix, t_decode=t_dec, n_generated=len(gen),
+                shared_decode_bytes=shared, context_cache_bytes=comp["meta"]["bytes"], live_cache_bytes_end=live,
+                live_minus_context_bytes=live - comp["meta"]["bytes"],
+                finite=bool(torch.isfinite(lp).all()))

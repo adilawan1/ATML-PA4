@@ -57,13 +57,70 @@ def read_jsonl(path) -> List[dict]:
         return [json.loads(l) for l in f if l.strip()]
 
 
+def _atomic_open(path: Path, binary_gz: bool):
+    """Write to a sibling temp file; _finish() fsyncs and renames it over `path` (a crash never leaves a torn file)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + f".tmp{os.getpid()}")
+    return tmp
+
+
+def _finish(tmp: Path, path: Path) -> None:
+    with open(tmp, "rb") as f:
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+
 def write_jsonl(path, rows: Iterable[dict]) -> None:
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = _atomic_open(path, path.suffix == ".gz")
     op = gzip.open if path.suffix == ".gz" else open
-    with op(path, "wt", encoding="utf-8") as f:
+    with op(tmp, "wt", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, sort_keys=True, default=_json_default) + "\n")
+    _finish(tmp, path)
+
+
+class JsonlAppender:
+    """Append-only JSONL log that survives disconnects: every record is flushed + fsynced, and on open a torn
+    trailing line (runtime killed mid-write) is truncated away. `done` holds keys of records already present."""
+
+    def __init__(self, path, key_fn):
+        self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.records: List[dict] = []
+        if self.path.exists():
+            good = 0
+            with open(self.path, "rb") as f:
+                data = f.read()
+            for line in data.splitlines(keepends=True):
+                try:
+                    if line.strip():
+                        self.records.append(json.loads(line))
+                    good += len(line)
+                except json.JSONDecodeError:
+                    break
+            if good < len(data):
+                with open(self.path, "r+b") as f:
+                    f.truncate(good)
+        self.key_fn = key_fn
+        self.done = {key_fn(r) for r in self.records}
+        self.fh = open(self.path, "a", encoding="utf-8")
+
+    def append(self, rec: dict) -> None:
+        self.fh.write(json.dumps(rec, default=_json_default) + "\n")
+        self.fh.flush()
+        os.fsync(self.fh.fileno())
+        self.records.append(rec)
+        self.done.add(self.key_fn(rec))
+
+    def close(self):
+        self.fh.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
 
 
 def _json_default(o):
@@ -89,9 +146,19 @@ def _json_default(o):
 
 def write_json(path, obj) -> None:
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
+    tmp = _atomic_open(path, False)
+    with open(tmp, "w", encoding="utf-8") as f:
         json.dump(obj, f, indent=2, sort_keys=True, default=_json_default)
+    _finish(tmp, path)
+
+
+def atomic_torch_save(obj, path) -> None:
+    import torch
+
+    path = Path(path)
+    tmp = _atomic_open(path, False)
+    torch.save(obj, tmp)
+    _finish(tmp, path)
 
 
 def read_json(path):
@@ -221,6 +288,12 @@ def environment_record(extra: Optional[dict] = None) -> dict:
             rec["cuda_version"] = torch.version.cuda
             rec["cudnn_version"] = torch.backends.cudnn.version()
             rec["gpu_total_memory_bytes"] = torch.cuda.get_device_properties(0).total_memory
+            # SDPA backends PyTorch may dispatch to (models load with attn_implementation="sdpa")
+            rec["sdpa_backends_enabled"] = dict(
+                flash=torch.backends.cuda.flash_sdp_enabled(), mem_efficient=torch.backends.cuda.mem_efficient_sdp_enabled(),
+                math=torch.backends.cuda.math_sdp_enabled(),
+                cudnn=getattr(torch.backends.cuda, "cudnn_sdp_enabled", lambda: None)())
+            rec["tf32_matmul"] = torch.backends.cuda.matmul.allow_tf32
     except Exception:
         pass
     if extra:

@@ -59,6 +59,8 @@ class Ctx:
         self.windows = {k: D.eval_windows(k) for k in ("wikitext2", "c4val")}
         self.hs = D.hellaswag()
         self.root = out_dir("task1")
+        self.env_extra = dict(model=BASE_MODEL, model_revision=self.rev, tokenizer=f"{BASE_MODEL}@{self.rev}",
+                              precision="float16", attn_implementation=self.model.config._attn_implementation)
         self._save_selection()
 
     def _save_selection(self):
@@ -77,7 +79,7 @@ class Ctx:
                               for w in v] for k, v in self.windows.items()},
             hellaswag_orders=[r["order"] for r in self.hs], hellaswag_source_rows=[r["source_row_index"] for r in self.hs],
             hellaswag_diagnostic_subset="first 512 of the supplied 2,000 IDs", hellaswag_format=HELLASWAG_PROMPT,
-            env=environment_record()))
+            env=environment_record(self.env_extra)))
 
     # ------------------------------------------------------------------ evaluation
     def evaluate(self, name: str, d: Path) -> dict:
@@ -144,7 +146,7 @@ class Ctx:
             rec["quality"] = self.evaluate(name, d)
             rec["storage"] = storage_report(self.model, quant_bytes)
             rec["latency"] = latency_report(self.model, reps=self.args.reps)
-        rec["env"] = environment_record()
+        rec["env"] = environment_record(self.env_extra)
         write_json(d / "metrics.json", rec)
         return rec
 
@@ -213,7 +215,7 @@ def cmd_sensitivity(ctx: Ctx, force=False):
     ctx.snap.restore(ctx.model)
     fis = fisher_diagonal(ctx.model, ctx.calib)
     print(f"Fisher: used={fis['used']} skipped={fis['skipped']} {fis['seconds']:.0f}s", flush=True)
-    pr = probe(ctx.model, ctx.calib, fis["F"], batch_size=ctx.args.calib_bs)
+    pr = probe(ctx.model, ctx.calib, fis["F"], batch_size=ctx.args.calib_bs, partial_path=d / "probe_partial.json")
     pr["fisher"] = dict(used=fis["used"], skipped=fis["skipped"], seconds=fis["seconds"], loss_scale=fis["loss_scale"])
     del fis
     gc.collect(); torch.cuda.empty_cache()

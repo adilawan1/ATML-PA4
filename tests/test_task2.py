@@ -131,15 +131,24 @@ class KVTests(unittest.TestCase):
         scores, ref_last = kv.question_scores(m, K, V, L, case["suffix"])
         self.assertEqual(tuple(scores.shape), (2, L))
         self.assertLess(float((ref_last - full[-1]).abs().max()), 1e-4)
-        for meth in kv.METHODS:
+        tok = SimpleNamespace(eos_token_id=1, decode=lambda g, skip_special_tokens=True: "12345",
+                              convert_tokens_to_ids=lambda t: 2)
+        ref = None
+        for meth in kv.METHODS:  # fp16 first: its teacher-forced log-probs are the reference
             c = kv.compress(meth, K, V, scores, m.config, case["evidence"])
             self.assertTrue(c["meta"]["within_budget"] or meth == "fp16", meth)
-            tok = SimpleNamespace(eos_token_id=1, decode=lambda g, skip_special_tokens=True: "12345",
-                                  convert_tokens_to_ids=lambda t: 2)
-            r = kv.run_policy(m, tok, case, c, ref_last)
+            r = kv.run_policy(m, tok, case, c, ref)
             self.assertTrue(r["finite"])
+            self.assertGreater(r["shared_decode_bytes"], 0)
+            if meth not in ("int4_token", "int4_kivi"):
+                self.assertEqual(r["live_cache_bytes_end"], r["context_cache_bytes"] + r["shared_decode_bytes"])
+            else:
+                self.assertLessEqual(r["live_cache_bytes_end"], r["context_cache_bytes"] + r["shared_decode_bytes"])
             if meth == "fp16":
-                self.assertLess(r["first_token_logit_kl"], 1e-6)
+                ref = r["tf_logprobs"]
+                self.assertLess(float((ref[len(case["suffix"]) - 1].exp() - torch.softmax(ref_last, -1)).abs().max()), 1e-5)
+            else:
+                self.assertGreaterEqual(r["teacher_forced_kl_mean"], -1e-6)
         # eviction keeps the absolute RoPE positions of retained tokens: dropping nothing == fp16
         keep_all = kv.build_cache([k.clone() for k in K], [v.clone() for v in V])
         idx = torch.arange(0, L)

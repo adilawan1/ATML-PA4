@@ -20,6 +20,7 @@ from __future__ import annotations
 import math
 import random
 import time
+from pathlib import Path
 from typing import Dict, List, Optional
 
 import numpy as np
@@ -158,8 +159,13 @@ def add_lora(student, seed: int):
 
 
 def distill(method: str, seed: int, teacher, student, tok, prompts: Dict[str, dict], perms, pool: Optional[dict],
-            log=print) -> dict:
-    """Run one distillation. prompts: pid -> dict(ids, category). pool: pid -> teacher response (off-policy)."""
+            log=print, ckpt_path=None, ckpt_every: int = 10) -> dict:
+    """Run one distillation. prompts: pid -> dict(ids, category). pool: pid -> teacher response (off-policy).
+
+    If ckpt_path is given, the complete training state is saved atomically every `ckpt_every` optimizer updates
+    and an existing checkpoint is resumed (adapter weights, AdamW + GradScaler state, prompt-schedule position,
+    partially consumed response, logs, presentations, cost counters, elapsed time). Rollout seeds are per
+    presentation, so a resumed run follows the same schedule as an uninterrupted one."""
     assert method in ("off", "on")
     dev = next(teacher.parameters()).device
     eos = eos_ids(tok)
@@ -177,6 +183,38 @@ def distill(method: str, seed: int, teacher, student, tok, prompts: Dict[str, di
     scored_total = 0
     update = 0
     skipped = 0
+    prior_elapsed, prior_peak, resumed_from = 0.0, 0, []
+    if ckpt_path is not None and Path(ckpt_path).exists():
+        st = torch.load(ckpt_path, map_location="cpu", weights_only=False)
+        assert st["method"] == method and st["seed"] == seed
+        named = {n: p for n, p in model.named_parameters() if p.requires_grad}
+        for n, t in st["adapter"].items():
+            named[n].data.copy_(t.to(named[n].device))
+        opt.load_state_dict(st["opt"])
+        scaler.load_state_dict(st["scaler"])
+        sched.ptr, sched.used, sched.k = st["sched"]["ptr"], st["sched"]["used"], st["sched"]["k"]
+        logs, presentations, costs = st["logs"], st["presentations"], st["costs"]
+        scored_total, update, skipped = st["scored_total"], st["update"], st["skipped"]
+        pending = None if st["pending"] is None else [presentations[st["pending"][0]], st["pending"][1], st["pending"][2]]
+        prior_elapsed, prior_peak = st["elapsed_s"], st["peak_alloc_bytes"]
+        resumed_from = st.get("resumed_from", []) + [update]
+        log(f"  [{method} s{seed}] resumed at update {update} ({scored_total} scored tokens)")
+
+    def save_ckpt():
+        if ckpt_path is None:
+            return
+        from ..common.utils import atomic_torch_save
+
+        Path(ckpt_path).parent.mkdir(parents=True, exist_ok=True)
+        peak = int(torch.cuda.max_memory_allocated()) if torch.cuda.is_available() else 0
+        atomic_torch_save(dict(
+            method=method, seed=seed, adapter={n: p.detach().cpu() for n, p in model.named_parameters() if p.requires_grad},
+            opt=opt.state_dict(), scaler=scaler.state_dict(), sched=dict(ptr=sched.ptr, used=sched.used, k=sched.k),
+            logs=logs, presentations=presentations, costs=costs, scored_total=scored_total, update=update,
+            skipped=skipped, pending=None if pending is None else [pending[0]["idx"], pending[1], pending[2]],
+            elapsed_s=prior_elapsed + time.perf_counter() - t_run, peak_alloc_bytes=max(prior_peak, peak),
+            resumed_from=resumed_from), ckpt_path)
+
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
     t_run = time.perf_counter()
@@ -242,13 +280,19 @@ def distill(method: str, seed: int, teacher, student, tok, prompts: Dict[str, di
         logs.append(dict(update=update, scored_tokens=scored_total, math_tokens=sched.used["math"],
                          short_tokens=sched.used["short"], kl_per_token=sum(seg_losses) / got, lr=LR,
                          grad_norm=float(gn), skipped=step_skipped, loss_scale=scale_before,
-                         elapsed_s=time.perf_counter() - t_run))
+                         elapsed_s=prior_elapsed + time.perf_counter() - t_run))
+        if update % ckpt_every == 0:
+            save_ckpt()
         if update % 20 == 0:
             log(f"  [{method} s{seed}] update {update} tokens {scored_total} KL/token {logs[-1]['kl_per_token']:.4f}")
+    save_ckpt()
     model.eval()
+    n_base = sum(p.numel() for n, p in model.named_parameters() if not p.requires_grad)
     res = dict(method=method, seed=seed, updates=update, skipped_updates=skipped, n_adapter_params=n_adapter,
-               logs=logs, costs=costs, wall_s=time.perf_counter() - t_run,
-               peak_alloc_bytes=int(torch.cuda.max_memory_allocated()) if torch.cuda.is_available() else None,
+               n_student_backbone_params=n_base, n_teacher_params=sum(p.numel() for p in teacher.parameters()),
+               resumed_from_updates=resumed_from,
+               logs=logs, costs=costs, wall_s=prior_elapsed + time.perf_counter() - t_run,
+               peak_alloc_bytes=max(prior_peak, int(torch.cuda.max_memory_allocated())) if torch.cuda.is_available() else None,
                n_presentations=len(presentations),
                tokens=dict(math=sched.used["math"], short=sched.used["short"]),
                rollout_lengths=dict(math=[len(p["response_ids"]) for p in presentations if p["category"] == "math"],
@@ -262,17 +306,32 @@ def _sync():
 
 
 @torch.no_grad()
-def teacher_pool(teacher, tok, prompts: Dict[str, dict], seed: int = 6304, log=print) -> dict:
-    """One frozen teacher response per training prompt (all 800), seeds recorded."""
+def teacher_pool(teacher, tok, prompts: Dict[str, dict], seed: int = 6304, log=print, partial_path=None,
+                 save_every: int = 25) -> dict:
+    """One frozen teacher response per training prompt (all 800), seeds recorded.
+
+    With partial_path, finished responses (and the generation time spent so far) are saved atomically every
+    `save_every` prompts and reused after a disconnect; each prompt has its own seed, so the pool is identical."""
+    from ..common.utils import read_json, write_json
+
     eos = eos_ids(tok)
-    pool = {}
+    pool, prior = {}, 0.0
+    if partial_path is not None and Path(partial_path).exists():
+        st = read_json(partial_path)
+        pool, prior = st["pool"], st["seconds"]
+        log(f"  teacher pool: resuming with {len(pool)}/{len(prompts)} responses")
     t0 = time.perf_counter()
     for i, (pid, pr) in enumerate(sorted(prompts.items())):
+        if pid in pool:
+            continue
         rseed = seed * 1_000_003 + 10_000_000 + i
         pool[pid] = sample_response(teacher, pr["ids"], CAP[pr["category"]], rseed, eos)
+        if partial_path is not None and len(pool) % save_every == 0:
+            _sync()
+            write_json(partial_path, dict(pool=pool, seconds=prior + time.perf_counter() - t0))
         if (i + 1) % 100 == 0:
             log(f"  teacher pool {i+1}/{len(prompts)}")
     _sync()
-    return dict(pool=pool, seconds=time.perf_counter() - t0,
+    return dict(pool=pool, seconds=prior + time.perf_counter() - t0,
                 tokens=dict(math=sum(len(v["response"]) for k, v in pool.items() if prompts[k]["category"] == "math"),
                             short=sum(len(v["response"]) for k, v in pool.items() if prompts[k]["category"] == "short")))

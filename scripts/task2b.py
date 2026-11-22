@@ -2,7 +2,8 @@
 """Task 2B: MQAR training/evaluation for every required mechanism x seed, plus resource sweeps.
 
   python scripts/task2b.py verify      # generator invariants on frozen test/dev + training samples
-  python scripts/task2b.py train       # all required runs (resumable), test evaluation, test-time controls
+  python scripts/task2b.py train       # B1 + B2 runs (resumable), test evaluation, test-time controls
+  python scripts/task2b.py b3          # B3 intervention -- only after inspecting B1/B2 and committing the prediction
   python scripts/task2b.py sweep       # forward-only inference sweep T in {256,1024,4096,8192}
   python scripts/task2b.py costs       # theoretical pair counts / state bytes at T=256
   python scripts/task2b.py all
@@ -55,13 +56,13 @@ def cmd_verify():
     print(rep)
 
 
-def cmd_train(force=False, only=None):
+def cmd_train(force=False, only=None, groups=("B1", "B2")):
     dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     dev_rows = D.mqar("development")
     test_rows = D.mqar("test")
     od = out_dir("task2", "mqar", "runs")
     for name, kind, k, regime, grp in RUNS:
-        if only and name not in only:
+        if grp not in groups or (only and name not in only):
             continue
         for seed in SEEDS:
             f = od / f"{name}_s{seed}.json"
@@ -79,7 +80,7 @@ def cmd_train(force=False, only=None):
                 res["test_topk64_at_test"] = evaluate(model, test_rows, dev)
                 model.set_test_override(None)
             res["theory"] = theoretical_costs(kind)
-            res["env"] = environment_record()
+            res["env"] = environment_record(dict(precision="float32", attention=kind, data_stream="course mqar_generator split=train"))
             p = ckpt_root() / "mqar" / f"{name}_s{seed}.pt"
             p.parent.mkdir(parents=True, exist_ok=True)
             torch.save(model.state_dict(), p)
@@ -122,7 +123,7 @@ def cmd_sweep(reps=10):
             gc.collect(); torch.cuda.empty_cache()
             print(rec["T"], kind, rec.get("ms"), rec["status"], flush=True)
             rows.append(rec)
-    write_json(out_dir("task2", "mqar") / "inference_sweep.json", dict(rows=rows, env=environment_record()))
+    write_json(out_dir("task2", "mqar") / "inference_sweep.json", dict(rows=rows, env=environment_record(dict(precision="float32"))))
 
 
 def cmd_costs():
@@ -135,7 +136,7 @@ def cmd_costs():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["verify", "train", "sweep", "costs", "all"])
+    ap.add_argument("cmd", choices=["verify", "train", "b3", "sweep", "costs", "all"])
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--only", nargs="*")
     a = ap.parse_args()
@@ -144,7 +145,10 @@ def main():
     if a.cmd in ("costs", "all"):
         cmd_costs()
     if a.cmd in ("train", "all"):
-        cmd_train(a.force, a.only)
+        cmd_train(a.force, a.only)  # B1 + B2 only
+    if a.cmd == "b3":
+        # run only after inspecting B1/B2 and committing the prediction in configs/task2.yaml
+        cmd_train(a.force, a.only, groups=("B3",))
     if a.cmd in ("sweep", "all"):
         cmd_sweep()
 

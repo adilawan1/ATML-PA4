@@ -184,6 +184,7 @@ def part_c():
             acc_given_ref_correct=acc[ref_ok].mean() if ref_ok.any() else np.nan,
             code_nll=np.mean([c["methods"][m]["code_nll"] for c in cases]),
             first_token_KL=np.mean([c["methods"][m]["first_token_logit_kl"] for c in cases]),
+            teacher_forced_KL=np.mean([c["methods"][m].get("teacher_forced_kl_mean", np.nan) for c in cases]),
             evidence_fp16_retained=np.nanmean([np.nan if c["methods"][m]["meta"].get("evidence_fp16_retained") is None
                                                else c["methods"][m]["meta"]["evidence_fp16_retained"] for c in cases]),
             packed_KB=np.mean([c["methods"][m]["meta"]["bytes"] for c in cases]) / 1024,
@@ -195,6 +196,7 @@ def part_c():
             suffix_ms=1000 * np.mean([c["methods"][m]["t_suffix"] for c in cases]),
             decode_ms=1000 * np.mean([c["methods"][m]["t_decode"] for c in cases]),
             peak_alloc_MB=np.mean([c["methods"][m]["peak_alloc_bytes"] for c in cases]) / 1e6,
+            shared_decode_KB=np.mean([c["methods"][m].get("shared_decode_bytes", np.nan) for c in cases]) / 1024,
             live_cache_end_KB=np.mean([c["methods"][m]["live_cache_bytes_end"] for c in cases]) / 1024))
     df = pd.DataFrame(rows)
     write_table(df, "task2c_kv_matched_budget", caption="KV policies at the per-prompt INT4 channel-K/token-V byte budget.")
@@ -205,6 +207,14 @@ def part_c():
                   c1_generate_match_rate=np.mean([c["methods"]["fp16"]["c1_matches_ordinary_generate"] for c in cases]),
                   all_finite=all(c["methods"][m]["finite"] for c in cases for m in METHODS))
     write_json(R / "kv" / "systems_summary.json", sysrow)
+    # C1: full-cache (FP16 reference) retrieval accuracy on every prompt cell, alongside each policy
+    cells = []
+    for key in sorted({(c["target_tokens"], c["position"], c["distractors"]) for c in cases}, key=str):
+        sub = [c for c in cases if (c["target_tokens"], c["position"], c["distractors"]) == key]
+        cells.append(dict(context=key[0], position=key[1], distractors=key[2], n=len(sub),
+                          L_ctx_range=f"{min(c['L_ctx'] for c in sub)}-{max(c['L_ctx'] for c in sub)}",
+                          **{m: np.mean([c["methods"][m]["correct"] for c in sub]) for m in METHODS}))
+    write_table(pd.DataFrame(cells), "task2c_kv_cells", caption="Exact match per prompt cell (10 prompts each; descriptive only).")
     # breakdowns
     br = []
     for fac in ("target_tokens", "position", "distractors"):

@@ -72,11 +72,35 @@ export PA4_DATA=$PWD/external/atml-pa4-datasets PA4_RESULTS=$PWD/results PA4_CKP
 python -m pytest -q tests
 python scripts/task1.py all
 python scripts/task2a.py && python scripts/task2b.py all && python scripts/task2c.py all
+#   ...inspect B1/B2, commit the B3 prediction in configs/task2.yaml, then:
+python scripts/task2b.py b3
 python scripts/task3.py all
 for t in 1 2 3; do python analysis/task${t}_report.py; done
 ```
 
 Every number in the report traces to a file under `results/` produced by these commands.
+
+## Resuming after a Colab disconnect
+
+On Colab, `$PA4_RESULTS` and `$PA4_CKPT` live on Google Drive, so a runtime that times out or disconnects loses at most
+the item in progress. All JSON/JSONL/checkpoint writes are atomic (temp file + fsync + rename); append-only logs fsync
+every record and drop a torn last line on reopen. After reconnecting: re-run the notebook's Setup cell,
+`!python scripts/progress.py` to see where each step stands, then re-run the interrupted cell.
+
+| Step | Saved as it runs | Lost on disconnect |
+|---|---|---|
+| Task 1 conditions (P1/P2/P3, 2:4, Q1/Q2/Q3) | one folder per finished condition | the condition in progress (≈5–15 min) |
+| Task 1 sensitivity probe | `probe_partial.json` after every block | current block (Fisher pass, ≈3 min, is recomputed) |
+| Task 1 P3/Q3 dev selection | one folder per candidate | candidate in progress |
+| Task 2A benchmark | `bench_rows.jsonl` per (impl, L, dtype) | one row |
+| Task 2B MQAR | one JSON + checkpoint per (run, seed); cached training streams | run in progress (≈2–5 min) |
+| Task 2C KV evaluation / C5 | `cases.jsonl` per prompt; `c5_bench_rows.jsonl` per row | one prompt / one row |
+| Task 3 teacher pool | `teacher_pool.partial.json` every 25 prompts | ≤ 24 responses |
+| Task 3 distillation | full state (LoRA, AdamW, GradScaler, schedule, partial response, logs, costs, time) every 10 updates in `$PA4_CKPT/task3/distill_ckpt/` | ≤ 10 updates; the resumed run is identical to an uninterrupted one (tested) |
+| Task 3 banks / alignment / standalone | per prompt (or per bank × prompt) | one prompt |
+| Task 3 speculative benchmark | `records_<draft>.jsonl` per (prompt, γ, rep); setup/warm-up time per session | one record |
+
+Elapsed training time and peak memory are accumulated across sessions; `resumed_from_updates` records every resume.
 
 ## Mapping from the handout to the code
 
@@ -98,9 +122,9 @@ Every number in the report traces to a file under `results/` produced by these c
 |---|---|
 | A1–A3 | `attention.dense_attention`, `TiledAttention` (online softmax forward, FlashAttention-2-style recomputation backward storing only O and LSE — a Python reference, **not** a fused kernel), SDPA with forced backends and profiler-detected default kernel; errors vs FP32 dense (or FP32 tiled where dense OOMs, flagged) |
 | B1–B2 | `mqar.MQARModel` (only the attention operator changes), protocol in `train_mqar.py`; dense/window/dilated masks are explicit dense boolean masks (correctness implementation, not sparse kernels); linear attention materialises prefix tensors (reported) |
-| B3 | gated 8-token local window + 16-feature ELU+1 memory; prediction and state-matching recorded in `configs/task2.yaml` before evaluation |
+| B3 | gated 8-token local window + 16-feature ELU+1 memory; separate `task2b.py b3` step run only after B1/B2 are inspected, with the prediction committed to `configs/task2.yaml` first (git history timestamps it) |
 | C1 | split-prefill vs full-forward logits, rebuilt 100 %-retention cache vs `generate`, finiteness, absolute RoPE positions preserved (`position_ids`) with consistent physical cache length |
-| C2–C4 | `kv.compress` / `kv.run_policy`; budgets from the handout formula; eviction keeps the largest legal number of FP16 positions incl. uint16 index bytes |
+| C2–C4 | `kv.compress` / `kv.run_policy`; budgets from the handout formula; eviction keeps the largest legal number of FP16 positions incl. uint16 index bytes; teacher-forced KL(FP16‖policy) averaged over every suffix + gold-code position and at the first answer token; K/V reconstruction errors; shared decode-time memory (question suffix + generated tokens, FP16) reported separately from the compressed context and included in the live total; per-cell full-cache accuracy table |
 | C5 | `kv_pack` real INT4/INT2 packing (serialized bytes asserted equal to the formula), pack/unpack and decode-step timings at batch 1/8 × 2k/4k |
 
 ### Task 3
@@ -130,6 +154,14 @@ Every number in the report traces to a file under `results/` produced by these c
   equality is impossible with integer feature dimension and window length, so the hybrid is kept *at or below* the
   comparator.
 * **Standalone student accuracy** uses greedy decoding with caps 512 (math) / 32 (short form).
+* **KV retention parameters** (8 sink, 64 recent, pooling kernel 7, per-layer selection) were fixed a priori from the
+  handout/SnapKV; no development prompts were used, so no final-test prompt influenced them.
+* **Speculative sampler padding**: generation runs one sequence at a time (batch 1), so no padding enters the sampler;
+  variable proposal lengths (γ ∈ {0,1,2,3,4}), cap truncation, EOS, one-token (γ=0) and fully accepted rounds are
+  exercised by the exact χ² tests and unit tests.
+* **Held-out hygiene** is checked in code: calibration/development C4 IDs are asserted disjoint; Task 3 asserts no
+  GSM8K question or short-form ID/text overlap between training and the 120 test prompts
+  (`results/task3/checks/prompt_sets_and_overlap.json`).
 * **On-policy rollouts** are generated by a seeded manual sampler (temperature 1, top-p 1, no top-k) so every
   presentation has a recorded seed.
 

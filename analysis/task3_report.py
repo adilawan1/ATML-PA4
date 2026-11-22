@@ -174,6 +174,31 @@ def speculative(align_df=None):
         # by workload split / output-length bins
     df = pd.DataFrame(rows)
     write_table(df, "task3_spec_main", caption="Speculative decoding (EOS-aware, cap 64, 120 prompts x 2 reps).")
+    # paired comparisons between drafts over prompts (repetitions averaged within prompt first)
+    def per_prompt(tag, g, fn):
+        d = defaultdict(list)
+        for r in by.get((tag, g), []):
+            d[r["prompt_id"]].append(fn(r))
+        return {k: float(np.mean(v)) for k, v in d.items()}
+
+    ratio_fn = lambda r: r["spec"]["tokens_per_s"] / r["target"]["tokens_per_s"]
+    acc_fn = lambda r: r["spec"]["accepted"] / max(r["spec"]["examined"], 1)
+    comps = []
+    for g in sorted({k[1] for k in by}):
+        pairs = [(d, "original") for d in DRAFTS[1:]] + [(f"on_s{s_}", f"off_s{s_}") for s_ in (6304, 6305)]
+        for a, b in pairs:
+            for metric, fn in (("throughput_ratio", ratio_fn), ("accept_examined", acc_fn)):
+                A, B = per_prompt(a, g, fn), per_prompt(b, g, fn)
+                common = sorted(set(A) & set(B))
+                if len(common) < 2:
+                    continue
+                bt = bootstrap_mean_diff([A[k] for k in common], [B[k] for k in common], 2000)
+                boot[f"{a}-{b}_g{g}_{metric}"] = bt
+                comps.append(dict(gamma=g, comparison=f"{a} - {b}", metric=metric, n_prompts=len(common),
+                                  diff=bt["point"], ci_low=bt["ci_low"], ci_high=bt["ci_high"]))
+    if comps:
+        write_table(pd.DataFrame(comps), "task3_spec_paired_comparisons",
+                    caption="Paired 95% bootstrap CIs over prompts (2000 resamples); training seeds reported separately.")
     write_json(sd / "bootstrap.json", boot)
     wl = []
     for (tag, g), rs in sorted(by.items()):
@@ -257,8 +282,40 @@ def standalone_and_breakeven(spec_df, dist_df):
     write_table(pd.DataFrame(be), "task3_deployment_break_even")
 
 
+def continuations():
+    """Matched-prompt continuations (same prompt, gamma=4, rep 0) for three fixed prompts: first math, first
+    familiar, first shifted ID. Decoded only if the tokenizer can be loaded."""
+    files = sorted((R / "spec").glob("records_*.jsonl"))
+    if not files:
+        return
+    recs = [r for f in files for r in read_jsonl(f) if r["gamma"] == 4 and r["rep"] == 0 and r["tag"] in DRAFTS]
+    chosen = []
+    for split in ("math", "familiar", "shifted"):
+        ids = sorted({r["prompt_id"] for r in recs if r["split"] == split})
+        if ids:
+            chosen.append(ids[0])
+    try:
+        from transformers import AutoTokenizer
+
+        from pa4.common.utils import model_revision
+        tok = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-1.5B-Instruct", revision=model_revision("Qwen/Qwen2.5-1.5B-Instruct"))
+        dec = lambda ids: tok.decode(ids, skip_special_tokens=False)
+    except Exception:
+        dec = lambda ids: ids
+    out = []
+    for pid in chosen:
+        for r in recs:
+            if r["prompt_id"] == pid:
+                out.append(dict(prompt_id=pid, split=r["split"], draft=r["tag"], gamma=4,
+                                speculative_output=dec(r["spec"]["out_ids"]), target_only_output=dec(r["target"]["out_ids"]),
+                                accepted=r["spec"]["accepted"], examined=r["spec"]["examined"], eos=r["spec"]["eos"],
+                                note="both are independent samples from the target distribution (same seed, different sampler)"))
+    write_json(R / "spec" / "continuations.json", dict(selection="first ID of each split, gamma=4, repetition 0", rows=out))
+
+
 def main():
     sampler()
+    continuations()
     dist_df = distillation()
     align_df = alignment()
     spec_df = speculative(align_df)

@@ -84,7 +84,7 @@ def task2():
     for i in range(36):
         cases.append(dict(id=f"c{i}", target_tokens=[2048, 4096][i % 2], position=["start", "middle", "end"][i % 3], distractors=[0, 2, 8][i % 3],
                           L_ctx=2000, prefill_seconds=0.1, scoring_seconds=0.02, prefill_peak_alloc_bytes=4e9, c1_split_vs_full_max_abs_logit=0.01,
-                          methods={m: dict(correct=bool(rng.random() > 0.3), code_nll=float(rng.random()), first_token_logit_kl=float(rng.random()),
+                          methods={m: dict(correct=bool(rng.random() > 0.3), code_nll=float(rng.random()), first_token_logit_kl=float(rng.random()), teacher_forced_kl_mean=0.1, shared_decode_bytes=5e4,
                                            meta=dict(bytes=1e6, realized_fraction_of_fp16=0.28, within_budget=True, evidence_fp16_retained=0.5),
                                            compress_seconds=0.01, t_suffix=0.02, t_decode=0.1, peak_alloc_bytes=4e9, live_cache_bytes_end=1e6,
                                            finite=True, c1_matches_ordinary_generate=True) for m in M}))
@@ -120,8 +120,8 @@ def task3():
                 for i, split in enumerate(("math", "familiar", "shifted") * 4):
                     sp = dict(accepted=30, examined=40, proposed=45, rounds=15, n_out=48, target_calls=15, draft_calls=45,
                               tokens_per_s=40.0 + rng.random(), eos=True, truncated=False, peak_alloc_bytes=5e9,
-                              t_prefill=0.02, t_draft=0.4, t_verify=0.4, t_accept=0.05, t_rollback=0.01, t_host_other=0.02, t_total=0.9)
-                    tg = dict(tokens_per_s=35.0, peak_alloc_bytes=4e9, t_decode=1.0, target_calls=48)
+                              t_prefill=0.02, t_draft=0.4, t_verify=0.4, t_accept=0.05, t_rollback=0.01, t_host_other=0.02, t_total=0.9, out_ids=[1, 2])
+                    tg = dict(tokens_per_s=35.0 + rng.random(), peak_alloc_bytes=4e9, t_decode=1.0, target_calls=48, out_ids=[3])
                     recs.append(dict(tag=d, draft=d, gamma=g, rep=rep, prompt_id=f"p{i}", split=split, spec=sp, target=tg, speedup=1.1))
     write_jsonl(R / "task3" / "spec" / "records_all.jsonl", recs)
     for m in ("teacher", "original", "on_s6304"):

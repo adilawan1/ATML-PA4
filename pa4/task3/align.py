@@ -65,7 +65,8 @@ def pair_metrics(lp: torch.Tensor, lq: torch.Tensor) -> Dict[str, List[float]]:
     rkl = (q * (lq - lp)).sum(-1)
     tv = 0.5 * (p - q).abs().sum(-1)
     agree = (lp.argmax(-1) == lq.argmax(-1)).float()
-    return dict(fkl=fkl.tolist(), rkl=rkl.tolist(), tv=tv.tolist(), exp_accept=(1 - tv).tolist(), greedy_agree=agree.tolist())
+    return dict(fkl=fkl.tolist(), rkl=rkl.tolist(), tv=tv.tolist(), exp_accept=(1 - tv).tolist(), greedy_agree=agree.tolist(),
+                target_argmax=lp.argmax(-1).tolist(), draft_argmax=lq.argmax(-1).tolist())
 
 
 def pos_bin(p: int) -> str:
