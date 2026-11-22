@@ -1,0 +1,39 @@
+# Task 2 - fixed configuration (mirrors constants in pa4/task2)
+A_attention: {B: 2, H: 4, d: 64, lengths: [256, 512, 1024, 2048, 4096, 8192], dtypes: [float32, float16],
+              reps: 10, warmup: 3, tiled_block: [128, 128], tile_sweep_L: 1024,
+              sdpa_backends: [FLASH_ATTENTION, EFFICIENT_ATTENTION, CUDNN_ATTENTION, MATH]}
+B_mqar:
+  model: {layers: 2, d_model: 128, heads: 4, d_head: 32, mlp: 512, vocab: 256, positions: sinusoidal, norm: pre-LayerNorm,
+          head: 64-way classifier over value ids at query positions}
+  train: {optimizer: AdamW, peak_lr: 8.0e-4, weight_decay: 0.01, batch: 32, updates: 4500, warmup: 200, final_lr_frac: 0.15,
+          clip: 1.0, eval_at: [500, 1000, 1500, 2000, 3000, 4500], seeds: [6304, 6305, 6306],
+          train_stream_index: "(seed-6304)*1e6 + i"}
+  runs:
+    B1: [dense K4/K8/K16 mixed, dense K16 near, window64 K4/K8/K16 near, window64 K16 mixed]
+    B2: [linear(ELU+1) K4/K8/K16 mixed, dilated(2 local-64 heads + 2 heads offsets 0,4..252) K4/K16 mixed]
+    B3: [hybrid K16 mixed]
+  test_time_controls: [dense + W=64 mask, dense + top-64 scores]
+  B3_intervention:
+    description: per-head sigmoid gate between an 8-token local softmax window and an ELU+1 linear memory on a learned
+                 16-dim q/k feature projection (shared over heads)
+    comparator: linear ELU+1 (K=16 mixed)
+    state_floats_per_layer: {hybrid: 4160 (= 4*(16*32+16) + 4*8*64), comparator: 4224 (= 4*(32*32+32))}
+    extra_params: "2 x (32*16 feature proj + 128*4+4 gate) = 2056 (<5% of ~0.43M)"
+    development_selection: none - hyperparameters fixed a priori; final checkpoint (update 4500) is reported
+    prediction_before_evaluation: >
+      The local 8-token window supplies the one-step key->value copy that pure ELU+1 attention struggles to form,
+      so the hybrid should raise K=16 accuracy over the linear comparator in every distance regime, most at near
+      distances. Because its associative memory is smaller (16 vs 32 features) we expect it to remain well below
+      dense attention at K=16, with the largest remaining gap at far distances.
+C_kv:
+  model: Qwen/Qwen2.5-1.5B-Instruct
+  decoding: greedy, max_new_tokens 12, answer = first \d{5} match
+  safeguards: {sink: 8, recent: 64}
+  scoring: {source: question suffix queries (RoPE at absolute positions) vs cached keys, FP32 masked softmax,
+            aggregate: sum over suffix queries and all heads of a layer, pooling: avg kernel 7, selection: per layer}
+  quantization: {group: 64, metadata: FP16 scale + FP16 offset, zero_point: none (offset = group min), rounding: half-to-even,
+                 trailing_tokens: FP16 until a complete 64-token group forms}
+  budget: per-prompt serialized bytes of uniform INT4 channel-K/token-V cache of the pre-question context
+  index_bytes: uint16 per selected position per layer (sink/recent implicit)
+  bootstrap_resamples: 2000
+  c5: {batches: [1, 8], contexts: [2048, 4096], reps: 10, warmup: 3, layouts: [kivi INT4, token INT4, kivi INT2]}

@@ -1,0 +1,22 @@
+# Task 3 - fixed configuration (mirrors constants in pa4/task3 and scripts/task3.py)
+models: {teacher_target: Qwen/Qwen2.5-1.5B-Instruct, draft_student: Qwen/Qwen2.5-0.5B-Instruct, dtype: float16}
+prompt_format: chat template, single user turn, add_generation_prompt (Qwen default system prompt), EOS = <|im_end|>/<|endoftext|>
+distillation:
+  seeds: [6304, 6305]
+  methods: [off-policy (frozen teacher pool, 1 response / training prompt), on-policy (fresh student rollout per presentation)]
+  quota: {math: 30000, short: 10000}
+  caps: {math: 192, short: 32}
+  sampling: {temperature: 1.0, top_p: 1.0, top_k: 0}
+  update_every_scored_tokens: 256
+  optimizer: {name: AdamW, lr: 3.0e-4, weight_decay: 0.01, clip: 1.0}
+  precision: FP16 frozen backbones, FP32 LoRA + optimizer, FP16 autocast, dynamic GradScaler (unscale before clip)
+  lora: {r: 8, alpha: 16, dropout: 0.0, targets: [q_proj, k_proj, v_proj, o_proj]}
+  objective: forward KL(p_T || q_S) over the full vocabulary, normalised by supervised tokens per update
+  schedule: seeded permutation per category, round-robin, next category = smaller fraction of quota consumed
+evaluation:
+  prompts: 120 (60 GSM8K test + 30 familiar + 30 shifted short-form)
+  speculative: {gammas: [2, 4], repetitions: 2, cap: 64, eos_aware: true, temperature: 1.0, counterbalanced: true}
+  fixed64_diagnostic: {prompts: first 24 GSM8K test, eos: ignored for timing only}
+  standalone_accuracy: {decoding: greedy, caps: {math: 512, short: 32}}
+  banks: [teacher (course), original_draft (course), exact_spec_original_gamma4 (ours), own rollouts of each trained student]
+  sampler_tests: {markov_sequences: 100000, length: 3, gamma: 2, alpha: 0.01, negative_control: residual replaced by p}

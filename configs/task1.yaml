@@ -1,0 +1,38 @@
+# Task 1 - fixed experimental configuration (mirrors constants in pa4/task1; tests/test_configs.py checks them)
+model: Qwen/Qwen2.5-1.5B            # base checkpoint, FP16, SDPA; revision from data/local_source_revisions.json
+seed: 6304
+eligible: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]   # embeddings/norms/biases/lm_head untouched
+calibration: {manifest: c4_calibration_locked, sequences: 128, tokens: 512, batch: 8, protocol: block-sequential}
+development: {manifest: c4_development_locked, sequences: 32, use: P3/Q3 design selection only}
+evaluation:
+  perplexity: [wikitext2_test_windows_locked, c4_validation_windows_locked]   # 50,000 scored tokens each, 512-token windows
+  hellaswag: {ids: 2000, diagnostic_subset: first 512, full_for: [fp16, p1_s50, p2_s50, p3_s50, q1_b4, q1_b3, q2_b4, q2_b3, q3_b4, q3_b3],
+              format: lm-eval-harness hellaswag v1.0 preprocessing, acc_norm: character length}
+pruning:
+  sparsities: [0.25, 0.50, 0.75]
+  mask: per output row, lowest scores removed, stable tie-break
+  wanda_score: "|W_ij| * ||X_j||_2 (block-sequential activations)"
+  structured_diagnostic: "2:4 along input channels, Wanda score, 50%"
+  p3:
+    unit_bounds: [0.10, 0.85]
+    targets: [0.50, 0.75]      # matched to P1/P2 by total zeroed eligible weights (exact)
+    candidates:
+      - {design: fisher_knapsack, unit: projection, sensitivity: "1/2 sum F_ij W_ij^2 over Wanda-pruned set", grid_step: 0.025}
+      - {design: owl, unit: block, M: 5, lambda: 0.04}
+      - {design: owl, unit: block, M: 5, lambda: 0.08}
+    selection: lowest mean NLL on the 32-sequence C4 development manifest
+quantization:
+  bits_uniform: [8, 4, 3]
+  group: 128           # along input columns
+  quantizer: asymmetric min/max, scale FP16, zero-point uint8, round-half-to-even, zero padding to group multiple
+  metadata_bytes_per_group: 3
+  packing: LSB-first bitstream per row, ceil(cols*b/8) bytes
+  awq_alpha_grid: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  awq_fold: {attn_in: input_layernorm, mlp_in: post_attention_layernorm, down_in: up_proj rows, o_in: serialized FP16 scales}
+  q3:
+    allowed_bits: [2, 3, 4, 8]
+    budgets: [Q2 uniform INT4 packed bytes, Q2 uniform INT3 packed bytes]
+    candidates: [{design: fisher_knapsack, cost: "1/2 sum F (W - W_q)^2"}, {design: out_err_knapsack, cost: "||(W - W_q) X||^2"}]
+    selection: lowest mean NLL on the 32-sequence C4 development manifest
+fisher: {loss_scale: 1024, sequences: 128, batch: 1}
+latency: {reps: 5, warmup: 2, prefill_lengths: [512, 2048], decode_tokens: 64, decode_prompt: 512}
