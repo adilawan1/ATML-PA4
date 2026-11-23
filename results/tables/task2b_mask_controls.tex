@@ -1,0 +1,25 @@
+\begin{table}
+\label{tab:task2b_mask_controls}
+\begin{tabular}{llrrr}
+\toprule
+model & condition & near & far & mixed \\
+\midrule
+dense\_K16\_mixed & as trained & 1 & 1 & 1 \\
+dense\_K16\_mixed & W=64 mask at test & 1 & 0.01573 & 0.2233 \\
+dense\_K16\_mixed & top-64 at test & 1 & 1 & 1 \\
+dense\_K16\_near & as trained & 1 & 0.9982 & 0.999 \\
+dense\_K16\_near & W=64 mask at test & 1 & 0.01554 & 0.2245 \\
+dense\_K16\_near & top-64 at test & 1 & 0.9982 & 0.999 \\
+dense\_K4\_mixed & as trained & 1 & 1 & 1 \\
+dense\_K4\_mixed & W=64 mask at test & 1 & 0.01579 & 0.2598 \\
+dense\_K4\_mixed & top-64 at test & 1 & 1 & 1 \\
+dense\_K8\_mixed & as trained & 1 & 1 & 1 \\
+dense\_K8\_mixed & W=64 mask at test & 1 & 0.0155 & 0.243 \\
+dense\_K8\_mixed & top-64 at test & 1 & 1 & 1 \\
+window\_K16\_mixed & window-trained & 0.07043 & 0.01322 & 0.04234 \\
+window\_K16\_near & window-trained & 1 & 0.01538 & 0.2243 \\
+window\_K4\_near & window-trained & 1 & 0.01685 & 0.2598 \\
+window\_K8\_near & window-trained & 1 & 0.01497 & 0.2433 \\
+\bottomrule
+\end{tabular}
+\end{table}

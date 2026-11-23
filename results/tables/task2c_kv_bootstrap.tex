@@ -1,0 +1,24 @@
+\begin{table}
+\label{tab:task2c_kv_bootstrap}
+\begin{tabular}{lrrrrrr}
+\toprule
+pair & point & ci\_low & ci\_high & n\_items & n\_resamples & se \\
+\midrule
+qa\_evict-sink\_recent & 0.6667 & 0.6 & 0.7333 & 180 & 2000 & 0.03532 \\
+int4\_kivi-int4\_token & 1 & 1 & 1 & 180 & 2000 & 0 \\
+hybrid-qa\_evict & -0.005556 & -0.01667 & 0 & 180 & 2000 & 0.005771 \\
+hybrid-int4\_kivi & -0.005556 & -0.01667 & 0 & 180 & 2000 & 0.005771 \\
+int4\_kivi-qa\_evict & 0 & 0 & 0 & 180 & 2000 & 0 \\
+sink\_recent-fp16 & -0.6667 & -0.7333 & -0.6 & 180 & 2000 & 0.03532 \\
+qa\_evict-fp16 & 0 & 0 & 0 & 180 & 2000 & 0 \\
+int4\_token-fp16 & -1 & -1 & -1 & 180 & 2000 & 0 \\
+int4\_kivi-fp16 & 0 & 0 & 0 & 180 & 2000 & 0 \\
+hybrid-fp16 & -0.005556 & -0.01667 & 0 & 180 & 2000 & 0.005771 \\
+NLL qa\_evict-sink\_recent & -9.16 & -10.15 & -8.172 & 180 & 2000 & 0.5017 \\
+NLL int4\_kivi-int4\_token & -21.87 & -22.57 & -21.26 & 180 & 2000 & 0.3263 \\
+NLL hybrid-qa\_evict & 0.02014 & 0.004555 & 0.04723 & 180 & 2000 & 0.01154 \\
+NLL hybrid-int4\_kivi & 0.01675 & 0.00131 & 0.04398 & 180 & 2000 & 0.01149 \\
+NLL int4\_kivi-qa\_evict & 0.003391 & 0.001591 & 0.005449 & 180 & 2000 & 0.001003 \\
+\bottomrule
+\end{tabular}
+\end{table}

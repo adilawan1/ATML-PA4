@@ -1,0 +1,15 @@
+\begin{table}
+\label{tab:task2b_theoretical_costs}
+\begin{tabular}{lrrrrrrrrrrr}
+\toprule
+mechanism & n\_params & pairs\_per\_head & state\_floats\_per\_layer & pairs\_per\_head\_dilated & pairs\_per\_head\_local & comparator\_linear\_state\_bytes\_fp32 & linear\_state\_floats & local\_buffer\_floats & state\_bytes\_per\_layer\_fp32 & pairs\_selected\_per\_head & max\_receptive\_field\_2layers \\
+\midrule
+dense & 437824 & 3.29e+04 & 6.554e+04 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+dilated & 437824 & 1.134e+04 & 4.058e+04 & 8320 & 1.437e+04 & NaN & NaN & NaN & NaN & NaN & NaN \\
+hybrid & 439880 & 2276 & 4160 & NaN & NaN & 1.69e+04 & 2112 & 2048 & 1.664e+04 & NaN & NaN \\
+linear & 437824 & 256 & 4224 & NaN & NaN & NaN & NaN & NaN & 1.69e+04 & NaN & NaN \\
+topk & 437824 & 3.29e+04 & 6.554e+04 & NaN & NaN & NaN & NaN & NaN & NaN & 1.437e+04 & NaN \\
+window & 437824 & 1.437e+04 & 1.638e+04 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & 126 \\
+\bottomrule
+\end{tabular}
+\end{table}

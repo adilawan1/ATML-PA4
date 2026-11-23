@@ -1,0 +1,33 @@
+\begin{table}
+\label{tab:task2b_inference_sweep}
+\begin{tabular}{rrrrllrrrrll}
+\toprule
+B & H & T & d\_head & implementation & mechanism & ms & ms\_std & peak\_alloc\_bytes & reps & status & unit \\
+\midrule
+4 & 4 & 256 & 32 & SDPA is\_causal & dense & 0.2081 & 0.02723 & 11141120 & 10 & ok & ms \\
+4 & 4 & 256 & 32 & SDPA + dense bool mask (T x T) & window & 0.2912 & 0.02128 & 2686976 & 10 & ok & ms \\
+4 & 4 & 256 & 32 & SDPA + dense bool mask (4 x T x T) & dilated & 0.2771 & 0.01852 & 3408896 & 10 & ok & ms \\
+4 & 4 & 256 & 32 & prefix-sum, materialises [B,H,T,32,32] & linear & 0.6588 & 0.0233 & 52953088 & 10 & ok & ms \\
+4 & 4 & 256 & 32 & dense bool mask + prefix-sum [B,H,T,16,32] & hybrid & 0.9614 & 0.007777 & 19464192 & 10 & ok & ms \\
+4 & 4 & 256 & 32 & dense scores + topk (materialises T x T) & topk & 0.6219 & 0.03044 & 12124160 & 10 & ok & ms \\
+4 & 4 & 1024 & 32 & SDPA is\_causal & dense & 0.4266 & 0.009697 & 10485760 & 10 & ok & ms \\
+4 & 4 & 1024 & 32 & SDPA + dense bool mask (T x T) & window & 0.527 & 0.006495 & 13632512 & 10 & ok & ms \\
+4 & 4 & 1024 & 32 & SDPA + dense bool mask (4 x T x T) & dilated & 0.5385 & 0.00984 & 29361152 & 10 & ok & ms \\
+4 & 4 & 1024 & 32 & prefix-sum, materialises [B,H,T,32,32] & linear & 1.552 & 0.0373 & 211812352 & 10 & ok & ms \\
+4 & 4 & 1024 & 32 & dense bool mask + prefix-sum [B,H,T,16,32] & hybrid & 1.909 & 0.01408 & 78643200 & 10 & ok & ms \\
+4 & 4 & 1024 & 32 & dense scores + topk (materialises T x T) & topk & 2.434 & 0.007786 & 162529280 & 10 & ok & ms \\
+4 & 4 & 4096 & 32 & SDPA is\_causal & dense & 2.416 & 0.05932 & 41943040 & 10 & ok & ms \\
+4 & 4 & 4096 & 32 & SDPA + dense bool mask (T x T) & window & 4.758 & 0.01561 & 117441536 & 10 & ok & ms \\
+4 & 4 & 4096 & 32 & SDPA + dense bool mask (4 x T x T) & dilated & 5.141 & 0.01896 & 369099776 & 10 & ok & ms \\
+4 & 4 & 4096 & 32 & prefix-sum, materialises [B,H,T,32,32] & linear & 4.689 & 0.01042 & 847249408 & 10 & ok & ms \\
+4 & 4 & 4096 & 32 & dense bool mask + prefix-sum [B,H,T,16,32] & hybrid & 8.435 & 0.004333 & 327155712 & 10 & ok & ms \\
+4 & 4 & 4096 & 32 & dense scores + topk (materialises T x T) & topk & 22.44 & 0.03094 & 2474639360 & 10 & ok & ms \\
+4 & 4 & 8192 & 32 & SDPA is\_causal & dense & 6.444 & 0.06639 & 83886080 & 10 & ok & ms \\
+4 & 4 & 8192 & 32 & SDPA + dense bool mask (T x T) & window & 14.75 & 0.02028 & 402654208 & 10 & ok & ms \\
+4 & 4 & 8192 & 32 & SDPA + dense bool mask (4 x T x T) & dilated & 15.69 & 0.03002 & 1409287168 & 10 & ok & ms \\
+4 & 4 & 8192 & 32 & prefix-sum, materialises [B,H,T,32,32] & linear & 10.74 & 0.01298 & 1694498816 & 10 & ok & ms \\
+4 & 4 & 8192 & 32 & dense bool mask + prefix-sum [B,H,T,16,32] & hybrid & 23.77 & 0.02783 & 687865856 & 10 & ok & ms \\
+4 & 4 & 8192 & 32 & dense scores + topk (materialises T x T) & topk & 84.62 & 0.0686 & 9814671360 & 10 & ok & ms \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,16 @@
+\begin{table}
+\caption{KV policies at the per-prompt INT4 channel-K/token-V byte budget.}
+\label{tab:task2c_kv_matched_budget}
+\begin{tabular}{lrrrrrrrrrlrrrrrrrr}
+\toprule
+method & n & exact\_match & acc\_given\_ref\_correct & code\_nll & first\_token\_KL & teacher\_forced\_KL & evidence\_fp16\_retained & packed\_KB & frac\_of\_fp16 & within\_budget & k\_rel\_mse & v\_rel\_mse & compress\_ms & suffix\_ms & decode\_ms & peak\_alloc\_MB & shared\_decode\_KB & live\_cache\_end\_KB \\
+\midrule
+FP16 full & 180 & 1 & 1 & 0.004979 & 0 & 0 & 1 & 1.098e+05 & 1 & NaN & NaN & NaN & 0.8948 & 38.77 & 156.7 & 3537 & 1083 & 1.109e+05 \\
+Sink+recent (FP16 evict) & 180 & 0.3333 & 0.3333 & 9.165 & 2.097 & 2.237 & 0.3333 & 3.147e+04 & 0.2869 & True & NaN & NaN & 13.08 & 39.39 & 157.9 & 3406 & 1084 & 3.255e+04 \\
+Question-aware (FP16 evict) & 180 & 1 & 1 & 0.004915 & 0.001721 & 0.006196 & 0.9647 & 3.146e+04 & 0.2868 & True & NaN & NaN & 16.17 & 38.95 & 157 & 3429 & 1083 & 3.254e+04 \\
+INT4 token-wise K/V & 180 & 0 & 0 & 21.87 & 5.616 & 7.258 & NaN & 3.147e+04 & 0.2869 & True & 0.02187 & 0.009765 & 27.25 & 46.2 & 345.4 & 3589 & 1251 & 3.193e+04 \\
+INT4 channel-K/token-V & 180 & 1 & 1 & 0.008306 & 0.00242 & 0.02149 & NaN & 3.147e+04 & 0.2869 & True & 4.57e-05 & 0.009765 & 27.2 & 46.1 & 157 & 3589 & 1083 & 3.185e+04 \\
+Hybrid FP16-select + INT2 & 180 & 0.9944 & 0.9944 & 0.02506 & 0.003981 & 0.01606 & 0.9519 & 3.047e+04 & 0.2783 & True & 0.001161 & 0.2463 & 53.53 & 39.12 & 156.7 & 3589 & 1083 & 3.155e+04 \\
+\bottomrule
+\end{tabular}
+\end{table}

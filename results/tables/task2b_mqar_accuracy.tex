@@ -1,0 +1,24 @@
+\begin{table}
+\caption{MQAR test accuracy (mean, sd over 3 seeds).}
+\label{tab:task2b_mqar_accuracy}
+\begin{tabular}{llrlrrrrrrrrrrrrrrrrrrrrrrrr}
+\toprule
+run & mechanism & train\_K & train\_regime & seeds & params & ms\_per\_step & peak\_train\_MB & near@K16 & near@K16\_sd & far@K16 & far@K16\_sd & mixed@K16 & mixed@K16\_sd & mixed@K4 & mixed@K8 & chance\_label & chance\_present & near@K4 & near@K4\_sd & far@K4 & far@K4\_sd & mixed@K4\_sd & near@K8 & near@K8\_sd & far@K8 & far@K8\_sd & mixed@K8\_sd \\
+\midrule
+dense\_K16\_mixed & dense & 16 & mixed & 3 & 437824 & 5.116 & 399.2 & 1 & 3.524e-05 & 1 & 0 & 1 & 0 & 0.9996 & 0.9998 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+dense\_K16\_near & dense & 16 & near & 3 & 437824 & 5.107 & 399.2 & 1 & 3.524e-05 & 0.9982 & 0.001361 & 0.999 & 0.0008309 & 0.9992 & 0.9993 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+dense\_K4\_mixed & dense & 4 & mixed & 3 & 437824 & 5.102 & 399.1 & NaN & NaN & NaN & NaN & 0.3343 & NaN & 1 & 0.6539 & 0.01562 & 0.25 & 1 & 0 & 1 & 0 & 0 & NaN & NaN & NaN & NaN & NaN \\
+dense\_K8\_mixed & dense & 8 & mixed & 3 & 437824 & 5.141 & 399.2 & NaN & NaN & NaN & NaN & 0.523 & NaN & 0.9999 & 1 & 0.01562 & 0.125 & NaN & NaN & NaN & NaN & NaN & 1 & 0 & 1 & 0 & 0 \\
+dilated\_K16\_mixed & dilated & 16 & mixed & 3 & 437824 & 5.285 & 399.8 & 0.066 & 0.003299 & 0.06396 & 0.001279 & 0.06346 & 0.0001865 & 0.2021 & 0.1259 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+dilated\_K4\_mixed & dilated & 4 & mixed & 3 & 437824 & 5.198 & 399.7 & NaN & NaN & NaN & NaN & 0.08435 & NaN & 0.3516 & 0.1684 & 0.01562 & 0.25 & 0.3652 & 0.06713 & 0.3532 & 0.04555 & 0.05328 & NaN & NaN & NaN & NaN & NaN \\
+hybrid\_K16\_mixed & hybrid & 16 & mixed & 3 & 439880 & 10.77 & 1339 & 0.2539 & 0.2342 & 0.2575 & 0.236 & 0.2557 & 0.2319 & 0.4278 & 0.3114 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+linear\_K16\_mixed & linear & 16 & mixed & 3 & 437824 & 8.95 & 3486 & 0.5373 & 0.4246 & 0.5424 & 0.4231 & 0.5403 & 0.4235 & 0.6779 & 0.6151 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+linear\_K4\_mixed & linear & 4 & mixed & 3 & 437824 & 9.374 & 3486 & NaN & NaN & NaN & NaN & 0.2822 & NaN & 0.9914 & 0.5693 & 0.01562 & 0.25 & 0.9918 & 0.007487 & 0.991 & 0.005515 & 0.005902 & NaN & NaN & NaN & NaN & NaN \\
+linear\_K8\_mixed & linear & 8 & mixed & 3 & 437824 & 8.974 & 3486 & NaN & NaN & NaN & NaN & 0.432 & NaN & 0.8761 & 0.8231 & 0.01562 & 0.125 & NaN & NaN & NaN & NaN & NaN & 0.8256 & 0.2986 & 0.8243 & 0.3015 & 0.3036 \\
+window\_K16\_mixed & window & 16 & mixed & 3 & 437824 & 5.257 & 399.4 & 0.07043 & 0.001008 & 0.01322 & 0.0008287 & 0.04234 & 0.001629 & 0.1285 & 0.07389 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+window\_K16\_near & window & 16 & near & 3 & 437824 & 5.255 & 399.4 & 1 & 3.524e-05 & 0.01538 & 0.0004608 & 0.2243 & 0.0003072 & 0.2581 & 0.2431 & 0.01562 & 0.0625 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN \\
+window\_K4\_near & window & 4 & near & 3 & 437824 & 5.256 & 399.3 & NaN & NaN & NaN & NaN & 0.07503 & NaN & 0.2598 & 0.1608 & 0.01562 & 0.25 & 1 & 0 & 0.01685 & 0.0004883 & 0.00293 & NaN & NaN & NaN & NaN & NaN \\
+window\_K8\_near & window & 8 & near & 3 & 437824 & 5.258 & 399.3 & NaN & NaN & NaN & NaN & 0.1137 & NaN & 0.2576 & 0.2433 & 0.01562 & 0.125 & NaN & NaN & NaN & NaN & NaN & 1 & 0 & 0.01497 & 0.001317 & 0.001372 \\
+\bottomrule
+\end{tabular}
+\end{table}

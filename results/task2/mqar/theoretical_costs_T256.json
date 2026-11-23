@@ -1,0 +1,45 @@
+{
+  "dense": {
+    "n_params": 437824,
+    "note": "KV cache grows with T",
+    "pairs_per_head": 32896.0,
+    "state_floats_per_layer": 65536.0
+  },
+  "dilated": {
+    "n_params": 437824,
+    "note": "dilated heads need the last 253 positions buffered (64 used)",
+    "pairs_per_head": 11344.0,
+    "pairs_per_head_dilated": 8320.0,
+    "pairs_per_head_local": 14368.0,
+    "state_floats_per_layer": 40576.0
+  },
+  "hybrid": {
+    "comparator_linear_state_bytes_fp32": 16896,
+    "linear_state_floats": 2112,
+    "local_buffer_floats": 2048,
+    "n_params": 439880,
+    "pairs_per_head": 2276.0,
+    "state_bytes_per_layer_fp32": 16640,
+    "state_floats_per_layer": 4160.0
+  },
+  "linear": {
+    "n_params": 437824,
+    "note": "state independent of T",
+    "pairs_per_head": 256.0,
+    "state_bytes_per_layer_fp32": 16896,
+    "state_floats_per_layer": 4224.0
+  },
+  "topk": {
+    "n_params": 437824,
+    "note": "scores all pairs, keeps 64",
+    "pairs_per_head": 32896.0,
+    "pairs_selected_per_head": 14368.0,
+    "state_floats_per_layer": 65536.0
+  },
+  "window": {
+    "max_receptive_field_2layers": 126,
+    "n_params": 437824,
+    "pairs_per_head": 14368.0,
+    "state_floats_per_layer": 16384.0
+  }
+}

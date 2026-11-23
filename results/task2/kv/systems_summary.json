@@ -1,0 +1,8 @@
+{
+  "all_finite": true,
+  "c1_generate_match_rate": 1.0,
+  "c1_split_vs_full_max": 0.10546875,
+  "prefill_ms": 92.7976835666843,
+  "prefill_peak_MB": 4460.922501688889,
+  "scoring_ms": 59.03371387777901
+}

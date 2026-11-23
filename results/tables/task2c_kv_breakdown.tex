@@ -1,0 +1,17 @@
+\begin{table}
+\label{tab:task2c_kv_breakdown}
+\begin{tabular}{llrrrrrrrr}
+\toprule
+factor & level & n & L\_ctx\_mean & fp16 & sink\_recent & qa\_evict & int4\_token & int4\_kivi & hybrid \\
+\midrule
+target\_tokens & 2048 & 90 & 2628 & 1 & 0.3333 & 1 & 0 & 1 & 0.9889 \\
+target\_tokens & 4096 & 90 & 5217 & 1 & 0.3333 & 1 & 0 & 1 & 1 \\
+position & end & 60 & 3922 & 1 & 1 & 1 & 0 & 1 & 1 \\
+position & middle & 60 & 3923 & 1 & 0 & 1 & 0 & 1 & 0.9833 \\
+position & start & 60 & 3922 & 1 & 0 & 1 & 0 & 1 & 1 \\
+distractors & 0 & 60 & 3933 & 1 & 0.3333 & 1 & 0 & 1 & 1 \\
+distractors & 2 & 60 & 3926 & 1 & 0.3333 & 1 & 0 & 1 & 1 \\
+distractors & 8 & 60 & 3907 & 1 & 0.3333 & 1 & 0 & 1 & 0.9833 \\
+\bottomrule
+\end{tabular}
+\end{table}

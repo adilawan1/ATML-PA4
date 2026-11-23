@@ -1,0 +1,7 @@
+mechanism,n_params,pairs_per_head,state_floats_per_layer,pairs_per_head_dilated,pairs_per_head_local,comparator_linear_state_bytes_fp32,linear_state_floats,local_buffer_floats,state_bytes_per_layer_fp32,pairs_selected_per_head,max_receptive_field_2layers
+dense,437824,32896.0,65536.0,,,,,,,,
+dilated,437824,11344.0,40576.0,8320.0,14368.0,,,,,,
+hybrid,439880,2276.0,4160.0,,,16896.0,2112.0,2048.0,16640.0,,
+linear,437824,256.0,4224.0,,,,,,16896.0,,
+topk,437824,32896.0,65536.0,,,,,,,14368.0,
+window,437824,14368.0,16384.0,,,,,,,,126.0

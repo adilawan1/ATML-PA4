@@ -1,0 +1,28 @@
+\begin{table}
+\caption{Exact match per prompt cell (10 prompts each; descriptive only).}
+\label{tab:task2c_kv_cells}
+\begin{tabular}{rlrrlrrrrrr}
+\toprule
+context & position & distractors & n & L\_ctx\_range & fp16 & sink\_recent & qa\_evict & int4\_token & int4\_kivi & hybrid \\
+\midrule
+2048 & end & 0 & 10 & 2634-2644 & 1 & 1 & 1 & 0 & 1 & 1 \\
+2048 & end & 2 & 10 & 2626-2638 & 1 & 1 & 1 & 0 & 1 & 1 \\
+2048 & end & 8 & 10 & 2607-2620 & 1 & 1 & 1 & 0 & 1 & 1 \\
+2048 & middle & 0 & 10 & 2633-2645 & 1 & 0 & 1 & 0 & 1 & 1 \\
+2048 & middle & 2 & 10 & 2624-2636 & 1 & 0 & 1 & 0 & 1 & 1 \\
+2048 & middle & 8 & 10 & 2605-2620 & 1 & 0 & 1 & 0 & 1 & 0.9 \\
+2048 & start & 0 & 10 & 2633-2649 & 1 & 0 & 1 & 0 & 1 & 1 \\
+2048 & start & 2 & 10 & 2625-2639 & 1 & 0 & 1 & 0 & 1 & 1 \\
+2048 & start & 8 & 10 & 2607-2617 & 1 & 0 & 1 & 0 & 1 & 1 \\
+4096 & end & 0 & 10 & 5219-5234 & 1 & 1 & 1 & 0 & 1 & 1 \\
+4096 & end & 2 & 10 & 5216-5238 & 1 & 1 & 1 & 0 & 1 & 1 \\
+4096 & end & 8 & 10 & 5193-5213 & 1 & 1 & 1 & 0 & 1 & 1 \\
+4096 & middle & 0 & 10 & 5212-5243 & 1 & 0 & 1 & 0 & 1 & 1 \\
+4096 & middle & 2 & 10 & 5216-5234 & 1 & 0 & 1 & 0 & 1 & 1 \\
+4096 & middle & 8 & 10 & 5195-5218 & 1 & 0 & 1 & 0 & 1 & 1 \\
+4096 & start & 0 & 10 & 5217-5240 & 1 & 0 & 1 & 0 & 1 & 1 \\
+4096 & start & 2 & 10 & 5214-5230 & 1 & 0 & 1 & 0 & 1 & 1 \\
+4096 & start & 8 & 10 & 5197-5209 & 1 & 0 & 1 & 0 & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,24 @@
+\begin{table}
+\caption{Supported / unsupported / OOM by implementation.}
+\label{tab:task2a_backend_status}
+\begin{tabular}{llllllll}
+\toprule
+impl & dtype & 256 & 512 & 1024 & 2048 & 4096 & 8192 \\
+\midrule
+dense & float16 & ok & ok & ok & ok & ok & ok \\
+dense & float32 & ok & ok & ok & ok & ok & ok \\
+sdpa\_cudnn\_attention & float16 & ok & ok & ok & ok & ok & ok \\
+sdpa\_cudnn\_attention & float32 & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. \\
+sdpa\_default & float16 & ok & ok & ok & ok & ok & ok \\
+sdpa\_default & float32 & ok & ok & ok & ok & ok & ok \\
+sdpa\_efficient\_attention & float16 & ok & ok & ok & ok & ok & ok \\
+sdpa\_efficient\_attention & float32 & ok & ok & ok & ok & ok & ok \\
+sdpa\_flash\_attention & float16 & ok & ok & ok & ok & ok & ok \\
+sdpa\_flash\_attention & float32 & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. & unsupported: No available kernel. Aborting execution. \\
+sdpa\_math & float16 & ok & ok & ok & ok & ok & ok \\
+sdpa\_math & float32 & ok & ok & ok & ok & ok & ok \\
+tiled & float16 & ok & ok & ok & ok & ok & ok \\
+tiled & float32 & ok & ok & ok & ok & ok & ok \\
+\bottomrule
+\end{tabular}
+\end{table}

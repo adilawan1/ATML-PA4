@@ -1,0 +1,21 @@
+{
+  "torch.float16": {
+    "backend": "FLASH_ATTENTION",
+    "kernels": [
+      "aten::_flash_attention_forward",
+      "aten::_scaled_dot_product_flash_attention",
+      "aten::scaled_dot_product_attention",
+      "void pytorch_flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<64, 64, 256, 4, false, false, cutlass::half_t, Flash_kernel_traits<64, 64, 256, 4, cutlass::half_t> >, 8, 2, true>(pytorch_flash::Flash_fwd_params)",
+      "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<64, 64, 256, 4, false, false, cutlass::half_t, Flash_kernel_traits<64, 64, 256, 4, cutlass::half_t> >, true, false, false, true, true, false, true, false>(pytorch_flash::Flash_fwd_params)"
+    ]
+  },
+  "torch.float32": {
+    "backend": "EFFICIENT_ATTENTION",
+    "kernels": [
+      "aten::_efficient_attention_forward",
+      "aten::_scaled_dot_product_efficient_attention",
+      "aten::scaled_dot_product_attention",
+      "fmha_cutlassF_f32_aligned_64x64_rf_sm80(PyTorchMemEffAttention::AttentionKernel<float, cutlass::arch::Sm80, true, 64, 64, 64, true, true>::Params)"
+    ]
+  }
+}

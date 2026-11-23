@@ -1,0 +1,89 @@
+{
+  "all_masked_row": {
+    "dense_finite": true,
+    "dense_row_output_abs_max": 0.0,
+    "note": "dense defines a fully-masked row as 0; SDPA behaviour recorded",
+    "sdpa_row_finite": true
+  },
+  "dense": {
+    "causality_future_perturbation_max_change": 0.0,
+    "extreme_scores": {
+      "torch.float16": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0571058335705118,
+        "multiplier": 30.0
+      },
+      "torch.float32": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.00036742935455980064,
+        "multiplier": 1000.0
+      }
+    }
+  },
+  "sdpa_cudnn_attention": {
+    "status": "No available kernel. Aborting execution."
+  },
+  "sdpa_default": {
+    "causality_future_perturbation_max_change": 0.0,
+    "extreme_scores": {
+      "torch.float16": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0012595759298785758,
+        "multiplier": 30.0
+      },
+      "torch.float32": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0005644703416660679,
+        "multiplier": 1000.0
+      }
+    }
+  },
+  "sdpa_efficient_attention": {
+    "causality_future_perturbation_max_change": 0.0,
+    "extreme_scores": {
+      "torch.float16": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0012595759298785758,
+        "multiplier": 30.0
+      },
+      "torch.float32": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0005644703416660679,
+        "multiplier": 1000.0
+      }
+    }
+  },
+  "sdpa_flash_attention": {
+    "status": "No available kernel. Aborting execution."
+  },
+  "sdpa_math": {
+    "causality_future_perturbation_max_change": 0.0,
+    "extreme_scores": {
+      "torch.float16": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0009759323061135916,
+        "multiplier": 30.0
+      },
+      "torch.float32": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.00036742935455980064,
+        "multiplier": 1000.0
+      }
+    }
+  },
+  "tiled": {
+    "causality_future_perturbation_max_change": 0.0,
+    "extreme_scores": {
+      "torch.float16": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.0575941148205118,
+        "multiplier": 30.0
+      },
+      "torch.float32": {
+        "finite": true,
+        "max_abs_err_vs_fp64": 0.00036742935455980064,
+        "multiplier": 1000.0
+      }
+    }
+  }
+}
