@@ -104,6 +104,15 @@ def part_b():
         rows.append(row)
     df = pd.DataFrame(rows)
     write_table(df, "task2b_mqar_accuracy", caption="MQAR test accuracy (mean, sd over 3 seeds).")
+    # per-seed results: exposes bimodal outcomes (some seeds solve the task, others stay near chance)
+    ps = []
+    for n in names:
+        for r in by[n]:
+            K = r["train_K"]
+            ps.append(dict(run=n, seed=r["seed"], **{f"{g}@K{K}": r["test"]["cells"][f"K{K}_{g}"]["acc"] for g in ("near", "far", "mixed")},
+                           final_train_loss=r["curve"][-1]["loss"], final_dev_acc=r["dev_curve"][-1]["acc"],
+                           dev_acc_at_500=r["dev_curve"][0]["acc"]))
+    write_table(pd.DataFrame(ps), "task2b_mqar_per_seed", caption="MQAR per-seed test accuracy at the trained K.")
     # distance x load heatmaps
     bins = ["[0,32)", "[32,64)", "[64,128)", "[128,256)"]
     n_cols = 4
