@@ -72,20 +72,27 @@ def part_b():
         by[r["name"]].append(r)
     names = list(by)
     cm = color_map(names)
-    # learning curves
-    fig, axes = plt.subplots(1, 2, figsize=(8, 3))
-    for n in names:
-        rs = by[n]
-        steps = [c["step"] for c in rs[0]["curve"]]
-        loss = np.array([[c["loss"] for c in r["curve"]] for r in rs])
-        axes[0].plot(steps, loss.mean(0), color=cm[n], label=n, lw=1.2)
-        st = [c["step"] for c in rs[0]["dev_curve"]]
-        acc = np.array([[c["acc"] for c in r["dev_curve"]] for r in rs])
-        axes[1].plot(st, acc.mean(0), marker="o", color=cm[n], lw=1.2)
-        axes[1].fill_between(st, acc.min(0), acc.max(0), color=cm[n], alpha=0.12, lw=0)
-    axes[0].set_xlabel("update"); axes[0].set_ylabel("train CE (mean of 3 seeds)"); axes[0].set_yscale("log")
-    axes[1].set_xlabel("update"); axes[1].set_ylabel("dev accuracy (all cells), min-max over seeds")
-    axes[0].legend(fontsize=5, ncol=2)
+    # learning curves: small multiples, one column per mechanism family (<= 4 runs per panel, colours not cycled)
+    fams = [("dense", ["dense"]), ("sliding window", ["window"]), ("linear", ["linear"]), ("dilated / hybrid (B3)", ["dilated", "hybrid"])]
+    fig, axes = plt.subplots(2, 4, figsize=(10, 4.6), sharex=True)
+    for col, (title, mechs) in enumerate(fams):
+        fam_runs = [n for n in names if by[n][0]["mechanism"] in mechs]
+        cmf = color_map(fam_runs)
+        for n in fam_runs:
+            rs = by[n]
+            steps = [c["step"] for c in rs[0]["curve"]]
+            loss = np.array([[c["loss"] for c in r["curve"]] for r in rs])
+            axes[0, col].plot(steps, loss.mean(0), color=cmf[n], lw=1.2, label=n if len(mechs) > 1 else n.split("_", 1)[1])
+            st = [c["step"] for c in rs[0]["dev_curve"]]
+            acc = np.array([[c["acc"] for c in r["dev_curve"]] for r in rs])
+            axes[1, col].plot(st, acc.mean(0), marker="o", color=cmf[n], lw=1.2)
+            axes[1, col].fill_between(st, acc.min(0), acc.max(0), color=cmf[n], alpha=0.15, lw=0)
+        axes[0, col].set_title(title); axes[0, col].set_yscale("log")
+        axes[0, col].legend(fontsize=6, title="train K / regime", title_fontsize=6)
+        axes[1, col].set_ylim(0, 1.02); axes[1, col].set_xlabel("update")
+        axes[1, col].axhline(1 / 64, color="#52514e", lw=0.8, ls=":")
+    axes[0, 0].set_ylabel("train CE (mean of 3 seeds)")
+    axes[1, 0].set_ylabel("dev accuracy, all K x regimes\n(mean; band = min-max over seeds)")
     fig.tight_layout(); save(fig, "task2", "mqar_learning_curves")
     # accuracy table: each run on near/far/mixed at its trained K and on all K
     rows = []
@@ -131,6 +138,8 @@ def part_b():
         ax.set_title(f"{n} (trained K={rs[0]['train_K']})", fontsize=6); ax.grid(False)
     for ax in np.ravel(axes)[len(names):]:
         ax.axis("off")
+    fig.supxlabel("source-to-query distance bin (tokens)", fontsize=8)
+    fig.supylabel("number of key-value pairs at test (K)", fontsize=8)
     fig.tight_layout(); save(fig, "task2", "mqar_distance_load_heatmaps")
     # train-vs-test mask controls
     ctrl = []
