@@ -1,8 +1,10 @@
 # ATML PA4 — Compression, Efficient Attention & KV Memory, Speculative Decoding
 
 Code, configurations and machine-readable results for EE-5102/CS-6304 Programming Assignment 4 (Fall 2026).
-All experiments are written for **Google Colab (Pro) GPUs** (A100 or L4 recommended; T4 works but is slower, and the
-largest dense-attention shapes may OOM, which is then recorded as a result).
+All experiments are written for **Google Colab (Pro) GPUs**. A100/L4 are fastest; a **T4 (16 GB) runs everything**
+in FP16 at roughly 3-4x the time. On T4, FlashAttention SDPA is unsupported (recorded as such) and the largest dense
+FP32 attention shapes may OOM (recorded as results, as the handout allows). The peak-memory step is Task 1's Fisher
+pass (about 12 GB).
 
 | Task | What is implemented | Entry point |
 |---|---|---|
