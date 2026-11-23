@@ -1,0 +1,39 @@
+{
+  "n_eligible_matrices": 196,
+  "n_eligible_weights": 1310195712,
+  "n_other_unique": 233518592,
+  "n_total_naive": 1777088000,
+  "n_total_unique": 1543714304,
+  "shapes": {
+    "layers.0.down_proj": [
+      1536,
+      8960
+    ],
+    "layers.0.gate_proj": [
+      8960,
+      1536
+    ],
+    "layers.0.k_proj": [
+      256,
+      1536
+    ],
+    "layers.0.o_proj": [
+      1536,
+      1536
+    ],
+    "layers.0.q_proj": [
+      1536,
+      1536
+    ],
+    "layers.0.up_proj": [
+      8960,
+      1536
+    ],
+    "layers.0.v_proj": [
+      256,
+      1536
+    ]
+  },
+  "tied_embeddings": true,
+  "tied_param_counted_once": true
+}

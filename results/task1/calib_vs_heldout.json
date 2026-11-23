@@ -1,0 +1,76 @@
+{
+  "selection": {
+    "p3_s50": [
+      {
+        "calib_out_err_rel_mean": 0.022870097357574868,
+        "candidate": "p3_s50_fisher",
+        "dev_mean_nll": 2.797566953237276,
+        "dev_ppl": 16.404684810879083
+      },
+      {
+        "calib_out_err_rel_mean": 0.027600982363792895,
+        "candidate": "p3_s50_owl_l0.04",
+        "dev_mean_nll": 2.823359360666891,
+        "dev_ppl": 16.833304936427677
+      },
+      {
+        "calib_out_err_rel_mean": 0.028288835848713324,
+        "candidate": "p3_s50_owl_l0.08",
+        "dev_mean_nll": 2.8214707645184838,
+        "dev_ppl": 16.801543623147246
+      }
+    ],
+    "p3_s75": [
+      {
+        "calib_out_err_rel_mean": 0.08696165941325577,
+        "candidate": "p3_s75_fisher",
+        "dev_mean_nll": 6.5305687294081,
+        "dev_ppl": 685.7881284790622
+      },
+      {
+        "calib_out_err_rel_mean": 0.10971081871088612,
+        "candidate": "p3_s75_owl_l0.04",
+        "dev_mean_nll": 6.37906249581951,
+        "dev_ppl": 589.3749071332425
+      },
+      {
+        "calib_out_err_rel_mean": 0.10854455445119014,
+        "candidate": "p3_s75_owl_l0.08",
+        "dev_mean_nll": 5.603372801539949,
+        "dev_ppl": 271.3400419173626
+      }
+    ],
+    "q3_b3": [
+      {
+        "calib_out_err_rel_mean": 0.027117861922345214,
+        "candidate": "q3_b3_fisher",
+        "dev_mean_nll": 2.7687409581970095,
+        "dev_ppl": 15.93855406585402
+      },
+      {
+        "calib_out_err_rel_mean": 0.060113826163170854,
+        "candidate": "q3_b3_out_err",
+        "dev_mean_nll": 3.768459521627706,
+        "dev_ppl": 43.313290229806576
+      }
+    ],
+    "q3_b4": [
+      {
+        "calib_out_err_rel_mean": 0.005541745407897019,
+        "candidate": "q3_b4_fisher",
+        "dev_mean_nll": 2.5684750588672736,
+        "dev_ppl": 13.045915012023324
+      },
+      {
+        "calib_out_err_rel_mean": 0.011899644191838041,
+        "candidate": "q3_b4_out_err",
+        "dev_mean_nll": 2.611614652809098,
+        "dev_ppl": 13.621026334102632
+      }
+    ]
+  },
+  "spearman_calib_err_vs_log_c4_ppl": 0.985294117647059,
+  "spearman_calib_err_vs_log_wiki_ppl": 0.9926470588235295,
+  "spearman_dev_nll_vs_hs_acc_norm": -0.9312890445928678,
+  "spearman_dev_nll_vs_log_wiki_ppl": 0.9926470588235295
+}

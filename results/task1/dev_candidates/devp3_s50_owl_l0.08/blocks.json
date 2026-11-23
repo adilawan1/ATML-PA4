@@ -1,0 +1,86 @@
+[
+  {
+    "block_output_rel_err": 0.025613879634718645
+  },
+  {
+    "block_output_rel_err": 0.0039025686393509736
+  },
+  {
+    "block_output_rel_err": 0.0023572470346268307
+  },
+  {
+    "block_output_rel_err": 0.00014584136701374406
+  },
+  {
+    "block_output_rel_err": 0.0002526806093800143
+  },
+  {
+    "block_output_rel_err": 0.0001743964708002625
+  },
+  {
+    "block_output_rel_err": 0.00028534246031092274
+  },
+  {
+    "block_output_rel_err": 0.00029782599880979934
+  },
+  {
+    "block_output_rel_err": 0.00029849754137382164
+  },
+  {
+    "block_output_rel_err": 0.00028796321487055193
+  },
+  {
+    "block_output_rel_err": 0.0002744728990168635
+  },
+  {
+    "block_output_rel_err": 0.00024623543844435876
+  },
+  {
+    "block_output_rel_err": 0.00019504544902617665
+  },
+  {
+    "block_output_rel_err": 0.0002212286977709757
+  },
+  {
+    "block_output_rel_err": 0.00016371752222655819
+  },
+  {
+    "block_output_rel_err": 0.00020516956883848548
+  },
+  {
+    "block_output_rel_err": 0.00018667172170222732
+  },
+  {
+    "block_output_rel_err": 0.00022183279394098597
+  },
+  {
+    "block_output_rel_err": 0.0002720848800528078
+  },
+  {
+    "block_output_rel_err": 0.0003562735414817109
+  },
+  {
+    "block_output_rel_err": 0.00047747958755799146
+  },
+  {
+    "block_output_rel_err": 0.0006205805227373764
+  },
+  {
+    "block_output_rel_err": 0.0006908996649924277
+  },
+  {
+    "block_output_rel_err": 0.0008670672253783685
+  },
+  {
+    "block_output_rel_err": 0.0012160628163953196
+  },
+  {
+    "block_output_rel_err": 0.001297187484036376
+  },
+  {
+    "block_output_rel_err": 0.016015813712337304
+  },
+  {
+    "block_output_rel_err": 0.005469834342507044
+  }
+]

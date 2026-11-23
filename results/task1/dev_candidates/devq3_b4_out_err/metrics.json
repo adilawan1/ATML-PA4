@@ -1,0 +1,284 @@
+{
+  "achieved_nonzero_fraction": 0.8099500313431036,
+  "achieved_sparsity": 0.19004996865689638,
+  "calib_out_err_rel_mean": 0.011899644191838041,
+  "calib_out_err_rel_median": 0.00684507569662942,
+  "compression": {
+    "compression_seconds_total": 131.135217259,
+    "eligible_packed_bytes": 685891584,
+    "extra_bytes": {
+      "o_proj_fp16_scales": 86016
+    },
+    "fold_checks": [
+      {
+        "layer": 0,
+        "max_abs_err": 0.0078125,
+        "rel_err": 0.0008881935500539839
+      },
+      {
+        "layer": 1,
+        "max_abs_err": 2.0,
+        "rel_err": 0.00037486222572624683
+      },
+      {
+        "layer": 2,
+        "max_abs_err": 4.0,
+        "rel_err": 0.0003164632071275264
+      },
+      {
+        "layer": 3,
+        "max_abs_err": 1.0,
+        "rel_err": 6.183511868584901e-05
+      },
+      {
+        "layer": 4,
+        "max_abs_err": 0.25,
+        "rel_err": 5.262290142127313e-05
+      },
+      {
+        "layer": 5,
+        "max_abs_err": 0.25,
+        "rel_err": 5.202817192184739e-05
+      },
+      {
+        "layer": 6,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.056999725638889e-05
+      },
+      {
+        "layer": 7,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.385113036027178e-05
+      },
+      {
+        "layer": 8,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.109472476760857e-05
+      },
+      {
+        "layer": 9,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.5039545259205624e-05
+      },
+      {
+        "layer": 10,
+        "max_abs_err": 0.0625,
+        "rel_err": 4.977660864824429e-05
+      },
+      {
+        "layer": 11,
+        "max_abs_err": 0.046875,
+        "rel_err": 5.243806299404241e-05
+      },
+      {
+        "layer": 12,
+        "max_abs_err": 0.125,
+        "rel_err": 4.8225450882455334e-05
+      },
+      {
+        "layer": 13,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.226462963037193e-05
+      },
+      {
+        "layer": 14,
+        "max_abs_err": 0.0625,
+        "rel_err": 4.6116641897242516e-05
+      },
+      {
+        "layer": 15,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.061720730736852e-05
+      },
+      {
+        "layer": 16,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.023270205128938e-05
+      },
+      {
+        "layer": 17,
+        "max_abs_err": 0.25,
+        "rel_err": 5.632904139929451e-05
+      },
+      {
+        "layer": 18,
+        "max_abs_err": 0.03125,
+        "rel_err": 7.236327655846253e-05
+      },
+      {
+        "layer": 19,
+        "max_abs_err": 0.125,
+        "rel_err": 7.77251334511675e-05
+      },
+      {
+        "layer": 20,
+        "max_abs_err": 0.125,
+        "rel_err": 8.220798918046057e-05
+      },
+      {
+        "layer": 21,
+        "max_abs_err": 0.125,
+        "rel_err": 9.616318857297301e-05
+      },
+      {
+        "layer": 22,
+        "max_abs_err": 0.0625,
+        "rel_err": 0.00011120726412627846
+      },
+      {
+        "layer": 23,
+        "max_abs_err": 0.5,
+        "rel_err": 0.00012298423098400235
+      },
+      {
+        "layer": 24,
+        "max_abs_err": 0.5,
+        "rel_err": 0.00014532280329149216
+      },
+      {
+        "layer": 25,
+        "max_abs_err": 0.125,
+        "rel_err": 0.0001581572141731158
+      },
+      {
+        "layer": 26,
+        "max_abs_err": 4.0,
+        "rel_err": 0.0009258870268240571
+      },
+      {
+        "layer": 27,
+        "max_abs_err": 0.3125,
+        "rel_err": 0.0004747503262478858
+      }
+    ],
+    "grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "method": "awq",
+    "packing_roundtrip_verified_units": 2,
+    "timing": {
+      "capture": 0.09954065599958994,
+      "compress": 116.84298740299755,
+      "propagate": 5.2035292520008625,
+      "stats": 8.988776640999276
+    }
+  },
+  "condition": "devq3_b4_out_err",
+  "dev": {
+    "N": 16352,
+    "mean_nll": 2.611614652809098,
+    "n_windows": 32,
+    "per_seq": [
+      1252.076904296875,
+      1076.656982421875,
+      1187.34423828125,
+      1271.2296142578125,
+      1405.510986328125,
+      1695.0791015625,
+      1235.69189453125,
+      1501.130615234375,
+      1293.126220703125,
+      1206.2406005859375,
+      1557.3216552734375,
+      1879.564453125,
+      1551.90625,
+      1228.1661376953125,
+      1165.645263671875,
+      1504.31982421875,
+      1589.893310546875,
+      1048.54345703125,
+      1184.632080078125,
+      1403.7003173828125,
+      1112.18310546875,
+      1132.9246826171875,
+      1552.673583984375,
+      1482.734619140625,
+      646.93505859375,
+      1553.092529296875,
+      1253.5931396484375,
+      1172.1041259765625,
+      1591.9073486328125,
+      1351.7685546875,
+      1211.1636962890625,
+      1406.262451171875
+    ],
+    "ppl": 13.621026334102632
+  },
+  "env": {
+    "argv": [
+      "scripts/task1.py",
+      "select"
+    ],
+    "attn_implementation": "sdpa",
+    "cuda_available": true,
+    "cuda_capability": [
+      8,
+      9
+    ],
+    "cuda_device": "NVIDIA L4",
+    "cuda_version": "13.0",
+    "cudnn_version": 92800,
+    "data_repo_commit": "6a0a9ec9da7ef3d313ee3036cfec493886723644",
+    "datasets": "4.8.5",
+    "git_commit": "e85961c9679c22939d7b2f75454b65190f6ed1bf",
+    "gpu_total_memory_bytes": 23659151360,
+    "huggingface_hub": "0.36.2",
+    "model": "Qwen/Qwen2.5-1.5B",
+    "model_revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "numpy": "2.4.6",
+    "peft": "0.17.1",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "precision": "float16",
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "scipy": "1.16.3",
+    "sdpa_backends_enabled": {
+      "cudnn": true,
+      "flash": true,
+      "math": true,
+      "mem_efficient": true
+    },
+    "source_revisions": {
+      "repos": {
+        "c4": "allenai/c4",
+        "gsm8k": "openai/gsm8k",
+        "hellaswag": "Rowan/hellaswag",
+        "model_base": "Qwen/Qwen2.5-1.5B",
+        "model_draft": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_target": "Qwen/Qwen2.5-1.5B-Instruct",
+        "wikitext": "Salesforce/wikitext"
+      },
+      "revisions": {
+        "c4": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+        "gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+        "hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+        "model_base": "8faed761d45a263340a0528343f099c05c9a4323",
+        "model_draft": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "model_target": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "wikitext": "b08601e04326c79dfdd32d625aee71d232d685c3"
+      }
+    },
+    "tf32_matmul": true,
+    "time": "2026-11-23 18:11:13 UTC",
+    "tokenizer": "Qwen/Qwen2.5-1.5B@8faed761d45a263340a0528343f099c05c9a4323",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.1"
+  },
+  "n_eligible": 1310195712,
+  "params": {
+    "allocation": "out_err_knapsack",
+    "budget": "Q2 uniform INT4",
+    "group": 128,
+    "method": "awq"
+  },
+  "zeros": 249002654
+}

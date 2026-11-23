@@ -1,0 +1,921 @@
+{
+  "draft_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "env": {
+    "argv": [
+      "scripts/task3.py",
+      "check"
+    ],
+    "attn_implementation": "sdpa",
+    "cuda_available": true,
+    "cuda_capability": [
+      8,
+      9
+    ],
+    "cuda_device": "NVIDIA L4",
+    "cuda_version": "13.0",
+    "cudnn_version": 92800,
+    "data_repo_commit": "6a0a9ec9da7ef3d313ee3036cfec493886723644",
+    "datasets": "4.8.5",
+    "git_commit": "e85961c9679c22939d7b2f75454b65190f6ed1bf",
+    "gpu_total_memory_bytes": 23659151360,
+    "huggingface_hub": "0.36.2",
+    "numpy": "2.4.6",
+    "peft": "0.17.1",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "precision": "float16",
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "scipy": "1.16.3",
+    "sdpa_backends_enabled": {
+      "cudnn": true,
+      "flash": true,
+      "math": true,
+      "mem_efficient": true
+    },
+    "source_revisions": {
+      "repos": {
+        "c4": "allenai/c4",
+        "gsm8k": "openai/gsm8k",
+        "hellaswag": "Rowan/hellaswag",
+        "model_base": "Qwen/Qwen2.5-1.5B",
+        "model_draft": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_target": "Qwen/Qwen2.5-1.5B-Instruct",
+        "wikitext": "Salesforce/wikitext"
+      },
+      "revisions": {
+        "c4": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+        "gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+        "hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+        "model_base": "8faed761d45a263340a0528343f099c05c9a4323",
+        "model_draft": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "model_target": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "wikitext": "b08601e04326c79dfdd32d625aee71d232d685c3"
+      }
+    },
+    "tf32_matmul": false,
+    "time": "2026-11-23 17:11:02 UTC",
+    "tokenizer_draft": "Qwen/Qwen2.5-0.5B-Instruct@7ae557604adf67be50417f59c2c2f167def9a775",
+    "tokenizer_target": "Qwen/Qwen2.5-1.5B-Instruct@989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.1"
+  },
+  "markov_eos_gamma3": {
+    "chi2": 12.331457252661263,
+    "dof": 14,
+    "eos_rate_empirical": 0.50141,
+    "eos_rate_exact": 0.503,
+    "gamma": 3,
+    "max_len": 3,
+    "min_expected": 1125.0,
+    "n": 100000,
+    "p_value": 0.5797029498972801,
+    "pass_exact": true,
+    "table": [
+      {
+        "empirical": 0.15264,
+        "exact_prob": 0.15125000000000002,
+        "seq": "000"
+      },
+      {
+        "empirical": 0.08283,
+        "exact_prob": 0.0825,
+        "seq": "001"
+      },
+      {
+        "empirical": 0.04027,
+        "exact_prob": 0.04125,
+        "seq": "002"
+      },
+      {
+        "empirical": 0.03702,
+        "exact_prob": 0.0375,
+        "seq": "010"
+      },
+      {
+        "empirical": 0.0671,
+        "exact_prob": 0.0675,
+        "seq": "011"
+      },
+      {
+        "empirical": 0.04591,
+        "exact_prob": 0.045,
+        "seq": "012"
+      },
+      {
+        "empirical": 0.0751,
+        "exact_prob": 0.075,
+        "seq": "02"
+      },
+      {
+        "empirical": 0.04249,
+        "exact_prob": 0.04125,
+        "seq": "100"
+      },
+      {
+        "empirical": 0.02259,
+        "exact_prob": 0.0225,
+        "seq": "101"
+      },
+      {
+        "empirical": 0.01093,
+        "exact_prob": 0.01125,
+        "seq": "102"
+      },
+      {
+        "empirical": 0.03336,
+        "exact_prob": 0.03375,
+        "seq": "110"
+      },
+      {
+        "empirical": 0.06056,
+        "exact_prob": 0.060750000000000005,
+        "seq": "111"
+      },
+      {
+        "empirical": 0.04055,
+        "exact_prob": 0.0405,
+        "seq": "112"
+      },
+      {
+        "empirical": 0.08979,
+        "exact_prob": 0.09,
+        "seq": "12"
+      },
+      {
+        "empirical": 0.19886,
+        "exact_prob": 0.2,
+        "seq": "2"
+      }
+    ]
+  },
+  "markov_gamma1": {
+    "exact": {
+      "accepted": 15887,
+      "bonus": 15887,
+      "chi2": 21.34140602166791,
+      "corrections": 12150,
+      "dof": 26,
+      "examined": 28037,
+      "fully_accepted_rounds": 15887,
+      "min_expected": 90.0,
+      "p_value": 0.724133543860048,
+      "plain_target_steps": 16076,
+      "table": [
+        {
+          "empirical": 0.24365,
+          "exact_prob": 0.24499999999999997,
+          "seq": "000"
+        },
+        {
+          "empirical": 0.0674,
+          "exact_prob": 0.06999999999999999,
+          "seq": "001"
+        },
+        {
+          "empirical": 0.0372,
+          "exact_prob": 0.034999999999999996,
+          "seq": "002"
+        },
+        {
+          "empirical": 0.0131,
+          "exact_prob": 0.015,
+          "seq": "010"
+        },
+        {
+          "empirical": 0.02485,
+          "exact_prob": 0.025,
+          "seq": "011"
+        },
+        {
+          "empirical": 0.06265,
+          "exact_prob": 0.06,
+          "seq": "012"
+        },
+        {
+          "empirical": 0.01575,
+          "exact_prob": 0.015,
+          "seq": "020"
+        },
+        {
+          "empirical": 0.02215,
+          "exact_prob": 0.022500000000000003,
+          "seq": "021"
+        },
+        {
+          "empirical": 0.0122,
+          "exact_prob": 0.0125,
+          "seq": "022"
+        },
+        {
+          "empirical": 0.0319,
+          "exact_prob": 0.0315,
+          "seq": "100"
+        },
+        {
+          "empirical": 0.00845,
+          "exact_prob": 0.009,
+          "seq": "101"
+        },
+        {
+          "empirical": 0.0042,
+          "exact_prob": 0.0045,
+          "seq": "102"
+        },
+        {
+          "empirical": 0.0114,
+          "exact_prob": 0.01125,
+          "seq": "110"
+        },
+        {
+          "empirical": 0.0182,
+          "exact_prob": 0.01875,
+          "seq": "111"
+        },
+        {
+          "empirical": 0.0454,
+          "exact_prob": 0.045,
+          "seq": "112"
+        },
+        {
+          "empirical": 0.05245,
+          "exact_prob": 0.054,
+          "seq": "120"
+        },
+        {
+          "empirical": 0.0815,
+          "exact_prob": 0.081,
+          "seq": "121"
+        },
+        {
+          "empirical": 0.04695,
+          "exact_prob": 0.045,
+          "seq": "122"
+        },
+        {
+          "empirical": 0.04265,
+          "exact_prob": 0.041999999999999996,
+          "seq": "200"
+        },
+        {
+          "empirical": 0.0122,
+          "exact_prob": 0.012,
+          "seq": "201"
+        },
+        {
+          "empirical": 0.00625,
+          "exact_prob": 0.006,
+          "seq": "202"
+        },
+        {
+          "empirical": 0.01335,
+          "exact_prob": 0.013500000000000002,
+          "seq": "210"
+        },
+        {
+          "empirical": 0.02155,
+          "exact_prob": 0.022500000000000003,
+          "seq": "211"
+        },
+        {
+          "empirical": 0.0555,
+          "exact_prob": 0.054000000000000006,
+          "seq": "212"
+        },
+        {
+          "empirical": 0.014,
+          "exact_prob": 0.015,
+          "seq": "220"
+        },
+        {
+          "empirical": 0.02305,
+          "exact_prob": 0.022500000000000003,
+          "seq": "221"
+        },
+        {
+          "empirical": 0.01205,
+          "exact_prob": 0.0125,
+          "seq": "222"
+        }
+      ]
+    },
+    "p": {
+      "accepted": 16013,
+      "bonus": 16013,
+      "chi2": 2485.0318949357516,
+      "corrections": 12044,
+      "dof": 26,
+      "examined": 28057,
+      "fully_accepted_rounds": 16013,
+      "min_expected": 90.0,
+      "p_value": 0.0,
+      "plain_target_steps": 15930,
+      "table": [
+        {
+          "empirical": 0.1482,
+          "exact_prob": 0.24499999999999997,
+          "seq": "000"
+        },
+        {
+          "empirical": 0.0416,
+          "exact_prob": 0.06999999999999999,
+          "seq": "001"
+        },
+        {
+          "empirical": 0.0218,
+          "exact_prob": 0.034999999999999996,
+          "seq": "002"
+        },
+        {
+          "empirical": 0.01265,
+          "exact_prob": 0.015,
+          "seq": "010"
+        },
+        {
+          "empirical": 0.0221,
+          "exact_prob": 0.025,
+          "seq": "011"
+        },
+        {
+          "empirical": 0.05275,
+          "exact_prob": 0.06,
+          "seq": "012"
+        },
+        {
+          "empirical": 0.0143,
+          "exact_prob": 0.015,
+          "seq": "020"
+        },
+        {
+          "empirical": 0.0179,
+          "exact_prob": 0.022500000000000003,
+          "seq": "021"
+        },
+        {
+          "empirical": 0.01065,
+          "exact_prob": 0.0125,
+          "seq": "022"
+        },
+        {
+          "empirical": 0.0526,
+          "exact_prob": 0.0315,
+          "seq": "100"
+        },
+        {
+          "empirical": 0.01365,
+          "exact_prob": 0.009,
+          "seq": "101"
+        },
+        {
+          "empirical": 0.0069,
+          "exact_prob": 0.0045,
+          "seq": "102"
+        },
+        {
+          "empirical": 0.01755,
+          "exact_prob": 0.01125,
+          "seq": "110"
+        },
+        {
+          "empirical": 0.03005,
+          "exact_prob": 0.01875,
+          "seq": "111"
+        },
+        {
+          "empirical": 0.0672,
+          "exact_prob": 0.045,
+          "seq": "112"
+        },
+        {
+          "empirical": 0.0706,
+          "exact_prob": 0.054,
+          "seq": "120"
+        },
+        {
+          "empirical": 0.1071,
+          "exact_prob": 0.081,
+          "seq": "121"
+        },
+        {
+          "empirical": 0.0601,
+          "exact_prob": 0.045,
+          "seq": "122"
+        },
+        {
+          "empirical": 0.0474,
+          "exact_prob": 0.041999999999999996,
+          "seq": "200"
+        },
+        {
+          "empirical": 0.01465,
+          "exact_prob": 0.012,
+          "seq": "201"
+        },
+        {
+          "empirical": 0.00585,
+          "exact_prob": 0.006,
+          "seq": "202"
+        },
+        {
+          "empirical": 0.01545,
+          "exact_prob": 0.013500000000000002,
+          "seq": "210"
+        },
+        {
+          "empirical": 0.02395,
+          "exact_prob": 0.022500000000000003,
+          "seq": "211"
+        },
+        {
+          "empirical": 0.05605,
+          "exact_prob": 0.054000000000000006,
+          "seq": "212"
+        },
+        {
+          "empirical": 0.0202,
+          "exact_prob": 0.015,
+          "seq": "220"
+        },
+        {
+          "empirical": 0.0307,
+          "exact_prob": 0.022500000000000003,
+          "seq": "221"
+        },
+        {
+          "empirical": 0.01805,
+          "exact_prob": 0.0125,
+          "seq": "222"
+        }
+      ]
+    },
+    "setup": {
+      "draft": [
+        [
+          0.2,
+          0.3,
+          0.5,
+          0.0
+        ],
+        [
+          0.6,
+          0.2,
+          0.2,
+          0.0
+        ],
+        [
+          0.1,
+          0.1,
+          0.8,
+          0.0
+        ],
+        [
+          0.15,
+          0.7,
+          0.15,
+          0.0
+        ]
+      ],
+      "expected_first_acceptance": 0.6,
+      "gamma": 1,
+      "length": 3,
+      "n": 20000,
+      "pass_exact": true,
+      "rejects_negative_control": true,
+      "seed": 6306,
+      "target": [
+        [
+          0.7,
+          0.2,
+          0.1,
+          0.0
+        ],
+        [
+          0.15,
+          0.25,
+          0.6,
+          0.0
+        ],
+        [
+          0.3,
+          0.45,
+          0.25,
+          0.0
+        ],
+        [
+          0.5,
+          0.3,
+          0.2,
+          0.0
+        ]
+      ]
+    }
+  },
+  "markov_gamma2": {
+    "exact": {
+      "accepted": 110245,
+      "bonus": 50173,
+      "chi2": 29.72018737717312,
+      "corrections": 89755,
+      "dof": 26,
+      "examined": 200000,
+      "fully_accepted_rounds": 50173,
+      "min_expected": 449.99999999999994,
+      "p_value": 0.2793652042942907,
+      "plain_target_steps": 49827,
+      "table": [
+        {
+          "empirical": 0.24674,
+          "exact_prob": 0.24499999999999997,
+          "seq": "000"
+        },
+        {
+          "empirical": 0.06959,
+          "exact_prob": 0.06999999999999999,
+          "seq": "001"
+        },
+        {
+          "empirical": 0.03456,
+          "exact_prob": 0.034999999999999996,
+          "seq": "002"
+        },
+        {
+          "empirical": 0.01526,
+          "exact_prob": 0.015,
+          "seq": "010"
+        },
+        {
+          "empirical": 0.02456,
+          "exact_prob": 0.025,
+          "seq": "011"
+        },
+        {
+          "empirical": 0.06008,
+          "exact_prob": 0.06,
+          "seq": "012"
+        },
+        {
+          "empirical": 0.01495,
+          "exact_prob": 0.015,
+          "seq": "020"
+        },
+        {
+          "empirical": 0.02185,
+          "exact_prob": 0.022500000000000003,
+          "seq": "021"
+        },
+        {
+          "empirical": 0.01257,
+          "exact_prob": 0.0125,
+          "seq": "022"
+        },
+        {
+          "empirical": 0.03133,
+          "exact_prob": 0.0315,
+          "seq": "100"
+        },
+        {
+          "empirical": 0.0084,
+          "exact_prob": 0.009,
+          "seq": "101"
+        },
+        {
+          "empirical": 0.00466,
+          "exact_prob": 0.0045,
+          "seq": "102"
+        },
+        {
+          "empirical": 0.01172,
+          "exact_prob": 0.01125,
+          "seq": "110"
+        },
+        {
+          "empirical": 0.01804,
+          "exact_prob": 0.01875,
+          "seq": "111"
+        },
+        {
+          "empirical": 0.04499,
+          "exact_prob": 0.045,
+          "seq": "112"
+        },
+        {
+          "empirical": 0.05484,
+          "exact_prob": 0.054,
+          "seq": "120"
+        },
+        {
+          "empirical": 0.08097,
+          "exact_prob": 0.081,
+          "seq": "121"
+        },
+        {
+          "empirical": 0.04432,
+          "exact_prob": 0.045,
+          "seq": "122"
+        },
+        {
+          "empirical": 0.04139,
+          "exact_prob": 0.041999999999999996,
+          "seq": "200"
+        },
+        {
+          "empirical": 0.01229,
+          "exact_prob": 0.012,
+          "seq": "201"
+        },
+        {
+          "empirical": 0.00592,
+          "exact_prob": 0.006,
+          "seq": "202"
+        },
+        {
+          "empirical": 0.01436,
+          "exact_prob": 0.013500000000000002,
+          "seq": "210"
+        },
+        {
+          "empirical": 0.02286,
+          "exact_prob": 0.022500000000000003,
+          "seq": "211"
+        },
+        {
+          "empirical": 0.05273,
+          "exact_prob": 0.054000000000000006,
+          "seq": "212"
+        },
+        {
+          "empirical": 0.01538,
+          "exact_prob": 0.015,
+          "seq": "220"
+        },
+        {
+          "empirical": 0.02289,
+          "exact_prob": 0.022500000000000003,
+          "seq": "221"
+        },
+        {
+          "empirical": 0.01275,
+          "exact_prob": 0.0125,
+          "seq": "222"
+        }
+      ]
+    },
+    "p": {
+      "accepted": 110858,
+      "bonus": 50844,
+      "chi2": 19372.30132993197,
+      "corrections": 89142,
+      "dof": 26,
+      "examined": 200000,
+      "fully_accepted_rounds": 50844,
+      "min_expected": 449.99999999999994,
+      "p_value": 0.0,
+      "plain_target_steps": 49156,
+      "table": [
+        {
+          "empirical": 0.13484,
+          "exact_prob": 0.24499999999999997,
+          "seq": "000"
+        },
+        {
+          "empirical": 0.03897,
+          "exact_prob": 0.06999999999999999,
+          "seq": "001"
+        },
+        {
+          "empirical": 0.01896,
+          "exact_prob": 0.034999999999999996,
+          "seq": "002"
+        },
+        {
+          "empirical": 0.01537,
+          "exact_prob": 0.015,
+          "seq": "010"
+        },
+        {
+          "empirical": 0.02696,
+          "exact_prob": 0.025,
+          "seq": "011"
+        },
+        {
+          "empirical": 0.06461,
+          "exact_prob": 0.06,
+          "seq": "012"
+        },
+        {
+          "empirical": 0.01588,
+          "exact_prob": 0.015,
+          "seq": "020"
+        },
+        {
+          "empirical": 0.02336,
+          "exact_prob": 0.022500000000000003,
+          "seq": "021"
+        },
+        {
+          "empirical": 0.01297,
+          "exact_prob": 0.0125,
+          "seq": "022"
+        },
+        {
+          "empirical": 0.06388,
+          "exact_prob": 0.0315,
+          "seq": "100"
+        },
+        {
+          "empirical": 0.0175,
+          "exact_prob": 0.009,
+          "seq": "101"
+        },
+        {
+          "empirical": 0.00947,
+          "exact_prob": 0.0045,
+          "seq": "102"
+        },
+        {
+          "empirical": 0.01981,
+          "exact_prob": 0.01125,
+          "seq": "110"
+        },
+        {
+          "empirical": 0.03231,
+          "exact_prob": 0.01875,
+          "seq": "111"
+        },
+        {
+          "empirical": 0.07899,
+          "exact_prob": 0.045,
+          "seq": "112"
+        },
+        {
+          "empirical": 0.05921,
+          "exact_prob": 0.054,
+          "seq": "120"
+        },
+        {
+          "empirical": 0.08856,
+          "exact_prob": 0.081,
+          "seq": "121"
+        },
+        {
+          "empirical": 0.04953,
+          "exact_prob": 0.045,
+          "seq": "122"
+        },
+        {
+          "empirical": 0.04133,
+          "exact_prob": 0.041999999999999996,
+          "seq": "200"
+        },
+        {
+          "empirical": 0.01286,
+          "exact_prob": 0.012,
+          "seq": "201"
+        },
+        {
+          "empirical": 0.00603,
+          "exact_prob": 0.006,
+          "seq": "202"
+        },
+        {
+          "empirical": 0.01211,
+          "exact_prob": 0.013500000000000002,
+          "seq": "210"
+        },
+        {
+          "empirical": 0.02042,
+          "exact_prob": 0.022500000000000003,
+          "seq": "211"
+        },
+        {
+          "empirical": 0.04693,
+          "exact_prob": 0.054000000000000006,
+          "seq": "212"
+        },
+        {
+          "empirical": 0.02672,
+          "exact_prob": 0.015,
+          "seq": "220"
+        },
+        {
+          "empirical": 0.0396,
+          "exact_prob": 0.022500000000000003,
+          "seq": "221"
+        },
+        {
+          "empirical": 0.02282,
+          "exact_prob": 0.0125,
+          "seq": "222"
+        }
+      ]
+    },
+    "setup": {
+      "draft": [
+        [
+          0.2,
+          0.3,
+          0.5,
+          0.0
+        ],
+        [
+          0.6,
+          0.2,
+          0.2,
+          0.0
+        ],
+        [
+          0.1,
+          0.1,
+          0.8,
+          0.0
+        ],
+        [
+          0.15,
+          0.7,
+          0.15,
+          0.0
+        ]
+      ],
+      "expected_first_acceptance": 0.6,
+      "gamma": 2,
+      "length": 3,
+      "n": 100000,
+      "pass_exact": true,
+      "rejects_negative_control": true,
+      "seed": 6304,
+      "target": [
+        [
+          0.7,
+          0.2,
+          0.1,
+          0.0
+        ],
+        [
+          0.15,
+          0.25,
+          0.6,
+          0.0
+        ],
+        [
+          0.3,
+          0.45,
+          0.25,
+          0.0
+        ],
+        [
+          0.5,
+          0.3,
+          0.2,
+          0.0
+        ]
+      ]
+    }
+  },
+  "real_model_cache": [
+    {
+      "bonus": 9,
+      "cache_vs_full_max_abs_prob": 0.0008957572281360626,
+      "corrections": 3,
+      "crop_refeed_max_abs_prob": 0.00039017200469970703,
+      "eos": false,
+      "n_out": 48,
+      "prompt": "GSM8K-0000",
+      "rounds": 12,
+      "split_prefill_max_abs_prob": 3.6656856536865234e-05
+    },
+    {
+      "bonus": 0,
+      "cache_vs_full_max_abs_prob": 9.619398042559624e-07,
+      "corrections": 0,
+      "crop_refeed_max_abs_prob": 1.1920928955078125e-07,
+      "eos": true,
+      "n_out": 2,
+      "prompt": "SHORT-familiar-0000",
+      "rounds": 1,
+      "split_prefill_max_abs_prob": 5.960464477539062e-07
+    },
+    {
+      "bonus": 0,
+      "cache_vs_full_max_abs_prob": 8.860297384671867e-09,
+      "corrections": 0,
+      "crop_refeed_max_abs_prob": 5.602836608886719e-06,
+      "eos": true,
+      "n_out": 2,
+      "prompt": "SHORT-shifted-0000",
+      "rounds": 1,
+      "split_prefill_max_abs_prob": 3.357627065270208e-09
+    }
+  ],
+  "target_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "tokenizer": {
+    "eos_student": [
+      151643,
+      151645
+    ],
+    "eos_teacher": [
+      151643,
+      151645
+    ],
+    "n_checked": 920,
+    "n_mismatch": 0,
+    "same_eos": true
+  }
+}

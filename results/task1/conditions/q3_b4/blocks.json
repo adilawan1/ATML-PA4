@@ -1,0 +1,86 @@
+[
+  {
+    "block_output_rel_err": 0.013061562123982583
+  },
+  {
+    "block_output_rel_err": 0.0006746205834209485
+  },
+  {
+    "block_output_rel_err": 4.733795990881404e-05
+  },
+  {
+    "block_output_rel_err": 2.4906166810514026e-05
+  },
+  {
+    "block_output_rel_err": 3.228719114225551e-05
+  },
+  {
+    "block_output_rel_err": 2.8180544694477403e-05
+  },
+  {
+    "block_output_rel_err": 3.11224995448152e-05
+  },
+  {
+    "block_output_rel_err": 3.189652013384706e-05
+  },
+  {
+    "block_output_rel_err": 2.8560424626259845e-05
+  },
+  {
+    "block_output_rel_err": 2.786475147047099e-05
+  },
+  {
+    "block_output_rel_err": 2.8450799065537415e-05
+  },
+  {
+    "block_output_rel_err": 2.6440818543607845e-05
+  },
+  {
+    "block_output_rel_err": 3.828282645201024e-05
+  },
+  {
+    "block_output_rel_err": 3.459198352944846e-05
+  },
+  {
+    "block_output_rel_err": 3.4611173957442714e-05
+  },
+  {
+    "block_output_rel_err": 3.651580410948392e-05
+  },
+  {
+    "block_output_rel_err": 4.213609759430106e-05
+  },
+  {
+    "block_output_rel_err": 3.2498049576606464e-05
+  },
+  {
+    "block_output_rel_err": 4.4738174898659185e-05
+  },
+  {
+    "block_output_rel_err": 7.439815518053154e-05
+  },
+  {
+    "block_output_rel_err": 7.519131284101448e-05
+  },
+  {
+    "block_output_rel_err": 0.00010832024729002536
+  },
+  {
+    "block_output_rel_err": 0.00013117944628241422
+  },
+  {
+    "block_output_rel_err": 0.00015456764140010348
+  },
+  {
+    "block_output_rel_err": 0.00019150240144273964
+  },
+  {
+    "block_output_rel_err": 0.00024354013631666197
+  },
+  {
+    "block_output_rel_err": 0.002318045128218534
+  },
+  {
+    "block_output_rel_err": 0.0016973540770007058
+  }
+]

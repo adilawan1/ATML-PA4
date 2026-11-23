@@ -1,0 +1,231 @@
+{
+  "achieved_nonzero_fraction": 0.25,
+  "achieved_sparsity": 0.75,
+  "calib_out_err_rel_mean": 0.10900536973982018,
+  "calib_out_err_rel_median": 0.10110141888701042,
+  "compression": {
+    "compression_seconds_total": 33.05719117900003,
+    "timing": {
+      "capture": 0.1038258969999788,
+      "compress": 19.06830487199977,
+      "propagate": 4.900130198999932,
+      "stats": 8.983084376999614
+    }
+  },
+  "condition": "p2_s75",
+  "dev": {
+    "N": 16352,
+    "mean_nll": 7.478544037402726,
+    "n_windows": 32,
+    "per_seq": [
+      3895.47314453125,
+      2804.974609375,
+      4203.08251953125,
+      4044.591064453125,
+      3185.90185546875,
+      3885.20068359375,
+      3528.4033203125,
+      4280.994140625,
+      3059.99658203125,
+      2788.5107421875,
+      4234.54541015625,
+      3390.11669921875,
+      3438.35888671875,
+      4258.8681640625,
+      3819.4580078125,
+      4502.17724609375,
+      3941.314208984375,
+      3538.85546875,
+      3689.55322265625,
+      4394.70703125,
+      4252.173828125,
+      4357.78515625,
+      3476.0126953125,
+      3831.58642578125,
+      3689.347900390625,
+      4081.922607421875,
+      4117.97265625,
+      3488.59765625,
+      4286.93017578125,
+      3911.349609375,
+      3945.739013671875,
+      3964.6513671875
+    ],
+    "ppl": 1769.662337159747
+  },
+  "env": {
+    "argv": [
+      "scripts/task1.py",
+      "uniform"
+    ],
+    "attn_implementation": "sdpa",
+    "cuda_available": true,
+    "cuda_capability": [
+      8,
+      9
+    ],
+    "cuda_device": "NVIDIA L4",
+    "cuda_version": "13.0",
+    "cudnn_version": 92800,
+    "data_repo_commit": "6a0a9ec9da7ef3d313ee3036cfec493886723644",
+    "datasets": "4.8.5",
+    "git_commit": "e85961c9679c22939d7b2f75454b65190f6ed1bf",
+    "gpu_total_memory_bytes": 23659151360,
+    "huggingface_hub": "0.36.2",
+    "model": "Qwen/Qwen2.5-1.5B",
+    "model_revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "numpy": "2.4.6",
+    "peft": "0.17.1",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "precision": "float16",
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "scipy": "1.16.3",
+    "sdpa_backends_enabled": {
+      "cudnn": true,
+      "flash": true,
+      "math": true,
+      "mem_efficient": true
+    },
+    "source_revisions": {
+      "repos": {
+        "c4": "allenai/c4",
+        "gsm8k": "openai/gsm8k",
+        "hellaswag": "Rowan/hellaswag",
+        "model_base": "Qwen/Qwen2.5-1.5B",
+        "model_draft": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_target": "Qwen/Qwen2.5-1.5B-Instruct",
+        "wikitext": "Salesforce/wikitext"
+      },
+      "revisions": {
+        "c4": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+        "gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+        "hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+        "model_base": "8faed761d45a263340a0528343f099c05c9a4323",
+        "model_draft": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "model_target": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "wikitext": "b08601e04326c79dfdd32d625aee71d232d685c3"
+      }
+    },
+    "tf32_matmul": true,
+    "time": "2026-11-23 17:35:37 UTC",
+    "tokenizer": "Qwen/Qwen2.5-1.5B@8faed761d45a263340a0528343f099c05c9a4323",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.1"
+  },
+  "latency": {
+    "batch_size": 1,
+    "decode_64": {
+      "all": [
+        2.084780751999915,
+        2.082362202000013,
+        2.113269907000131,
+        2.090043442999786,
+        2.0930911759999162
+      ],
+      "mean": 2.0927094959999524,
+      "peak_allocated_bytes": 3267788288,
+      "per_token_ms": 32.69858587499925,
+      "prompt_len": 512,
+      "std": 0.012246586190216829
+    },
+    "kernels": "dense FP16 (torch SDPA + cuBLAS)",
+    "model_allocated_bytes": 3095952896,
+    "prefill_2048": {
+      "all": [
+        0.15136943599986807,
+        0.16261818699990727,
+        0.15850383599990892,
+        0.15562667699987287,
+        0.15402362199984054
+      ],
+      "max": 0.16261818699990727,
+      "mean": 0.15642835159987953,
+      "median": 0.15562667699987287,
+      "min": 0.15136943599986807,
+      "peak_allocated_bytes": 3783306752,
+      "reps": 5,
+      "std": 0.004319714441830635,
+      "unit": "s",
+      "warmup": 2
+    },
+    "prefill_512": {
+      "all": [
+        0.038871661000030144,
+        0.03901395599996249,
+        0.03899136399991221,
+        0.038970650999999634,
+        0.03896591500006252
+      ],
+      "max": 0.03901395599996249,
+      "mean": 0.0389627093999934,
+      "median": 0.038970650999999634,
+      "min": 0.038871661000030144,
+      "peak_allocated_bytes": 3267788288,
+      "reps": 5,
+      "std": 5.433796123160634e-05,
+      "unit": "s",
+      "warmup": 2
+    },
+    "reps": 5,
+    "unit": "seconds",
+    "warmup": 2
+  },
+  "n_eligible": 1310195712,
+  "params": {
+    "method": "wanda",
+    "per": "output row",
+    "sparsity": 0.75,
+    "structure": "unstructured"
+  },
+  "quality": {
+    "c4val": {
+      "N": 50000,
+      "mean_nll": 7.64817642578125,
+      "n_windows": 177,
+      "ppl": 2096.818396925946
+    },
+    "continuations": [
+      {
+        "continuation": "",
+        "prompt": " = Robert Boulter = \n",
+        "source_row": 1
+      },
+      {
+        "continuation": ", and, and, and, and, and, and, and, and, and, and, and, and, and, and, and, and",
+        "prompt": " Robert Boulter is an English film , television and theatre actor . He had a guest @-@ starring role on the television series The Bill in 2000 . This was followed by a starring role in the play Herons written by Simon Stephens , which was performed in 2001 at the",
+        "source_row": 3
+      }
+    ],
+    "hellaswag": {
+      "acc": 0.26953125,
+      "acc_norm": 0.28515625,
+      "n": 512
+    },
+    "hellaswag_diag512": {
+      "acc": 0.26953125,
+      "acc_norm": 0.28515625,
+      "n": 512
+    },
+    "wikitext2": {
+      "N": 50000,
+      "mean_nll": 8.192509556999207,
+      "n_windows": 437,
+      "ppl": 3613.779862955977
+    }
+  },
+  "storage": {
+    "dense_fp16_eligible_bytes": 2620391424,
+    "dense_fp16_total_bytes": 3087428608,
+    "eligible_nonzeros": 327548928,
+    "eligible_sparsity": 0.75,
+    "n_eligible": 1310195712,
+    "n_other_unique": 233518592,
+    "nominal_bits_per_eligible_weight_dense": 16.0,
+    "nominal_bits_per_eligible_weight_sparse16": 5.0,
+    "sparse16_eligible_bytes": 818872320,
+    "sparse16_total_bytes": 1285909504,
+    "tied_embeddings": true,
+    "uncompressed_other_bytes": 467037184
+  },
+  "zeros": 982646784
+}

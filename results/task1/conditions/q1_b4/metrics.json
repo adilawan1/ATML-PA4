@@ -1,0 +1,256 @@
+{
+  "achieved_nonzero_fraction": 0.8504887253057961,
+  "achieved_sparsity": 0.1495112746942039,
+  "calib_out_err_rel_mean": 0.010507683971384107,
+  "calib_out_err_rel_median": 0.010316331320630225,
+  "compression": {
+    "compression_seconds_total": 32.24964799899999,
+    "eligible_packed_bytes": 685805568,
+    "extra_bytes": {
+      "o_proj_fp16_scales": 0
+    },
+    "fold_checks": [],
+    "grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "method": "rtn",
+    "packing_roundtrip_verified_units": 2,
+    "timing": {
+      "capture": 0.10250780599994869,
+      "compress": 17.766952587999185,
+      "propagate": 5.331826117000219,
+      "stats": 9.047610867999538
+    }
+  },
+  "condition": "q1_b4",
+  "dev": {
+    "N": 16352,
+    "mean_nll": 2.6095170993394348,
+    "n_windows": 32,
+    "per_seq": [
+      1266.8525390625,
+      1081.14013671875,
+      1187.9892578125,
+      1259.27978515625,
+      1398.45703125,
+      1702.8818359375,
+      1224.25244140625,
+      1496.6881103515625,
+      1292.7281494140625,
+      1193.069580078125,
+      1603.1097412109375,
+      1868.53564453125,
+      1552.826171875,
+      1239.588623046875,
+      1158.0216064453125,
+      1494.421142578125,
+      1617.4569091796875,
+      1024.3232421875,
+      1182.830810546875,
+      1427.2353515625,
+      1117.6302490234375,
+      1081.289794921875,
+      1560.46484375,
+      1490.311279296875,
+      633.9581298828125,
+      1553.0843505859375,
+      1270.519287109375,
+      1184.28125,
+      1604.2425537109375,
+      1322.119140625,
+      1208.6748046875,
+      1372.559814453125
+    ],
+    "ppl": 13.592485446538376
+  },
+  "env": {
+    "argv": [
+      "scripts/task1.py",
+      "uniform"
+    ],
+    "attn_implementation": "sdpa",
+    "cuda_available": true,
+    "cuda_capability": [
+      8,
+      9
+    ],
+    "cuda_device": "NVIDIA L4",
+    "cuda_version": "13.0",
+    "cudnn_version": 92800,
+    "data_repo_commit": "6a0a9ec9da7ef3d313ee3036cfec493886723644",
+    "datasets": "4.8.5",
+    "git_commit": "e85961c9679c22939d7b2f75454b65190f6ed1bf",
+    "gpu_total_memory_bytes": 23659151360,
+    "huggingface_hub": "0.36.2",
+    "model": "Qwen/Qwen2.5-1.5B",
+    "model_revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "numpy": "2.4.6",
+    "peft": "0.17.1",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "precision": "float16",
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "scipy": "1.16.3",
+    "sdpa_backends_enabled": {
+      "cudnn": true,
+      "flash": true,
+      "math": true,
+      "mem_efficient": true
+    },
+    "source_revisions": {
+      "repos": {
+        "c4": "allenai/c4",
+        "gsm8k": "openai/gsm8k",
+        "hellaswag": "Rowan/hellaswag",
+        "model_base": "Qwen/Qwen2.5-1.5B",
+        "model_draft": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_target": "Qwen/Qwen2.5-1.5B-Instruct",
+        "wikitext": "Salesforce/wikitext"
+      },
+      "revisions": {
+        "c4": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+        "gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+        "hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+        "model_base": "8faed761d45a263340a0528343f099c05c9a4323",
+        "model_draft": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "model_target": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "wikitext": "b08601e04326c79dfdd32d625aee71d232d685c3"
+      }
+    },
+    "tf32_matmul": true,
+    "time": "2026-11-23 17:40:29 UTC",
+    "tokenizer": "Qwen/Qwen2.5-1.5B@8faed761d45a263340a0528343f099c05c9a4323",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.1"
+  },
+  "latency": {
+    "batch_size": 1,
+    "decode_64": {
+      "all": [
+        2.1038132829999086,
+        2.080472966999878,
+        2.0827272379999613,
+        2.0856498429998283,
+        2.0950873849999425
+      ],
+      "mean": 2.0895501431999035,
+      "peak_allocated_bytes": 3267788288,
+      "per_token_ms": 32.649220987498495,
+      "prompt_len": 512,
+      "std": 0.009724424256620613
+    },
+    "kernels": "dense FP16 (torch SDPA + cuBLAS)",
+    "model_allocated_bytes": 3095952896,
+    "prefill_2048": {
+      "all": [
+        0.17478303899997627,
+        0.17742568199992093,
+        0.1661137169999165,
+        0.16396321999991414,
+        0.16363201099989055
+      ],
+      "max": 0.17742568199992093,
+      "mean": 0.16918353379992368,
+      "median": 0.1661137169999165,
+      "min": 0.16363201099989055,
+      "peak_allocated_bytes": 3783306752,
+      "reps": 5,
+      "std": 0.006457211514880045,
+      "unit": "s",
+      "warmup": 2
+    },
+    "prefill_512": {
+      "all": [
+        0.044116223999935755,
+        0.043013465999820255,
+        0.04251625100005185,
+        0.04540925900005277,
+        0.043560977999959505
+      ],
+      "max": 0.04540925900005277,
+      "mean": 0.04372323559996403,
+      "median": 0.043560977999959505,
+      "min": 0.04251625100005185,
+      "peak_allocated_bytes": 3267788288,
+      "reps": 5,
+      "std": 0.001116246727501561,
+      "unit": "s",
+      "warmup": 2
+    },
+    "reps": 5,
+    "unit": "seconds",
+    "warmup": 2
+  },
+  "n_eligible": 1310195712,
+  "params": {
+    "bits": 4,
+    "group": 128,
+    "method": "rtn",
+    "rounding": "half-to-even",
+    "scale": "fp16",
+    "zero": "uint8"
+  },
+  "quality": {
+    "c4val": {
+      "N": 50000,
+      "mean_nll": 2.8171175815582274,
+      "n_windows": 177,
+      "ppl": 16.72856239531039
+    },
+    "continuations": [
+      {
+        "continuation": "",
+        "prompt": " = Robert Boulter = \n",
+        "source_row": 1
+      },
+      {
+        "continuation": " National Theatre . Boulter also starred in the 2002 film The Last King of Scotland , in which he played the role of the British ambassador",
+        "prompt": " Robert Boulter is an English film , television and theatre actor . He had a guest @-@ starring role on the television series The Bill in 2000 . This was followed by a starring role in the play Herons written by Simon Stephens , which was performed in 2001 at the",
+        "source_row": 3
+      }
+    ],
+    "hellaswag": {
+      "acc": 0.489,
+      "acc_norm": 0.6685,
+      "n": 2000
+    },
+    "hellaswag_diag512": {
+      "acc": 0.44921875,
+      "acc_norm": 0.57421875,
+      "n": 512
+    },
+    "wikitext2": {
+      "N": 50000,
+      "mean_nll": 2.9389793657684327,
+      "n_windows": 437,
+      "ppl": 18.89655000090271
+    }
+  },
+  "storage": {
+    "dense_fp16_eligible_bytes": 2620391424,
+    "dense_fp16_total_bytes": 3087428608,
+    "eligible_nonzeros": 1114306681,
+    "eligible_sparsity": 0.1495112746942039,
+    "n_eligible": 1310195712,
+    "n_other_unique": 233518592,
+    "nominal_bits_per_eligible_weight_dense": 16.0,
+    "nominal_bits_per_eligible_weight_packed": 4.1875,
+    "nominal_bits_per_eligible_weight_sparse16": 14.607819604892738,
+    "packed_eligible_bytes": 685805568,
+    "packed_total_bytes": 1152842752,
+    "sparse16_eligible_bytes": 2392387826,
+    "sparse16_total_bytes": 2859425010,
+    "tied_embeddings": true,
+    "uncompressed_other_bytes": 467037184
+  },
+  "zeros": 195889031
+}

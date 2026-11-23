@@ -1,0 +1,123 @@
+{
+  "achieved_nonzero_fraction": 0.5,
+  "achieved_sparsity": 0.5,
+  "calib_out_err_rel_mean": 0.022870097357574868,
+  "calib_out_err_rel_median": 0.01897249979326757,
+  "compression": {
+    "compression_seconds_total": 32.86802922900006,
+    "timing": {
+      "capture": 1.673578034000002,
+      "compress": 16.91779138000038,
+      "propagate": 5.010302628001227,
+      "stats": 9.212747367999782
+    }
+  },
+  "condition": "devp3_s50_fisher",
+  "dev": {
+    "N": 16352,
+    "mean_nll": 2.797566953237276,
+    "n_windows": 32,
+    "per_seq": [
+      1357.073974609375,
+      1176.111572265625,
+      1322.8267822265625,
+      1344.043701171875,
+      1538.5885009765625,
+      1753.199462890625,
+      1330.1556396484375,
+      1577.189208984375,
+      1390.6468505859375,
+      1326.1553955078125,
+      1675.281982421875,
+      2002.2838134765625,
+      1651.00048828125,
+      1315.2509765625,
+      1289.1083984375,
+      1560.95849609375,
+      1675.113525390625,
+      1128.384765625,
+      1271.432373046875,
+      1527.953125,
+      1233.092529296875,
+      1268.56982421875,
+      1642.8658447265625,
+      1585.921142578125,
+      728.3873291015625,
+      1624.8148193359375,
+      1338.6317138671875,
+      1276.221923828125,
+      1672.83056640625,
+      1401.2939453125,
+      1305.889892578125,
+      1454.5362548828125
+    ],
+    "ppl": 16.404684810879083
+  },
+  "env": {
+    "argv": [
+      "scripts/task1.py",
+      "select"
+    ],
+    "attn_implementation": "sdpa",
+    "cuda_available": true,
+    "cuda_capability": [
+      8,
+      9
+    ],
+    "cuda_device": "NVIDIA L4",
+    "cuda_version": "13.0",
+    "cudnn_version": 92800,
+    "data_repo_commit": "6a0a9ec9da7ef3d313ee3036cfec493886723644",
+    "datasets": "4.8.5",
+    "git_commit": "e85961c9679c22939d7b2f75454b65190f6ed1bf",
+    "gpu_total_memory_bytes": 23659151360,
+    "huggingface_hub": "0.36.2",
+    "model": "Qwen/Qwen2.5-1.5B",
+    "model_revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "numpy": "2.4.6",
+    "peft": "0.17.1",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "precision": "float16",
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "scipy": "1.16.3",
+    "sdpa_backends_enabled": {
+      "cudnn": true,
+      "flash": true,
+      "math": true,
+      "mem_efficient": true
+    },
+    "source_revisions": {
+      "repos": {
+        "c4": "allenai/c4",
+        "gsm8k": "openai/gsm8k",
+        "hellaswag": "Rowan/hellaswag",
+        "model_base": "Qwen/Qwen2.5-1.5B",
+        "model_draft": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_target": "Qwen/Qwen2.5-1.5B-Instruct",
+        "wikitext": "Salesforce/wikitext"
+      },
+      "revisions": {
+        "c4": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+        "gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+        "hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+        "model_base": "8faed761d45a263340a0528343f099c05c9a4323",
+        "model_draft": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "model_target": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "wikitext": "b08601e04326c79dfdd32d625aee71d232d685c3"
+      }
+    },
+    "tf32_matmul": true,
+    "time": "2026-11-23 18:03:56 UTC",
+    "tokenizer": "Qwen/Qwen2.5-1.5B@8faed761d45a263340a0528343f099c05c9a4323",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.1"
+  },
+  "n_eligible": 1310195712,
+  "params": {
+    "allocation": "fisher_knapsack",
+    "method": "wanda",
+    "sparsity": 0.5,
+    "unit": "projection"
+  },
+  "zeros": 655097856
+}

@@ -1,0 +1,397 @@
+{
+  "achieved_nonzero_fraction": 0.99033540036498,
+  "achieved_sparsity": 0.009664599635019977,
+  "calib_out_err_rel_mean": 2.4646097784263807e-05,
+  "calib_out_err_rel_median": 2.4796098922584972e-05,
+  "compression": {
+    "compression_seconds_total": 130.635913673,
+    "eligible_packed_bytes": 1340989440,
+    "extra_bytes": {
+      "o_proj_fp16_scales": 86016
+    },
+    "fold_checks": [
+      {
+        "layer": 0,
+        "max_abs_err": 0.0078125,
+        "rel_err": 0.0008942487183958292
+      },
+      {
+        "layer": 1,
+        "max_abs_err": 4.0,
+        "rel_err": 0.0005513463402166963
+      },
+      {
+        "layer": 2,
+        "max_abs_err": 4.0,
+        "rel_err": 0.0003090446989517659
+      },
+      {
+        "layer": 3,
+        "max_abs_err": 0.5,
+        "rel_err": 4.866730159847066e-05
+      },
+      {
+        "layer": 4,
+        "max_abs_err": 0.5,
+        "rel_err": 4.9454509280622005e-05
+      },
+      {
+        "layer": 5,
+        "max_abs_err": 4.0,
+        "rel_err": 0.00012864363088738173
+      },
+      {
+        "layer": 6,
+        "max_abs_err": 0.03125,
+        "rel_err": 4.516280023381114e-05
+      },
+      {
+        "layer": 7,
+        "max_abs_err": 0.25,
+        "rel_err": 4.8129029892152175e-05
+      },
+      {
+        "layer": 8,
+        "max_abs_err": 0.0625,
+        "rel_err": 4.6493678382830694e-05
+      },
+      {
+        "layer": 9,
+        "max_abs_err": 0.0625,
+        "rel_err": 4.8882873670663685e-05
+      },
+      {
+        "layer": 10,
+        "max_abs_err": 0.5,
+        "rel_err": 4.980940866516903e-05
+      },
+      {
+        "layer": 11,
+        "max_abs_err": 0.0625,
+        "rel_err": 4.7336896386696026e-05
+      },
+      {
+        "layer": 12,
+        "max_abs_err": 1.0,
+        "rel_err": 5.951453567831777e-05
+      },
+      {
+        "layer": 13,
+        "max_abs_err": 0.03125,
+        "rel_err": 4.452526263776235e-05
+      },
+      {
+        "layer": 14,
+        "max_abs_err": 0.03125,
+        "rel_err": 4.113445174880326e-05
+      },
+      {
+        "layer": 15,
+        "max_abs_err": 0.046875,
+        "rel_err": 4.3994241423206404e-05
+      },
+      {
+        "layer": 16,
+        "max_abs_err": 0.0625,
+        "rel_err": 4.4446202082326636e-05
+      },
+      {
+        "layer": 17,
+        "max_abs_err": 0.03125,
+        "rel_err": 5.208490983932279e-05
+      },
+      {
+        "layer": 18,
+        "max_abs_err": 0.0625,
+        "rel_err": 5.8726160204969347e-05
+      },
+      {
+        "layer": 19,
+        "max_abs_err": 0.046875,
+        "rel_err": 6.906363705638796e-05
+      },
+      {
+        "layer": 20,
+        "max_abs_err": 0.125,
+        "rel_err": 7.34630084480159e-05
+      },
+      {
+        "layer": 21,
+        "max_abs_err": 0.25,
+        "rel_err": 8.857555076247081e-05
+      },
+      {
+        "layer": 22,
+        "max_abs_err": 0.5,
+        "rel_err": 0.00010171348549192771
+      },
+      {
+        "layer": 23,
+        "max_abs_err": 0.125,
+        "rel_err": 0.00011415424523875117
+      },
+      {
+        "layer": 24,
+        "max_abs_err": 0.125,
+        "rel_err": 0.00013732358638662845
+      },
+      {
+        "layer": 25,
+        "max_abs_err": 0.25,
+        "rel_err": 0.00014263074262998998
+      },
+      {
+        "layer": 26,
+        "max_abs_err": 8.0,
+        "rel_err": 0.0009186965180560946
+      },
+      {
+        "layer": 27,
+        "max_abs_err": 0.375,
+        "rel_err": 0.0004874526057392359
+      }
+    ],
+    "grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "method": "awq",
+    "packing_roundtrip_verified_units": 2,
+    "timing": {
+      "capture": 0.10286047700014933,
+      "compress": 116.31686153700025,
+      "propagate": 5.24643734399956,
+      "stats": 8.968992854999442
+    }
+  },
+  "condition": "q2_b8",
+  "dev": {
+    "N": 16352,
+    "mean_nll": 2.5267758677383694,
+    "n_windows": 32,
+    "per_seq": [
+      1214.0057373046875,
+      1032.93115234375,
+      1130.806396484375,
+      1192.8853759765625,
+      1356.8270263671875,
+      1668.9427490234375,
+      1185.81787109375,
+      1459.660888671875,
+      1265.360595703125,
+      1161.6197509765625,
+      1541.44873046875,
+      1825.650634765625,
+      1531.496337890625,
+      1190.0733642578125,
+      1118.0399169921875,
+      1446.20166015625,
+      1562.0565185546875,
+      998.45361328125,
+      1137.8773193359375,
+      1377.5224609375,
+      1084.889892578125,
+      1041.60986328125,
+      1516.2535400390625,
+      1434.248779296875,
+      590.620361328125,
+      1512.69580078125,
+      1225.64404296875,
+      1134.69921875,
+      1555.0020751953125,
+      1310.6845703125,
+      1160.064453125,
+      1353.748291015625
+    ],
+    "ppl": 12.51309714950039
+  },
+  "env": {
+    "argv": [
+      "scripts/task1.py",
+      "uniform"
+    ],
+    "attn_implementation": "sdpa",
+    "cuda_available": true,
+    "cuda_capability": [
+      8,
+      9
+    ],
+    "cuda_device": "NVIDIA L4",
+    "cuda_version": "13.0",
+    "cudnn_version": 92800,
+    "data_repo_commit": "6a0a9ec9da7ef3d313ee3036cfec493886723644",
+    "datasets": "4.8.5",
+    "git_commit": "e85961c9679c22939d7b2f75454b65190f6ed1bf",
+    "gpu_total_memory_bytes": 23659151360,
+    "huggingface_hub": "0.36.2",
+    "model": "Qwen/Qwen2.5-1.5B",
+    "model_revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "numpy": "2.4.6",
+    "peft": "0.17.1",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "precision": "float16",
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "scipy": "1.16.3",
+    "sdpa_backends_enabled": {
+      "cudnn": true,
+      "flash": true,
+      "math": true,
+      "mem_efficient": true
+    },
+    "source_revisions": {
+      "repos": {
+        "c4": "allenai/c4",
+        "gsm8k": "openai/gsm8k",
+        "hellaswag": "Rowan/hellaswag",
+        "model_base": "Qwen/Qwen2.5-1.5B",
+        "model_draft": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_target": "Qwen/Qwen2.5-1.5B-Instruct",
+        "wikitext": "Salesforce/wikitext"
+      },
+      "revisions": {
+        "c4": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+        "gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+        "hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+        "model_base": "8faed761d45a263340a0528343f099c05c9a4323",
+        "model_draft": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "model_target": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "wikitext": "b08601e04326c79dfdd32d625aee71d232d685c3"
+      }
+    },
+    "tf32_matmul": true,
+    "time": "2026-11-23 17:45:39 UTC",
+    "tokenizer": "Qwen/Qwen2.5-1.5B@8faed761d45a263340a0528343f099c05c9a4323",
+    "torch": "2.14.1+cu130",
+    "transformers": "4.57.1"
+  },
+  "latency": {
+    "batch_size": 1,
+    "decode_64": {
+      "all": [
+        2.115470576999769,
+        2.0932016279998606,
+        2.0816974919998756,
+        2.076296475000163,
+        2.0848234370000682
+      ],
+      "mean": 2.090297921799947,
+      "peak_allocated_bytes": 3267788288,
+      "per_token_ms": 32.660905028124176,
+      "prompt_len": 512,
+      "std": 0.015346595457639686
+    },
+    "kernels": "dense FP16 (torch SDPA + cuBLAS)",
+    "model_allocated_bytes": 3095952896,
+    "prefill_2048": {
+      "all": [
+        0.17488878299991484,
+        0.17679423699996732,
+        0.16734548199997334,
+        0.16400082899986046,
+        0.16505564899989622
+      ],
+      "max": 0.17679423699996732,
+      "mean": 0.16961699599992244,
+      "median": 0.16734548199997334,
+      "min": 0.16400082899986046,
+      "peak_allocated_bytes": 3783306752,
+      "reps": 5,
+      "std": 0.005848322849869274,
+      "unit": "s",
+      "warmup": 2
+    },
+    "prefill_512": {
+      "all": [
+        0.046051341000065804,
+        0.04411633300014728,
+        0.043465080000032685,
+        0.04571882599998389,
+        0.04430660599996372
+      ],
+      "max": 0.046051341000065804,
+      "mean": 0.04473163720003868,
+      "median": 0.04430660599996372,
+      "min": 0.043465080000032685,
+      "peak_allocated_bytes": 3267788288,
+      "reps": 5,
+      "std": 0.001104488316695958,
+      "unit": "s",
+      "warmup": 2
+    },
+    "reps": 5,
+    "unit": "seconds",
+    "warmup": 2
+  },
+  "n_eligible": 1310195712,
+  "params": {
+    "bits": 8,
+    "group": 128,
+    "method": "awq",
+    "rounding": "half-to-even",
+    "scale": "fp16",
+    "zero": "uint8"
+  },
+  "quality": {
+    "c4val": {
+      "N": 50000,
+      "mean_nll": 2.705835176010132,
+      "n_windows": 177,
+      "ppl": 14.966811393985909
+    },
+    "continuations": [
+      {
+        "continuation": "",
+        "prompt": " = Robert Boulter = \n",
+        "source_row": 1
+      },
+      {
+        "continuation": " National Theatre in London . He also appeared in the 2001 film The Last King of Scotland , playing the role of the British Army officer , Major",
+        "prompt": " Robert Boulter is an English film , television and theatre actor . He had a guest @-@ starring role on the television series The Bill in 2000 . This was followed by a starring role in the play Herons written by Simon Stephens , which was performed in 2001 at the",
+        "source_row": 3
+      }
+    ],
+    "hellaswag": {
+      "acc": 0.46484375,
+      "acc_norm": 0.5859375,
+      "n": 512
+    },
+    "hellaswag_diag512": {
+      "acc": 0.46484375,
+      "acc_norm": 0.5859375,
+      "n": 512
+    },
+    "wikitext2": {
+      "N": 50000,
+      "mean_nll": 2.7800175624084473,
+      "n_windows": 437,
+      "ppl": 16.11930403934308
+    }
+  },
+  "storage": {
+    "dense_fp16_eligible_bytes": 2620391424,
+    "dense_fp16_total_bytes": 3087428608,
+    "eligible_nonzeros": 1297533195,
+    "eligible_sparsity": 0.009664599635019977,
+    "n_eligible": 1310195712,
+    "n_other_unique": 233518592,
+    "nominal_bits_per_eligible_weight_dense": 16.0,
+    "nominal_bits_per_eligible_weight_packed": 8.188025210084033,
+    "nominal_bits_per_eligible_weight_sparse16": 16.84536640583968,
+    "packed_eligible_bytes": 1340989440,
+    "packed_total_bytes": 1808026624,
+    "sparse16_eligible_bytes": 2758840854,
+    "sparse16_total_bytes": 3225878038,
+    "tied_embeddings": true,
+    "uncompressed_other_bytes": 467037184
+  },
+  "zeros": 12662517
+}

@@ -1,0 +1,1570 @@
+{
+  "layers.0.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 325.4676971435547,
+    "out_err_rel": 2.890040490498357e-05
+  },
+  "layers.0.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 3406.30078125,
+    "out_err_rel": 1.2664162204275913e-05
+  },
+  "layers.0.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 959.2557983398438,
+    "out_err_rel": 4.837488711471722e-05
+  },
+  "layers.0.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 284.61536407470703,
+    "out_err_rel": 2.959001218153865e-05
+  },
+  "layers.0.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 5239.1114501953125,
+    "out_err_rel": 2.442393780868941e-06
+  },
+  "layers.0.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 2334.1066284179688,
+    "out_err_rel": 3.041984993009578e-05
+  },
+  "layers.0.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 115.83659553527832,
+    "out_err_rel": 5.898204259216655e-05
+  },
+  "layers.1.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 167087.62109375,
+    "out_err_rel": 4.587856297892586e-05
+  },
+  "layers.1.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 139714.140625,
+    "out_err_rel": 6.174623783831654e-06
+  },
+  "layers.1.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 255.36204147338867,
+    "out_err_rel": 1.432707196445352e-05
+  },
+  "layers.1.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 157.3997459411621,
+    "out_err_rel": 3.585414502089128e-05
+  },
+  "layers.1.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 833.7814025878906,
+    "out_err_rel": 1.5819156157790185e-05
+  },
+  "layers.1.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 116393.640625,
+    "out_err_rel": 3.846169423139555e-05
+  },
+  "layers.1.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 53.97538375854492,
+    "out_err_rel": 2.820937327951832e-05
+  },
+  "layers.10.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 589.78564453125,
+    "out_err_rel": 3.373538281046317e-05
+  },
+  "layers.10.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8153.783203125,
+    "out_err_rel": 1.396883211853857e-05
+  },
+  "layers.10.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 506.9866714477539,
+    "out_err_rel": 1.6994580914106356e-05
+  },
+  "layers.10.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 429.9143981933594,
+    "out_err_rel": 5.515145802741097e-05
+  },
+  "layers.10.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2602.8717041015625,
+    "out_err_rel": 2.8958281598976037e-05
+  },
+  "layers.10.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 7633.1346435546875,
+    "out_err_rel": 4.5236925796338305e-05
+  },
+  "layers.10.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 443.4895935058594,
+    "out_err_rel": 4.807599041231244e-05
+  },
+  "layers.11.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 541.8930969238281,
+    "out_err_rel": 3.3399980379731806e-05
+  },
+  "layers.11.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8775.319580078125,
+    "out_err_rel": 1.1265749624922774e-05
+  },
+  "layers.11.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 604.3643035888672,
+    "out_err_rel": 1.8115885857209048e-05
+  },
+  "layers.11.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 517.4239196777344,
+    "out_err_rel": 4.566468900026837e-05
+  },
+  "layers.11.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3040.04833984375,
+    "out_err_rel": 3.279683391998906e-05
+  },
+  "layers.11.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 7672.60498046875,
+    "out_err_rel": 4.5971391299466276e-05
+  },
+  "layers.11.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 434.58194732666016,
+    "out_err_rel": 5.0436323637738085e-05
+  },
+  "layers.12.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 526.6366882324219,
+    "out_err_rel": 3.651198263967313e-05
+  },
+  "layers.12.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 7697.1400146484375,
+    "out_err_rel": 1.3913769471346026e-05
+  },
+  "layers.12.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 673.6774291992188,
+    "out_err_rel": 2.416349449765198e-05
+  },
+  "layers.12.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 317.52510833740234,
+    "out_err_rel": 5.3435407647508745e-05
+  },
+  "layers.12.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3147.9899291992188,
+    "out_err_rel": 3.443490444654507e-05
+  },
+  "layers.12.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 7011.9473876953125,
+    "out_err_rel": 4.56272521967768e-05
+  },
+  "layers.12.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 362.0479736328125,
+    "out_err_rel": 3.746904994472883e-05
+  },
+  "layers.13.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 421.15086364746094,
+    "out_err_rel": 3.51452037741658e-05
+  },
+  "layers.13.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6670.896240234375,
+    "out_err_rel": 1.505765680290094e-05
+  },
+  "layers.13.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 467.79911041259766,
+    "out_err_rel": 1.68878274258802e-05
+  },
+  "layers.13.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 411.38209533691406,
+    "out_err_rel": 3.693905447007168e-05
+  },
+  "layers.13.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2304.1571655273438,
+    "out_err_rel": 3.0837906269429215e-05
+  },
+  "layers.13.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6386.3111572265625,
+    "out_err_rel": 4.351294220906067e-05
+  },
+  "layers.13.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 313.32752227783203,
+    "out_err_rel": 3.849326388235512e-05
+  },
+  "layers.14.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 457.80728912353516,
+    "out_err_rel": 3.391436733579385e-05
+  },
+  "layers.14.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6676.077880859375,
+    "out_err_rel": 1.5210943248430865e-05
+  },
+  "layers.14.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 713.6805114746094,
+    "out_err_rel": 2.264810483069974e-05
+  },
+  "layers.14.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 253.81136322021484,
+    "out_err_rel": 6.043669287630861e-05
+  },
+  "layers.14.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4568.4112548828125,
+    "out_err_rel": 4.0034337877050757e-05
+  },
+  "layers.14.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6801.79345703125,
+    "out_err_rel": 4.6507010020105216e-05
+  },
+  "layers.14.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 556.0943450927734,
+    "out_err_rel": 5.42228927844522e-05
+  },
+  "layers.15.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 452.8555679321289,
+    "out_err_rel": 3.5652850836469005e-05
+  },
+  "layers.15.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6955.9647216796875,
+    "out_err_rel": 1.5132551822725737e-05
+  },
+  "layers.15.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 499.5153045654297,
+    "out_err_rel": 1.8584999866818268e-05
+  },
+  "layers.15.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 470.68482208251953,
+    "out_err_rel": 6.353807237401637e-05
+  },
+  "layers.15.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3726.5037841796875,
+    "out_err_rel": 6.988924214301469e-06
+  },
+  "layers.15.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6598.090087890625,
+    "out_err_rel": 4.672256175990132e-05
+  },
+  "layers.15.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 460.08983612060547,
+    "out_err_rel": 5.6644272114101083e-05
+  },
+  "layers.16.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 534.3772430419922,
+    "out_err_rel": 3.7616585357718386e-05
+  },
+  "layers.16.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8021.3182373046875,
+    "out_err_rel": 1.6867883222355058e-05
+  },
+  "layers.16.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 641.0646667480469,
+    "out_err_rel": 1.999126512711866e-05
+  },
+  "layers.16.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 445.7824401855469,
+    "out_err_rel": 6.593818206286135e-05
+  },
+  "layers.16.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3448.156494140625,
+    "out_err_rel": 3.880906523020019e-05
+  },
+  "layers.16.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 7904.72314453125,
+    "out_err_rel": 5.1160337313899616e-05
+  },
+  "layers.16.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 504.75823974609375,
+    "out_err_rel": 5.064742758876563e-05
+  },
+  "layers.17.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 765.4768829345703,
+    "out_err_rel": 3.843676606705695e-05
+  },
+  "layers.17.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8913.03369140625,
+    "out_err_rel": 1.6472334070842357e-05
+  },
+  "layers.17.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 368.91815185546875,
+    "out_err_rel": 1.91250515612495e-05
+  },
+  "layers.17.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 342.0874481201172,
+    "out_err_rel": 4.351038792919772e-05
+  },
+  "layers.17.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3021.4571533203125,
+    "out_err_rel": 3.3378894762119416e-05
+  },
+  "layers.17.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8981.1923828125,
+    "out_err_rel": 5.0841203688836106e-05
+  },
+  "layers.17.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 678.2295379638672,
+    "out_err_rel": 5.22480684455222e-05
+  },
+  "layers.18.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 993.3562927246094,
+    "out_err_rel": 4.0512595906579955e-05
+  },
+  "layers.18.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 9745.22119140625,
+    "out_err_rel": 1.7860022372457685e-05
+  },
+  "layers.18.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 547.3229217529297,
+    "out_err_rel": 2.2341642960144522e-05
+  },
+  "layers.18.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 611.8278350830078,
+    "out_err_rel": 5.272349397667155e-05
+  },
+  "layers.18.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3087.650390625,
+    "out_err_rel": 3.806758301848814e-05
+  },
+  "layers.18.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 9729.230712890625,
+    "out_err_rel": 4.7597016322902406e-05
+  },
+  "layers.18.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 519.3273162841797,
+    "out_err_rel": 4.620308477528112e-05
+  },
+  "layers.19.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 1856.0484313964844,
+    "out_err_rel": 3.9495662727513005e-05
+  },
+  "layers.19.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 11239.950439453125,
+    "out_err_rel": 1.6026361152591325e-05
+  },
+  "layers.19.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 517.4070281982422,
+    "out_err_rel": 2.1171787188547905e-05
+  },
+  "layers.19.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 594.4282379150391,
+    "out_err_rel": 5.529864645363705e-05
+  },
+  "layers.19.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4145.916259765625,
+    "out_err_rel": 4.154826950934215e-05
+  },
+  "layers.19.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 12174.81201171875,
+    "out_err_rel": 4.799142520406013e-05
+  },
+  "layers.19.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 1022.0331573486328,
+    "out_err_rel": 7.733757152797174e-05
+  },
+  "layers.2.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 96991.6875,
+    "out_err_rel": 2.2411763724790938e-05
+  },
+  "layers.2.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 87297.302734375,
+    "out_err_rel": 5.789075037705285e-06
+  },
+  "layers.2.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 493.65370178222656,
+    "out_err_rel": 1.9310957869616026e-05
+  },
+  "layers.2.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 98.15007781982422,
+    "out_err_rel": 3.295595628212844e-05
+  },
+  "layers.2.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2210.5931396484375,
+    "out_err_rel": 2.264452740479243e-05
+  },
+  "layers.2.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 56856.46875,
+    "out_err_rel": 9.313080100385448e-05
+  },
+  "layers.2.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 209.2891731262207,
+    "out_err_rel": 4.229053445760053e-05
+  },
+  "layers.20.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 1727.3910217285156,
+    "out_err_rel": 3.837837869299981e-05
+  },
+  "layers.20.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 11623.496337890625,
+    "out_err_rel": 1.689917719000644e-05
+  },
+  "layers.20.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 523.4515686035156,
+    "out_err_rel": 1.9847101700669734e-05
+  },
+  "layers.20.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 1005.3576202392578,
+    "out_err_rel": 4.63812226760343e-05
+  },
+  "layers.20.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4486.201904296875,
+    "out_err_rel": 5.124253797616065e-05
+  },
+  "layers.20.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 12070.799072265625,
+    "out_err_rel": 4.440203370462021e-05
+  },
+  "layers.20.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 1266.9478759765625,
+    "out_err_rel": 7.581735464081516e-05
+  },
+  "layers.21.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 3066.9263916015625,
+    "out_err_rel": 3.8635002449187424e-05
+  },
+  "layers.21.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 16719.05615234375,
+    "out_err_rel": 1.5226653141354048e-05
+  },
+  "layers.21.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 546.6694946289062,
+    "out_err_rel": 2.2503253711974398e-05
+  },
+  "layers.21.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 1051.3212890625,
+    "out_err_rel": 2.8176618636305004e-05
+  },
+  "layers.21.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4420.6727294921875,
+    "out_err_rel": 4.785438780789274e-05
+  },
+  "layers.21.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 17249.765625,
+    "out_err_rel": 4.245692246119562e-05
+  },
+  "layers.21.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 1195.1426391601562,
+    "out_err_rel": 8.007201193501114e-05
+  },
+  "layers.22.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 4109.979431152344,
+    "out_err_rel": 3.522854630495309e-05
+  },
+  "layers.22.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 21378.09228515625,
+    "out_err_rel": 1.4989474602375402e-05
+  },
+  "layers.22.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 640.3221740722656,
+    "out_err_rel": 2.508334592538978e-05
+  },
+  "layers.22.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 604.9735565185547,
+    "out_err_rel": 3.899257578029518e-05
+  },
+  "layers.22.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4306.359375,
+    "out_err_rel": 5.167131815707221e-05
+  },
+  "layers.22.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 21406.6171875,
+    "out_err_rel": 4.364353125916231e-05
+  },
+  "layers.22.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 1308.7738952636719,
+    "out_err_rel": 8.135073097238326e-05
+  },
+  "layers.23.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 4950.214599609375,
+    "out_err_rel": 3.28524461349384e-05
+  },
+  "layers.23.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 22090.83837890625,
+    "out_err_rel": 1.3981578391018548e-05
+  },
+  "layers.23.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 749.0676574707031,
+    "out_err_rel": 2.870945256596601e-05
+  },
+  "layers.23.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 1143.6325378417969,
+    "out_err_rel": 3.50139158549711e-05
+  },
+  "layers.23.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 6388.75537109375,
+    "out_err_rel": 6.512909399885512e-05
+  },
+  "layers.23.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 23236.92919921875,
+    "out_err_rel": 4.484544495188696e-05
+  },
+  "layers.23.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 2190.7329711914062,
+    "out_err_rel": 9.364523481899479e-05
+  },
+  "layers.24.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 6353.9949951171875,
+    "out_err_rel": 3.277445093630494e-05
+  },
+  "layers.24.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 22635.28564453125,
+    "out_err_rel": 1.5417438092721837e-05
+  },
+  "layers.24.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 674.8743896484375,
+    "out_err_rel": 2.7424461855721396e-05
+  },
+  "layers.24.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 1388.5790100097656,
+    "out_err_rel": 3.312848228913413e-05
+  },
+  "layers.24.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 5095.2459716796875,
+    "out_err_rel": 5.716994892742446e-05
+  },
+  "layers.24.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 24578.5009765625,
+    "out_err_rel": 4.222654028751523e-05
+  },
+  "layers.24.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 2685.2595825195312,
+    "out_err_rel": 6.474412755244494e-05
+  },
+  "layers.25.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8075.4874267578125,
+    "out_err_rel": 3.414576530776138e-05
+  },
+  "layers.25.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 21491.818359375,
+    "out_err_rel": 1.8552443431812375e-05
+  },
+  "layers.25.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 560.1497192382812,
+    "out_err_rel": 2.794804675477717e-05
+  },
+  "layers.25.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2005.4012451171875,
+    "out_err_rel": 2.7237753729585415e-05
+  },
+  "layers.25.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 6069.6748046875,
+    "out_err_rel": 8.238740607620942e-05
+  },
+  "layers.25.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 25144.939453125,
+    "out_err_rel": 3.9577742939088576e-05
+  },
+  "layers.25.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 2204.4537353515625,
+    "out_err_rel": 3.702732726761468e-05
+  },
+  "layers.26.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 268401.80859375,
+    "out_err_rel": 1.57952614485142e-05
+  },
+  "layers.26.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 21753.02392578125,
+    "out_err_rel": 2.0927836970131234e-05
+  },
+  "layers.26.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 595.4904937744141,
+    "out_err_rel": 3.196705122888509e-05
+  },
+  "layers.26.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2675.6902465820312,
+    "out_err_rel": 2.1386166978272905e-05
+  },
+  "layers.26.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4910.19140625,
+    "out_err_rel": 6.0721426596778326e-05
+  },
+  "layers.26.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 26325.40380859375,
+    "out_err_rel": 3.6019367700164555e-05
+  },
+  "layers.26.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 3354.7184448242188,
+    "out_err_rel": 3.6105748253042426e-05
+  },
+  "layers.27.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 74686.1875,
+    "out_err_rel": 2.0120386620240607e-05
+  },
+  "layers.27.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 44629.9013671875,
+    "out_err_rel": 1.5607268371926395e-05
+  },
+  "layers.27.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 470.9847640991211,
+    "out_err_rel": 2.7353519941237458e-05
+  },
+  "layers.27.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 5856.904541015625,
+    "out_err_rel": 2.294484324328904e-05
+  },
+  "layers.27.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 4705.946533203125,
+    "out_err_rel": 5.717304269403708e-05
+  },
+  "layers.27.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 46538.4599609375,
+    "out_err_rel": 3.2658132035160384e-05
+  },
+  "layers.27.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 3226.68603515625,
+    "out_err_rel": 3.579118863150871e-05
+  },
+  "layers.3.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 1106.220947265625,
+    "out_err_rel": 5.096221479312782e-05
+  },
+  "layers.3.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 56807.6015625,
+    "out_err_rel": 5.927037853700071e-06
+  },
+  "layers.3.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 547.2703247070312,
+    "out_err_rel": 1.67937103088081e-05
+  },
+  "layers.3.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 156.458740234375,
+    "out_err_rel": 3.2193697956622004e-05
+  },
+  "layers.3.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2584.80517578125,
+    "out_err_rel": 2.1906220577717695e-05
+  },
+  "layers.3.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 30968.072265625,
+    "out_err_rel": 9.241725328454413e-05
+  },
+  "layers.3.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 313.59584045410156,
+    "out_err_rel": 5.7990027691780034e-05
+  },
+  "layers.4.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 910.6108856201172,
+    "out_err_rel": 4.156804066754285e-05
+  },
+  "layers.4.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 28409.34814453125,
+    "out_err_rel": 6.905184086984325e-06
+  },
+  "layers.4.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 573.2573089599609,
+    "out_err_rel": 2.1629536176969305e-05
+  },
+  "layers.4.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 170.74740982055664,
+    "out_err_rel": 3.408090351802976e-05
+  },
+  "layers.4.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2976.2374877929688,
+    "out_err_rel": 2.5972510324627582e-05
+  },
+  "layers.4.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 17425.2001953125,
+    "out_err_rel": 6.954570606760018e-05
+  },
+  "layers.4.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 407.9531784057617,
+    "out_err_rel": 5.980510875693264e-05
+  },
+  "layers.5.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 860.0580291748047,
+    "out_err_rel": 4.112755192330921e-05
+  },
+  "layers.5.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 60879.1181640625,
+    "out_err_rel": 5.70022022981869e-06
+  },
+  "layers.5.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 656.9728546142578,
+    "out_err_rel": 2.5503136816075785e-05
+  },
+  "layers.5.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 314.2824478149414,
+    "out_err_rel": 5.100533598922246e-05
+  },
+  "layers.5.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3080.5870361328125,
+    "out_err_rel": 2.476323810799136e-05
+  },
+  "layers.5.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 39282.21875,
+    "out_err_rel": 7.619122588187371e-05
+  },
+  "layers.5.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 569.8398132324219,
+    "out_err_rel": 6.944054057870277e-05
+  },
+  "layers.6.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 775.4586944580078,
+    "out_err_rel": 3.405812613004207e-05
+  },
+  "layers.6.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 10839.152099609375,
+    "out_err_rel": 1.2371291410304527e-05
+  },
+  "layers.6.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 776.5666351318359,
+    "out_err_rel": 2.4011320099500553e-05
+  },
+  "layers.6.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 190.81971740722656,
+    "out_err_rel": 3.6514344960604925e-05
+  },
+  "layers.6.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3931.1898803710938,
+    "out_err_rel": 2.241524907966836e-05
+  },
+  "layers.6.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 9130.263671875,
+    "out_err_rel": 4.9280757439425284e-05
+  },
+  "layers.6.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 466.1769561767578,
+    "out_err_rel": 8.225813195363131e-05
+  },
+  "layers.7.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 765.5338897705078,
+    "out_err_rel": 3.473483305866993e-05
+  },
+  "layers.7.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 9035.095703125,
+    "out_err_rel": 1.4744768978771113e-05
+  },
+  "layers.7.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 417.18280029296875,
+    "out_err_rel": 1.81545982296391e-05
+  },
+  "layers.7.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 279.69713592529297,
+    "out_err_rel": 4.0071793418304286e-05
+  },
+  "layers.7.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 2207.142578125,
+    "out_err_rel": 2.5867450923579453e-05
+  },
+  "layers.7.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8534.5478515625,
+    "out_err_rel": 4.793206172297646e-05
+  },
+  "layers.7.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 347.4375534057617,
+    "out_err_rel": 5.8158286624416226e-05
+  },
+  "layers.8.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 684.3529052734375,
+    "out_err_rel": 3.237467098400144e-05
+  },
+  "layers.8.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 9076.00341796875,
+    "out_err_rel": 1.3131886609877987e-05
+  },
+  "layers.8.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 659.3005065917969,
+    "out_err_rel": 1.9913067478888346e-05
+  },
+  "layers.8.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 279.3545684814453,
+    "out_err_rel": 4.426204930514319e-05
+  },
+  "layers.8.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3570.1739501953125,
+    "out_err_rel": 3.177448892909092e-05
+  },
+  "layers.8.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8456.117919921875,
+    "out_err_rel": 4.838802553562254e-05
+  },
+  "layers.8.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 416.93687438964844,
+    "out_err_rel": 5.244009686846055e-05
+  },
+  "layers.9.down_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 626.4015350341797,
+    "out_err_rel": 3.3076504464891016e-05
+  },
+  "layers.9.gate_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 8060.920654296875,
+    "out_err_rel": 1.4840224775480294e-05
+  },
+  "layers.9.k_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 615.9697418212891,
+    "out_err_rel": 2.0990578441565494e-05
+  },
+  "layers.9.o_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 261.83807373046875,
+    "out_err_rel": 4.331748888741961e-05
+  },
+  "layers.9.q_proj": {
+    "bits": 8,
+    "bytes_metadata": 55296,
+    "bytes_payload": 2359296,
+    "bytes_total": 2414592,
+    "out_err_abs": 3032.4767456054688,
+    "out_err_rel": 3.527317402033715e-05
+  },
+  "layers.9.up_proj": {
+    "bits": 8,
+    "bytes_metadata": 322560,
+    "bytes_payload": 13762560,
+    "bytes_total": 14085120,
+    "out_err_abs": 7785.0313720703125,
+    "out_err_rel": 4.5355255841822623e-05
+  },
+  "layers.9.v_proj": {
+    "bits": 8,
+    "bytes_metadata": 9216,
+    "bytes_payload": 393216,
+    "bytes_total": 402432,
+    "out_err_abs": 367.6713333129883,
+    "out_err_rel": 4.6978123945892974e-05
+  }
+}

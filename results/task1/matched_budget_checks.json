@@ -1,0 +1,26 @@
+{
+  "b3": {
+    "q2_total_bytes": 989154304,
+    "q3_total_bytes": 989006848,
+    "slack_bytes": 147456,
+    "within_budget": true
+  },
+  "b4": {
+    "q2_total_bytes": 1152928768,
+    "q3_total_bytes": 1152879616,
+    "slack_bytes": 49152,
+    "within_budget": true
+  },
+  "s50": {
+    "equal": true,
+    "p1_zeros": 655097856,
+    "p2_zeros": 655097856,
+    "p3_zeros": 655097856
+  },
+  "s75": {
+    "equal": true,
+    "p1_zeros": 982646784,
+    "p2_zeros": 982646784,
+    "p3_zeros": 982646784
+  }
+}
