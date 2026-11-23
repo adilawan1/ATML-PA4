@@ -47,8 +47,12 @@ def main():
         bhs = {s["order"]: s for s in base["_hs"]}
         hs = m["_hs"][:512]
         d_accn = 100 * np.mean([(s["pred_norm"] == s["gold"]) - (bhs[s["order"]]["pred_norm"] == s["gold"]) for s in hs])
+        is_quant = n.startswith("q")
         rows.append(dict(
-            condition=n, sparsity=m["achieved_sparsity"],
+            condition=n,
+            # pruning sparsity; for quantized models zeros are weights that merely round to 0 (reported separately)
+            sparsity=np.nan if is_quant else m["achieved_sparsity"],
+            frac_dequantized_to_zero=m["achieved_sparsity"] if is_quant else np.nan,
             bits_per_weight=st.get("nominal_bits_per_eligible_weight_packed", st["nominal_bits_per_eligible_weight_sparse16"] if n.startswith("p") else 16.0),
             wiki_ppl=q["wikitext2"]["ppl"], d_wiki_ppl=q["wikitext2"]["ppl"] - base["quality"]["wikitext2"]["ppl"],
             c4_ppl=q["c4val"]["ppl"], d_c4_ppl=q["c4val"]["ppl"] - base["quality"]["c4val"]["ppl"],
@@ -56,7 +60,8 @@ def main():
             hs_acc=q["hellaswag"]["acc"], hs_acc_norm=q["hellaswag"]["acc_norm"], hs_n=q["hellaswag"]["n"],
             hs512_acc_norm=q["hellaswag_diag512"]["acc_norm"], d_hs512_acc_norm_pp=d_accn,
             dev_nll=m["dev"]["mean_nll"], calib_err=m.get("calib_out_err_rel_mean"),
-            dense_fp16_MB=st["dense_fp16_total_bytes"] / 1e6, sparse16_MB=st["sparse16_total_bytes"] / 1e6,
+            dense_fp16_MB=st["dense_fp16_total_bytes"] / 1e6,
+            sparse16_MB=np.nan if is_quant else st["sparse16_total_bytes"] / 1e6,
             packed_MB=st.get("packed_total_bytes", np.nan) / 1e6 if st.get("packed_total_bytes") else np.nan,
             compress_s=m.get("compression", {}).get("compression_seconds_total", 0.0),
             prefill512_ms=1000 * lat["prefill_512"]["mean"], prefill2048_ms=1000 * lat["prefill_2048"]["mean"],
@@ -73,10 +78,11 @@ def main():
         A, B = M[a]["_ppl"][suite], M[b]["_ppl"][suite]
         return bootstrap_ppl_diff(A["nll"], A["ntok"], B["nll"], B["ntok"])
 
-    def hs_boot(a, b, key="pred_norm", n=512):
+    def hs_boot(a, b, key="pred_norm"):
+        """Paired over every HellaSwag ID scored for both conditions (2,000 if both are full, else the first 512)."""
         A = {s["order"]: s for s in M[a]["_hs"]}
         B = {s["order"]: s for s in M[b]["_hs"]}
-        common = sorted(set(A) & set(B))[:n]
+        common = sorted(set(A) & set(B))
         return bootstrap_mean_diff([float(A[o][key] == A[o]["gold"]) for o in common],
                                    [float(B[o][key] == B[o]["gold"]) for o in common])
 
@@ -86,11 +92,11 @@ def main():
         if a in M and b in M:
             boots[f"{a}-{b}"] = dict(wikitext2_ppl=ppl_boot(a, b, "wikitext2"), c4val_ppl=ppl_boot(a, b, "c4val"),
                                      hellaswag_acc_norm=hs_boot(a, b), hellaswag_acc=hs_boot(a, b, "pred"),
-                                     hellaswag_n=min(len(M[a]["_hs"]), len(M[b]["_hs"]), 512))
+                                     hellaswag_n=len(set(s["order"] for s in M[a]["_hs"]) & set(s["order"] for s in M[b]["_hs"])))
     write_json(R / "bootstrap_pairs.json", boots)
     brow = []
     for k, v in boots.items():
-        brow.append(dict(pair=k, **{f"{m}_{s}": v[m][s] for m in ("wikitext2_ppl", "c4val_ppl", "hellaswag_acc_norm")
+        brow.append(dict(pair=k, hellaswag_n=v["hellaswag_n"], **{f"{m}_{s}": v[m][s] for m in ("wikitext2_ppl", "c4val_ppl", "hellaswag_acc_norm")
                                     for s in ("point", "ci_low", "ci_high")}))
     if brow:
         write_table(pd.DataFrame(brow), "task1_bootstrap", caption="Paired 95% bootstrap CIs (2000 resamples).")
