@@ -48,9 +48,14 @@ Nothing from the datasets is committed here. `scripts/get_data.sh` clones the co
 
 ```bash
 python $PA4_DATA/scripts/setup_data.py --public        # C4/WikiText-2/HellaSwag/GSM8K locked selections
-python $PA4_DATA/scripts/setup_data.py --prefix-banks  # course teacher / original-draft prefix banks (GPU)
+python scripts/make_prefix_banks.py                     # course teacher / original-draft prefix banks (GPU)
 python $PA4_DATA/scripts/check_setup.py
 ```
+
+`setup_data.py --prefix-banks` itself fails under the pinned `transformers==4.57.1` (it passes `generator=` to
+`generate()`, which that version rejects). `scripts/make_prefix_banks.py` is a drop-in that reuses the course script's
+prompts, per-prompt seeds, position sampler, record format and output path, sampling each response with a seeded
+ancestral sampler (temperature 1, top-p 1, no top-k, stop at EOS, cap 192); a note is written next to the bank.
 
 The first `--public` run resolves and locks the Hugging Face commits in `data/local_source_revisions.json`; keep that
 file (the notebooks place the data repo on Google Drive) and report those revisions. All models are loaded at the
