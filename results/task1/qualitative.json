@@ -217,5 +217,1414 @@
       }
     ]
   },
-  "hellaswag": []
+  "hellaswag": [
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -28.58,
+            -13.12,
+            -17.37,
+            -14.69
+          ],
+          "pred_norm": 3
+        },
+        "p1_s25": {
+          "ll": [
+            -31.41,
+            -13.55,
+            -17.47,
+            -14.87
+          ],
+          "pred_norm": 3
+        },
+        "p1_s50": {
+          "ll": [
+            -31.1,
+            -25.66,
+            -29.87,
+            -32.56
+          ],
+          "pred_norm": 3
+        },
+        "p1_s75": {
+          "ll": [
+            -76.59,
+            -73.19,
+            -93.17,
+            -118.34
+          ],
+          "pred_norm": 2
+        },
+        "p2_24_s50": {
+          "ll": [
+            -26.23,
+            -16.3,
+            -21.07,
+            -30.2
+          ],
+          "pred_norm": 2
+        },
+        "p2_s25": {
+          "ll": [
+            -29.0,
+            -12.47,
+            -18.81,
+            -14.49
+          ],
+          "pred_norm": 3
+        },
+        "p2_s50": {
+          "ll": [
+            -24.26,
+            -11.83,
+            -14.31,
+            -21.7
+          ],
+          "pred_norm": 2
+        },
+        "p2_s75": {
+          "ll": [
+            -56.73,
+            -47.44,
+            -71.14,
+            -75.52
+          ],
+          "pred_norm": 3
+        },
+        "p3_s50": {
+          "ll": [
+            -26.4,
+            -10.52,
+            -15.87,
+            -20.76
+          ],
+          "pred_norm": 1
+        },
+        "p3_s75": {
+          "ll": [
+            -37.94,
+            -25.42,
+            -33.39,
+            -45.52
+          ],
+          "pred_norm": 2
+        },
+        "q1_b3": {
+          "ll": [
+            -29.92,
+            -15.91,
+            -23.82,
+            -20.89
+          ],
+          "pred_norm": 3
+        },
+        "q1_b4": {
+          "ll": [
+            -28.9,
+            -12.89,
+            -17.07,
+            -17.32
+          ],
+          "pred_norm": 3
+        },
+        "q1_b8": {
+          "ll": [
+            -28.54,
+            -13.03,
+            -17.29,
+            -14.69
+          ],
+          "pred_norm": 3
+        },
+        "q2_b3": {
+          "ll": [
+            -25.26,
+            -12.72,
+            -14.41,
+            -18.85
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -27.91,
+            -15.11,
+            -16.76,
+            -16.14
+          ],
+          "pred_norm": 3
+        },
+        "q2_b8": {
+          "ll": [
+            -28.66,
+            -13.19,
+            -17.29,
+            -14.68
+          ],
+          "pred_norm": 3
+        },
+        "q3_b3": {
+          "ll": [
+            -26.47,
+            -15.3,
+            -19.26,
+            -19.39
+          ],
+          "pred_norm": 3
+        },
+        "q3_b4": {
+          "ll": [
+            -27.21,
+            -15.57,
+            -17.25,
+            -15.42
+          ],
+          "pred_norm": 3
+        }
+      },
+      "ctx": "A lady walks to a barbell. She bends down and grabs the pole. the lady",
+      "endings": [
+        "swings and lands in her arms.",
+        "pulls the barbell forward.",
+        "pulls a rope attached to the barbell.",
+        "stands and lifts the weight over her head."
+      ],
+      "gold": 3,
+      "order": 0,
+      "selection": "fixed first-4"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -58.12,
+            -40.1,
+            -30.75,
+            -32.43
+          ],
+          "pred_norm": 2
+        },
+        "p1_s25": {
+          "ll": [
+            -59.95,
+            -40.51,
+            -32.64,
+            -33.02
+          ],
+          "pred_norm": 2
+        },
+        "p1_s50": {
+          "ll": [
+            -71.84,
+            -55.92,
+            -39.5,
+            -48.51
+          ],
+          "pred_norm": 2
+        },
+        "p1_s75": {
+          "ll": [
+            -122.41,
+            -140.34,
+            -120.92,
+            -112.39
+          ],
+          "pred_norm": 0
+        },
+        "p2_24_s50": {
+          "ll": [
+            -64.05,
+            -55.67,
+            -42.35,
+            -45.79
+          ],
+          "pred_norm": 2
+        },
+        "p2_s25": {
+          "ll": [
+            -58.47,
+            -41.69,
+            -31.32,
+            -32.23
+          ],
+          "pred_norm": 2
+        },
+        "p2_s50": {
+          "ll": [
+            -59.26,
+            -45.99,
+            -33.15,
+            -38.01
+          ],
+          "pred_norm": 2
+        },
+        "p2_s75": {
+          "ll": [
+            -83.69,
+            -86.08,
+            -79.09,
+            -73.01
+          ],
+          "pred_norm": 0
+        },
+        "p3_s50": {
+          "ll": [
+            -61.21,
+            -46.91,
+            -35.04,
+            -35.45
+          ],
+          "pred_norm": 2
+        },
+        "p3_s75": {
+          "ll": [
+            -75.95,
+            -74.31,
+            -69.95,
+            -66.98
+          ],
+          "pred_norm": 0
+        },
+        "q1_b3": {
+          "ll": [
+            -66.1,
+            -48.08,
+            -38.29,
+            -42.97
+          ],
+          "pred_norm": 2
+        },
+        "q1_b4": {
+          "ll": [
+            -58.06,
+            -40.29,
+            -32.71,
+            -34.58
+          ],
+          "pred_norm": 2
+        },
+        "q1_b8": {
+          "ll": [
+            -58.46,
+            -40.23,
+            -30.79,
+            -32.31
+          ],
+          "pred_norm": 2
+        },
+        "q2_b3": {
+          "ll": [
+            -59.32,
+            -41.5,
+            -33.62,
+            -32.54
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -54.56,
+            -41.4,
+            -33.76,
+            -33.98
+          ],
+          "pred_norm": 2
+        },
+        "q2_b8": {
+          "ll": [
+            -58.09,
+            -40.09,
+            -30.69,
+            -32.39
+          ],
+          "pred_norm": 2
+        },
+        "q3_b3": {
+          "ll": [
+            -57.07,
+            -39.7,
+            -34.49,
+            -30.22
+          ],
+          "pred_norm": 3
+        },
+        "q3_b4": {
+          "ll": [
+            -55.82,
+            -40.28,
+            -31.55,
+            -33.5
+          ],
+          "pred_norm": 2
+        }
+      },
+      "ctx": "A cartoon animation video is shown with people wandering around and rockets being shot. two men",
+      "endings": [
+        "fight robots of evil and ends with a to be continued.",
+        "are then shown in closeups shooting a shot put.",
+        "push a child in a speedboat in the water.",
+        "look in the cameraman's eye and smile."
+      ],
+      "gold": 0,
+      "order": 1,
+      "selection": "fixed first-4"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -28.43,
+            -70.53,
+            -21.81,
+            -62.13
+          ],
+          "pred_norm": 0
+        },
+        "p1_s25": {
+          "ll": [
+            -29.41,
+            -68.58,
+            -19.0,
+            -64.34
+          ],
+          "pred_norm": 0
+        },
+        "p1_s50": {
+          "ll": [
+            -34.66,
+            -80.28,
+            -25.44,
+            -76.22
+          ],
+          "pred_norm": 0
+        },
+        "p1_s75": {
+          "ll": [
+            -105.98,
+            -215.98,
+            -68.4,
+            -186.11
+          ],
+          "pred_norm": 0
+        },
+        "p2_24_s50": {
+          "ll": [
+            -33.45,
+            -75.31,
+            -23.51,
+            -69.16
+          ],
+          "pred_norm": 0
+        },
+        "p2_s25": {
+          "ll": [
+            -29.16,
+            -72.07,
+            -21.17,
+            -63.53
+          ],
+          "pred_norm": 0
+        },
+        "p2_s50": {
+          "ll": [
+            -29.28,
+            -69.2,
+            -20.57,
+            -65.18
+          ],
+          "pred_norm": 0
+        },
+        "p2_s75": {
+          "ll": [
+            -66.53,
+            -156.27,
+            -37.57,
+            -107.17
+          ],
+          "pred_norm": 2
+        },
+        "p3_s50": {
+          "ll": [
+            -27.58,
+            -66.06,
+            -19.83,
+            -60.28
+          ],
+          "pred_norm": 0
+        },
+        "p3_s75": {
+          "ll": [
+            -41.43,
+            -91.81,
+            -26.75,
+            -86.5
+          ],
+          "pred_norm": 0
+        },
+        "q1_b3": {
+          "ll": [
+            -36.19,
+            -72.79,
+            -19.65,
+            -64.97
+          ],
+          "pred_norm": 2
+        },
+        "q1_b4": {
+          "ll": [
+            -26.9,
+            -64.6,
+            -21.83,
+            -65.4
+          ],
+          "pred_norm": 0
+        },
+        "q1_b8": {
+          "ll": [
+            -28.39,
+            -70.35,
+            -21.8,
+            -61.97
+          ],
+          "pred_norm": 0
+        },
+        "q2_b3": {
+          "ll": [
+            -31.24,
+            -67.58,
+            -18.34,
+            -62.39
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -29.22,
+            -66.4,
+            -21.39,
+            -64.56
+          ],
+          "pred_norm": 0
+        },
+        "q2_b8": {
+          "ll": [
+            -28.35,
+            -70.33,
+            -21.7,
+            -62.03
+          ],
+          "pred_norm": 0
+        },
+        "q3_b3": {
+          "ll": [
+            -31.8,
+            -73.52,
+            -21.13,
+            -58.34
+          ],
+          "pred_norm": 0
+        },
+        "q3_b4": {
+          "ll": [
+            -30.24,
+            -67.63,
+            -22.57,
+            -63.34
+          ],
+          "pred_norm": 0
+        }
+      },
+      "ctx": "The stone particles stick to the wet piece of wood. He then takes the knife and sharpens it against the wood piece. he",
+      "endings": [
+        "then cuts off the excess hair of the wood.",
+        "scrapes the wood with a broom in the cutting tool used in sharpening the instrument.",
+        "writes on the board again.",
+        "then notices a little black and green poisonous frog sitting next to him."
+      ],
+      "gold": 3,
+      "order": 2,
+      "selection": "fixed first-4"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -61.23,
+            -42.2,
+            -18.39,
+            -38.53
+          ],
+          "pred_norm": 1
+        },
+        "p1_s25": {
+          "ll": [
+            -65.85,
+            -41.71,
+            -21.27,
+            -36.54
+          ],
+          "pred_norm": 1
+        },
+        "p1_s50": {
+          "ll": [
+            -94.88,
+            -64.16,
+            -32.68,
+            -54.99
+          ],
+          "pred_norm": 1
+        },
+        "p1_s75": {
+          "ll": [
+            -170.52,
+            -157.79,
+            -65.79,
+            -143.99
+          ],
+          "pred_norm": 1
+        },
+        "p2_24_s50": {
+          "ll": [
+            -76.69,
+            -58.78,
+            -23.65,
+            -43.42
+          ],
+          "pred_norm": 1
+        },
+        "p2_s25": {
+          "ll": [
+            -63.08,
+            -44.0,
+            -18.89,
+            -38.32
+          ],
+          "pred_norm": 1
+        },
+        "p2_s50": {
+          "ll": [
+            -65.83,
+            -47.29,
+            -17.42,
+            -36.75
+          ],
+          "pred_norm": 2
+        },
+        "p2_s75": {
+          "ll": [
+            -131.24,
+            -102.93,
+            -51.42,
+            -77.31
+          ],
+          "pred_norm": 1
+        },
+        "p3_s50": {
+          "ll": [
+            -65.39,
+            -46.47,
+            -20.2,
+            -38.07
+          ],
+          "pred_norm": 1
+        },
+        "p3_s75": {
+          "ll": [
+            -94.9,
+            -76.33,
+            -36.33,
+            -60.91
+          ],
+          "pred_norm": 1
+        },
+        "q1_b3": {
+          "ll": [
+            -75.01,
+            -51.59,
+            -26.89,
+            -39.88
+          ],
+          "pred_norm": 1
+        },
+        "q1_b4": {
+          "ll": [
+            -66.64,
+            -46.0,
+            -19.2,
+            -37.97
+          ],
+          "pred_norm": 1
+        },
+        "q1_b8": {
+          "ll": [
+            -61.28,
+            -42.16,
+            -18.48,
+            -38.56
+          ],
+          "pred_norm": 1
+        },
+        "q2_b3": {
+          "ll": [
+            -71.95,
+            -51.08,
+            -18.3,
+            -41.91
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -63.46,
+            -41.31,
+            -19.38,
+            -38.67
+          ],
+          "pred_norm": 1
+        },
+        "q2_b8": {
+          "ll": [
+            -61.19,
+            -42.04,
+            -18.29,
+            -38.45
+          ],
+          "pred_norm": 1
+        },
+        "q3_b3": {
+          "ll": [
+            -68.28,
+            -44.62,
+            -20.69,
+            -40.19
+          ],
+          "pred_norm": 1
+        },
+        "q3_b4": {
+          "ll": [
+            -62.03,
+            -42.92,
+            -19.41,
+            -37.53
+          ],
+          "pred_norm": 1
+        }
+      },
+      "ctx": "He then takes the knife and sharpens it against the wood piece. He then notices a little black and green poisonous frog sitting next to him. the frog",
+      "endings": [
+        "eventually gets to get up and marches out of the room waving its body about.",
+        "then starts to get up from the chair and begins walking towards the camera.",
+        "then escapes and jumps away.",
+        "is acting crazy and attacking him while he is cooking."
+      ],
+      "gold": 2,
+      "order": 3,
+      "selection": "fixed first-4"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -28.58,
+            -13.12,
+            -17.37,
+            -14.69
+          ],
+          "pred_norm": 3
+        },
+        "p1_s25": {
+          "ll": [
+            -31.41,
+            -13.55,
+            -17.47,
+            -14.87
+          ],
+          "pred_norm": 3
+        },
+        "p1_s50": {
+          "ll": [
+            -31.1,
+            -25.66,
+            -29.87,
+            -32.56
+          ],
+          "pred_norm": 3
+        },
+        "p1_s75": {
+          "ll": [
+            -76.59,
+            -73.19,
+            -93.17,
+            -118.34
+          ],
+          "pred_norm": 2
+        },
+        "p2_24_s50": {
+          "ll": [
+            -26.23,
+            -16.3,
+            -21.07,
+            -30.2
+          ],
+          "pred_norm": 2
+        },
+        "p2_s25": {
+          "ll": [
+            -29.0,
+            -12.47,
+            -18.81,
+            -14.49
+          ],
+          "pred_norm": 3
+        },
+        "p2_s50": {
+          "ll": [
+            -24.26,
+            -11.83,
+            -14.31,
+            -21.7
+          ],
+          "pred_norm": 2
+        },
+        "p2_s75": {
+          "ll": [
+            -56.73,
+            -47.44,
+            -71.14,
+            -75.52
+          ],
+          "pred_norm": 3
+        },
+        "p3_s50": {
+          "ll": [
+            -26.4,
+            -10.52,
+            -15.87,
+            -20.76
+          ],
+          "pred_norm": 1
+        },
+        "p3_s75": {
+          "ll": [
+            -37.94,
+            -25.42,
+            -33.39,
+            -45.52
+          ],
+          "pred_norm": 2
+        },
+        "q1_b3": {
+          "ll": [
+            -29.92,
+            -15.91,
+            -23.82,
+            -20.89
+          ],
+          "pred_norm": 3
+        },
+        "q1_b4": {
+          "ll": [
+            -28.9,
+            -12.89,
+            -17.07,
+            -17.32
+          ],
+          "pred_norm": 3
+        },
+        "q1_b8": {
+          "ll": [
+            -28.54,
+            -13.03,
+            -17.29,
+            -14.69
+          ],
+          "pred_norm": 3
+        },
+        "q2_b3": {
+          "ll": [
+            -25.26,
+            -12.72,
+            -14.41,
+            -18.85
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -27.91,
+            -15.11,
+            -16.76,
+            -16.14
+          ],
+          "pred_norm": 3
+        },
+        "q2_b8": {
+          "ll": [
+            -28.66,
+            -13.19,
+            -17.29,
+            -14.68
+          ],
+          "pred_norm": 3
+        },
+        "q3_b3": {
+          "ll": [
+            -26.47,
+            -15.3,
+            -19.26,
+            -19.39
+          ],
+          "pred_norm": 3
+        },
+        "q3_b4": {
+          "ll": [
+            -27.21,
+            -15.57,
+            -17.25,
+            -15.42
+          ],
+          "pred_norm": 3
+        }
+      },
+      "ctx": "A lady walks to a barbell. She bends down and grabs the pole. the lady",
+      "endings": [
+        "swings and lands in her arms.",
+        "pulls the barbell forward.",
+        "pulls a rope attached to the barbell.",
+        "stands and lifts the weight over her head."
+      ],
+      "gold": 3,
+      "order": 0,
+      "selection": "fixed first-4"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -12.16,
+            -13.05,
+            -16.67,
+            -26.85
+          ],
+          "pred_norm": 0
+        },
+        "p1_s25": {
+          "ll": [
+            -14.21,
+            -14.05,
+            -18.08,
+            -28.59
+          ],
+          "pred_norm": 0
+        },
+        "p1_s50": {
+          "ll": [
+            -31.91,
+            -19.0,
+            -34.54,
+            -46.76
+          ],
+          "pred_norm": 1
+        },
+        "p1_s75": {
+          "ll": [
+            -96.83,
+            -113.75,
+            -90.13,
+            -102.13
+          ],
+          "pred_norm": 3
+        },
+        "p2_24_s50": {
+          "ll": [
+            -21.17,
+            -10.75,
+            -23.94,
+            -31.74
+          ],
+          "pred_norm": 1
+        },
+        "p2_s25": {
+          "ll": [
+            -12.79,
+            -12.97,
+            -17.36,
+            -27.65
+          ],
+          "pred_norm": 0
+        },
+        "p2_s50": {
+          "ll": [
+            -14.97,
+            -10.19,
+            -18.33,
+            -30.37
+          ],
+          "pred_norm": 1
+        },
+        "p2_s75": {
+          "ll": [
+            -62.38,
+            -42.58,
+            -67.31,
+            -84.42
+          ],
+          "pred_norm": 1
+        },
+        "p3_s50": {
+          "ll": [
+            -14.19,
+            -10.29,
+            -18.39,
+            -29.4
+          ],
+          "pred_norm": 1
+        },
+        "p3_s75": {
+          "ll": [
+            -41.35,
+            -18.05,
+            -41.53,
+            -51.09
+          ],
+          "pred_norm": 1
+        },
+        "q1_b3": {
+          "ll": [
+            -15.33,
+            -13.24,
+            -21.1,
+            -26.0
+          ],
+          "pred_norm": 1
+        },
+        "q1_b4": {
+          "ll": [
+            -12.71,
+            -13.93,
+            -16.44,
+            -27.18
+          ],
+          "pred_norm": 0
+        },
+        "q1_b8": {
+          "ll": [
+            -12.22,
+            -13.07,
+            -16.78,
+            -26.9
+          ],
+          "pred_norm": 0
+        },
+        "q2_b3": {
+          "ll": [
+            -14.18,
+            -11.68,
+            -20.2,
+            -30.61
+          ],
+          "pred_norm": 1
+        },
+        "q2_b4": {
+          "ll": [
+            -11.66,
+            -13.5,
+            -16.23,
+            -28.77
+          ],
+          "pred_norm": 0
+        },
+        "q2_b8": {
+          "ll": [
+            -12.1,
+            -13.05,
+            -16.68,
+            -26.78
+          ],
+          "pred_norm": 0
+        },
+        "q3_b3": {
+          "ll": [
+            -16.54,
+            -11.78,
+            -19.41,
+            -32.24
+          ],
+          "pred_norm": 1
+        },
+        "q3_b4": {
+          "ll": [
+            -12.01,
+            -13.63,
+            -16.21,
+            -27.81
+          ],
+          "pred_norm": 0
+        }
+      },
+      "ctx": "A man in a blue shirt and shorts lifts a large weight over his head. Another man is filming it. The same man comes back and lifts the weight over his head again. he",
+      "endings": [
+        "drops it on the ground and walks away.",
+        "again lifts the weight over his head.",
+        "drops it and runs towards the camera.",
+        "drops it onto the floor where it gets stuck."
+      ],
+      "gold": 0,
+      "order": 16,
+      "selection": "FP16 correct, P2@50% wrong"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -28.34,
+            -68.93,
+            -21.72,
+            -15.92
+          ],
+          "pred_norm": 2
+        },
+        "p1_s25": {
+          "ll": [
+            -29.59,
+            -64.05,
+            -20.29,
+            -17.98
+          ],
+          "pred_norm": 2
+        },
+        "p1_s50": {
+          "ll": [
+            -42.55,
+            -89.66,
+            -43.14,
+            -31.84
+          ],
+          "pred_norm": 2
+        },
+        "p1_s75": {
+          "ll": [
+            -136.85,
+            -213.74,
+            -149.84,
+            -102.52
+          ],
+          "pred_norm": 1
+        },
+        "p2_24_s50": {
+          "ll": [
+            -34.66,
+            -84.48,
+            -37.36,
+            -20.27
+          ],
+          "pred_norm": 3
+        },
+        "p2_s25": {
+          "ll": [
+            -28.43,
+            -69.43,
+            -20.9,
+            -16.89
+          ],
+          "pred_norm": 2
+        },
+        "p2_s50": {
+          "ll": [
+            -31.33,
+            -66.83,
+            -22.31,
+            -15.31
+          ],
+          "pred_norm": 3
+        },
+        "p2_s75": {
+          "ll": [
+            -100.31,
+            -176.6,
+            -93.7,
+            -45.49
+          ],
+          "pred_norm": 3
+        },
+        "p3_s50": {
+          "ll": [
+            -31.74,
+            -65.26,
+            -23.76,
+            -16.01
+          ],
+          "pred_norm": 3
+        },
+        "p3_s75": {
+          "ll": [
+            -49.44,
+            -107.46,
+            -63.09,
+            -28.14
+          ],
+          "pred_norm": 3
+        },
+        "q1_b3": {
+          "ll": [
+            -31.45,
+            -60.86,
+            -25.74,
+            -19.07
+          ],
+          "pred_norm": 2
+        },
+        "q1_b4": {
+          "ll": [
+            -33.5,
+            -66.88,
+            -22.77,
+            -17.66
+          ],
+          "pred_norm": 2
+        },
+        "q1_b8": {
+          "ll": [
+            -28.4,
+            -68.79,
+            -21.68,
+            -15.9
+          ],
+          "pred_norm": 2
+        },
+        "q2_b3": {
+          "ll": [
+            -27.8,
+            -61.9,
+            -23.59,
+            -18.9
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -32.06,
+            -70.17,
+            -24.98,
+            -16.13
+          ],
+          "pred_norm": 3
+        },
+        "q2_b8": {
+          "ll": [
+            -28.25,
+            -68.86,
+            -21.62,
+            -15.93
+          ],
+          "pred_norm": 2
+        },
+        "q3_b3": {
+          "ll": [
+            -31.37,
+            -65.72,
+            -24.24,
+            -17.26
+          ],
+          "pred_norm": 3
+        },
+        "q3_b4": {
+          "ll": [
+            -31.27,
+            -71.45,
+            -24.97,
+            -16.18
+          ],
+          "pred_norm": 3
+        }
+      },
+      "ctx": "A man is in the gym in tight he bends over picks up a weight over his head and drops it back down. He walks back and loosens up before walking back up and doing it again adding more weight. he",
+      "endings": [
+        "finally lifts the weight over his head over his own head.",
+        "turns his back towards the camera and continues talking to the camera adding more weight along with more weight on the end.",
+        "does this multiple times adding more and more weight to the rack.",
+        "walks back up and drops the weights back down."
+      ],
+      "gold": 2,
+      "order": 20,
+      "selection": "FP16 correct, P2@50% wrong"
+    },
+    {
+      "configs": {
+        "fp16": {
+          "ll": [
+            -40.79,
+            -28.69,
+            -25.65,
+            -26.77
+          ],
+          "pred_norm": 2
+        },
+        "p1_s25": {
+          "ll": [
+            -42.85,
+            -30.77,
+            -28.8,
+            -29.6
+          ],
+          "pred_norm": 2
+        },
+        "p1_s50": {
+          "ll": [
+            -70.11,
+            -57.71,
+            -52.27,
+            -38.58
+          ],
+          "pred_norm": 0
+        },
+        "p1_s75": {
+          "ll": [
+            -242.34,
+            -145.66,
+            -152.23,
+            -86.64
+          ],
+          "pred_norm": 3
+        },
+        "p2_24_s50": {
+          "ll": [
+            -53.04,
+            -43.66,
+            -42.43,
+            -29.43
+          ],
+          "pred_norm": 0
+        },
+        "p2_s25": {
+          "ll": [
+            -40.16,
+            -28.68,
+            -27.69,
+            -26.68
+          ],
+          "pred_norm": 2
+        },
+        "p2_s50": {
+          "ll": [
+            -41.85,
+            -35.2,
+            -31.28,
+            -27.62
+          ],
+          "pred_norm": 0
+        },
+        "p2_s75": {
+          "ll": [
+            -119.1,
+            -74.66,
+            -84.36,
+            -50.15
+          ],
+          "pred_norm": 0
+        },
+        "p3_s50": {
+          "ll": [
+            -43.35,
+            -35.85,
+            -30.98,
+            -26.99
+          ],
+          "pred_norm": 0
+        },
+        "p3_s75": {
+          "ll": [
+            -91.86,
+            -69.94,
+            -62.32,
+            -40.71
+          ],
+          "pred_norm": 2
+        },
+        "q1_b3": {
+          "ll": [
+            -46.25,
+            -29.61,
+            -27.78,
+            -29.49
+          ],
+          "pred_norm": 2
+        },
+        "q1_b4": {
+          "ll": [
+            -42.63,
+            -29.25,
+            -29.14,
+            -28.31
+          ],
+          "pred_norm": 2
+        },
+        "q1_b8": {
+          "ll": [
+            -40.74,
+            -28.73,
+            -25.53,
+            -26.83
+          ],
+          "pred_norm": 2
+        },
+        "q2_b3": {
+          "ll": [
+            -42.67,
+            -31.43,
+            -26.43,
+            -25.92
+          ],
+          "pred_norm": 2
+        },
+        "q2_b4": {
+          "ll": [
+            -41.31,
+            -30.2,
+            -27.82,
+            -26.16
+          ],
+          "pred_norm": 2
+        },
+        "q2_b8": {
+          "ll": [
+            -40.8,
+            -28.51,
+            -25.76,
+            -26.8
+          ],
+          "pred_norm": 2
+        },
+        "q3_b3": {
+          "ll": [
+            -43.5,
+            -33.86,
+            -26.84,
+            -26.5
+          ],
+          "pred_norm": 2
+        },
+        "q3_b4": {
+          "ll": [
+            -41.33,
+            -28.89,
+            -27.7,
+            -26.59
+          ],
+          "pred_norm": 2
+        }
+      },
+      "ctx": "He moves closer to the camera so that you can see the detail of what he is doing with his hands. He begins to play different notes on the violin as he moves his fingers. the video",
+      "endings": [
+        "then zooms out and you can see him making notes on another piece of equipment.",
+        "transitions into him laying in bed as he plays.",
+        "ends with the closing credits shown across the screen.",
+        "stops going back to him playing."
+      ],
+      "gold": 2,
+      "order": 63,
+      "selection": "FP16 correct, P2@50% wrong"
+    }
+  ]
 }

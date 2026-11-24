@@ -223,7 +223,7 @@ def task2():
         inctx = sum(1 for c in wrong if c["methods"]["sink_recent"]["pred"] and c["methods"]["sink_recent"]["pred"] in raw[c["id"]]["user_text"])
         mac("SinkWrong", str(len(wrong))); mac("SinkInCtx", str(inctx))
     pl = np.array([c["methods"]["qa_evict"]["meta"]["evidence_fp16_retained_per_layer"] for c in cases])
-    mac("QaEvLzero", f"{100 * pl[:, 0].mean():.0f}"); mac("QaEvLtwo", f"{100 * pl[:, 2:].mean():.0f}")
+    mac("QaEvLzero", f"{100 * pl[:, 0].mean():.0f}"); mac("QaEvLtwo", f"{100 * pl[:, 2:].mean():.1f}"); mac("QaEvLtwoMin", f"{100 * pl[:, 2:].mean(0).min():.1f}")
     br = pd.read_csv(R / "tables/task2c_kv_breakdown.csv")
     rows = []
     for _, r in br.iterrows():
@@ -320,7 +320,7 @@ def task3():
     pc = pd.read_csv(R / "tables/task3_spec_paired_comparisons.csv")
     g2 = pc[(pc.gamma == 2) & (pc.metric == "throughput_ratio")]
     mac("PairOffOrig", "; ".join(f"{r.comparison.split(' - ')[0].replace('_s', ' s')}: {r['diff']:+.3f} [{r.ci_low:+.3f}, {r.ci_high:+.3f}]" for _, r in g2.iterrows() if "original" in r.comparison))
-    oo = pc[pc.comparison.str.contains("off_") & pc.comparison.str.startswith("on_")]
+    oo = pc[pc.comparison.str.contains("off_") & pc.comparison.str.startswith("on_") & (pc.metric == "accept_examined")]
     lo, hi = oo.ci_low.min(), oo.ci_high.max()
     mac("OnOffRange", f"{oo['diff'].min():+.3f} to {oo['diff'].max():+.3f}")
     mac("OnOffAllZero", "all" if ((oo.ci_low <= 0) & (oo.ci_high >= 0)).all() else "not all")
@@ -337,6 +337,8 @@ def task3():
     r = be[(be.draft == "off_s6304") & (be.gamma == 4)].iloc[0]
     mac("BeSave", f"{r.saving_ms_per_req_vs_original_draft:.1f}"); mac("BeReq", f"{r.break_even_requests_vs_original / 1e3:,.0f}k")
     mac("BeCost", f"{r.distill_cost_ms / 6e4:.0f}")
+    r2 = be[(be.draft == "off_s6304") & (be.gamma == 2)].iloc[0]
+    mac("BeSaveTwo", f"{r2.saving_ms_per_req_vs_original_draft:.1f}"); mac("BeReqTwo", f"{r2.break_even_requests_vs_original / 1e6:.2f}M")
     w = pd.read_csv(R / "tables/task3_spec_workload.csv")
     get = lambda d, g, s_, k: w[(w.draft == d) & (w.gamma == g) & (w.split == s_)][k].iloc[0]
     mac("FamAccOrig", f"{get('original', 2, 'familiar', 'accept_examined'):.3f}"); mac("FamAccOff", f"{get('off_s6304', 2, 'familiar', 'accept_examined'):.3f}")

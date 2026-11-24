@@ -85,7 +85,7 @@ python scripts/task3.py all
 for t in 1 2 3; do python analysis/task${t}_report.py; done
 ```
 
-Every number in the report traces to a file under `results/` produced by these commands.
+Every number in the report traces to a file under `results/` produced by these commands. `python scripts/validate_results.py` checks the handout requirements and `python scripts/verify_report_claims.py` re-derives every hand-typed number and claim in `report/main.tex` from `results/` (output: `results/claims_audit.md`).
 
 ## Resuming after a Colab disconnect
 

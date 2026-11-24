@@ -255,6 +255,10 @@ def main():
                     entry["configs"][n] = dict(ll=[round(v, 2) for v in s["ll"]], pred_norm=s["pred_norm"])
             qual.append(entry)
     cont = {n: m["quality"].get("continuations") for n, m in M.items()}
+    old = R / "qualitative.json"
+    if not qual and old.exists() and read_json(old).get("hellaswag"):
+        print("HellaSwag source rows unavailable: keeping the existing qualitative cases in", old)
+        qual = read_json(old)["hellaswag"]
     write_json(R / "qualitative.json", dict(hellaswag=qual, continuations=cont))
     print(df.to_string())
 

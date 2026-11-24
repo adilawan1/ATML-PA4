@@ -34,7 +34,7 @@ We test inference-efficiency methods on Qwen2.5 models, reporting quality next t
 HellaSwag changes are within noise except at 75\%, and with dense FP16 kernels latency and memory do not change.
 (2)~Our tiled attention matches dense FP32 to $10^{-6}$ with 140 times less peak memory but runs about 1{,}000$\times$ slower than fused SDPA. In associative recall, sliding windows fail on queries out of reach and linear attention degrades as stored pairs grow.
 At an INT4 KV-cache byte budget, question-aware eviction and per-channel-key INT4 keep 100\% retrieval, while token-wise INT4 drops to 0\% because of key outlier channels.
-(3)~Our exact speculative sampler passes a $\chi^2$ test on 100{,}000 sequences, but a 0.5B draft step costs 0.86--0.90 of a 1.5B target step, so speculative decoding is 18--20\% \emph{slower} per token. Off- and on-policy distillation give small gains that we cannot tell apart.
+(3)~Our exact speculative sampler passes a $\chi^2$ test on 100{,}000 sequences, but a 0.5B draft step costs 0.86--0.90 of a 1.5B target step, so speculative decoding is 17--20\% \emph{slower} per token. Off- and on-policy distillation give small gains that we cannot tell apart.
 Code and results: \url{https://github.com/adilawan1/ATML-PA4}
 \end{abstract}
 
@@ -45,7 +45,7 @@ In all three tasks the savings appear in stored bytes. They mostly do not appear
 \section{Experimental setup}\label{sec:setup}
 \textbf{Models and data.} Qwen2.5-1.5B (base; Task~1), Qwen2.5-1.5B-Instruct (Task~2C target, Task~3 target/teacher) and Qwen2.5-0.5B-Instruct (Task~3 draft/student)~\cite{qwen25}, at revisions \texttt{8faed76}, \texttt{989aa79} and \texttt{7ae5576}, run in FP16 with PyTorch SDPA~\cite{pytorch,hf}.
 Data come from the locked course manifests: C4~\cite{c4} (128 calibration and 32 disjoint development sequences of 512 tokens; 50{,}000 scored validation tokens), WikiText-2 test~\cite{wikitext} (50{,}000 scored tokens in independent $\le$512-token windows), 2{,}000 HellaSwag validation IDs~\cite{hellaswag}, GSM8K~\cite{gsm8k}, the course MQAR generator and 180 KV-retrieval prompts; dataset revisions are in \texttt{data/local\_source\_revisions.json}.
-\textbf{Hardware.} Tasks~1 and~3 ran on an NVIDIA \GPUone{} (24\,GB) and Task~2 on an \GPUtwo{}, so latencies can only be compared within a task.
+\textbf{Hardware.} Tasks~1 and~3 ran on an NVIDIA \GPUone{} (23.7\,GB) and Task~2 on an \GPUtwo{}, so latencies can only be compared within a task.
 \textbf{Protocol.} Seed 6304 (MQAR: 6304--6306; distillation: 6304, 6305). We synchronise CUDA before reading timers and warm up first (Task~1: 5 repetitions; 2A and C5: 10; Task~3: 2 counterbalanced runs per prompt). Peak \emph{allocated} memory is reported separately from packed byte counts.
 Uncertainty comes from a paired bootstrap over prompts, examples or whole evaluation windows (2{,}000 resamples; for perplexity we recompute pooled NLL in each resample). We write results as point estimate [95\% CI].
 \texttt{scripts/validate\_results.py} checks the handout requirements against the saved results, and all 64 checks pass.
@@ -62,7 +62,7 @@ With GQA the $v{\to}o$ fold does not work, so we store o\_proj scales in FP16 an
 Q3 assigns $\{2,3,4,8\}$ bits per projection by knapsack under the exact Q2 INT4/INT3 packed-byte budget, using a Fisher-weighted perturbation cost (HAWQ-style~\cite{hawq}). This cost beat a calibration-output-error cost on development NLL (INT3: \SelQthree).
 
 \begin{figure}[t]
-\centering\includegraphics[width=0.85\linewidth]{t1_tradeoff.pdf}
+\centering\includegraphics[width=0.8\linewidth]{t1_tradeoff.pdf}
 \caption{Held-out WikiText-2 perplexity (50{,}000 scored tokens) of Qwen2.5-1.5B versus (a) achieved sparsity and (b) total packed bytes including group metadata and uncompressed FP16 parameters. FP16 reference dashed.}
 \label{fig:t1}
 \end{figure}
@@ -94,7 +94,7 @@ Comparison & $\Delta$ WikiText-2 PPL & $\Delta$ C4 PPL & $\Delta$ HellaSwag acc\
 \end{table}
 
 \begin{figure}[t]
-\centering\includegraphics[width=0.92\linewidth]{t1_maps.pdf}
+\centering\includegraphics[width=0.88\linewidth]{t1_maps.pdf}
 \caption{Sensitivity probes (calibration data only) and final allocations over 28 blocks $\times$ 7 projections: (a) Fisher cost of Wanda-pruning 50\% of a projection; (b,c) selected P3 sparsity maps; (d) Fisher-weighted 3-bit perturbation; (e) selected Q3 bits at the INT3 budget.}
 \label{fig:t1maps}
 \end{figure}
@@ -104,13 +104,13 @@ Comparison & $\Delta$ WikiText-2 PPL & $\Delta$ C4 PPL & $\Delta$ HellaSwag acc\
 Weighting by $\|X_j\|$ lowers 50\% perplexity by 102 points, adds 17.8\,pp HellaSwag (Table~\ref{tab:t1boot}) and halves the calibration layer-output error from 0.064 to 0.027 (Table~\ref{tab:t1}). At 75\% every uniform method breaks down (PPL $>$3{,}600, HellaSwag near chance).
 
 \textbf{Sensitivity and allocation.} Summed over each projection, the MLP matrices have the largest Fisher costs (Fig.~\ref{fig:t1maps}a,d). Per weight, the small k/v projections are the most sensitive, and both allocators protect them. P3 at 50\% leaves v\_proj at 21\% and k\_proj at 30\% sparsity and prunes q\_proj to 63\% (Fig.~\ref{fig:t1maps}b).
-At the INT4 budget, Q3 gives k/v projections 8 bits in \QfourKVeight\% of blocks (\QfourHist) and pays for this with 2--3-bit gate/up matrices (INT3: \QthreeHist).
+At the INT4 budget, Q3 gives k/v projections 8 bits in \QfourKVeight\% of blocks (\QfourHist) and pays for this mostly with 2--3-bit gate/up matrices (INT3: \QthreeHist; two q\_proj also get 2 bits).
 At 75\% the development set chose OWL, which protects the early blocks (Fig.~\ref{fig:t1maps}c). Our diagonal Fisher cost misses interactions once most of a layer is removed.
 
 \textbf{Uniform versus adaptive at matched budgets.} The adaptive allocations give significantly better likelihood in all four comparisons (Table~\ref{tab:t1boot}): WikiText-2 PPL drops by 2.0 at 50\% sparsity, from 3{,}614 to 1{,}130 at 75\%, and by 0.15 and 2.14 for Q3 at the INT4 and INT3 budgets. HellaSwag improves only at 75\% (+7.0\,pp), and the other three intervals include zero. A perplexity change of 0.5--2 points barely moves the \emph{relative} likelihoods of four endings, and with 2{,}000 examples the CI half-width is about 1\,pp. C4 gains are smaller, and the Q3 INT4 C4 interval includes zero, so the evidence for Q3 at INT4 is weak.
 The AWQ-style scaling matters more than the allocation: at INT3 it removes 14.5 PPL and adds 5.7\,pp HellaSwag compared with round-to-nearest. The first 512 HellaSwag IDs are harder than the rest (FP16 \HSfirst\% vs.\ \HSrest\%), so we only compare paired deltas on the same IDs.
 
-\textbf{Calibration criteria versus held-out quality.} Calibration layer-output error orders the conditions almost exactly as held-out WikiText-2 perplexity does (Spearman $\rho=\RhoCalWiki$), and development NLL orders HellaSwag well ($\rho=\RhoDevHS$). Choosing designs on the development set therefore worked. In one fixed example (HellaSwag ID 63, the first example FP16 gets right and P2@50\% gets wrong), all three 50\% pruners fail and every INT3 quantizer succeeds (Appendix~\ref{app:qual}).
+\textbf{Calibration criteria versus held-out quality.} Calibration layer-output error orders the conditions almost exactly as held-out WikiText-2 perplexity does (Spearman $\rho=\RhoCalWiki$), and development NLL orders HellaSwag well ($\rho=\RhoDevHS$). Choosing designs on the development set therefore worked. In one fixed example (manifest position 63, among the first four that FP16 gets right and P2@50\% gets wrong), all three 50\% pruners fail and every INT3 quantizer succeeds (Appendix~\ref{app:qual}).
 
 \textbf{Theoretical versus practical savings.} Packed INT3 takes 989\,MB against 3{,}087\,MB in FP16 (32\%). The eligible weights alone shrink to 20\%; the uncompressed \OtherMB\,MB embedding limits the overall ratio. With 50\% sparsity, the mask+value format saves only 37\% (1.125 vs.\ 2 bytes per weight). Latency and memory are the same for all 18 conditions, because zeros and dequantized weights still run as dense FP16 GEMMs. The 2:4 format, which hardware can accelerate, costs +42 PPL and $-9.8$\,pp HellaSwag against unstructured Wanda. Compression takes 31--35\,s for pruning or 131\,s for the AWQ search, plus a one-off \ProbeS\,s sensitivity probe (Fisher pass \FisherS\,s).
 
@@ -133,9 +133,9 @@ Implementation & FP32 & fwd ms & fwd+bwd ms & peak MB & max$|\Delta O|$ & max$|\
 \bottomrule
 \end{tabular}
 \end{table}
-In FP32 our tiled online-softmax attention matches dense attention to \TiledErrOut{} (output) and \TiledErrGrad{} (gradients) at every length and for all seven tile shapes (forward memory \TileMinMB--\TileMaxMB\,MB at $L{=}1{,}024$). In FP16 every method has error around $10^{-3}$, the rounding floor (Fig.~\ref{fig:t2a}a). Changing future keys and values never changes earlier outputs.
+In FP32 our tiled online-softmax attention matches dense attention to \TiledErrOut{} (output) and \TiledErrGrad{} (gradients) at every length and for all seven tile shapes (\TileMinMB--\TileMaxMB\,MB forward memory at $L{=}1{,}024$, both dtypes). In FP16 every method has error around $10^{-3}$, the rounding floor (Fig.~\ref{fig:t2a}a). Changing future keys and values never changes earlier outputs (dense, tiled and three SDPA backends tested).
 When queries are scaled by 30, our dense FP16 kernel is off from FP64 by \ExtremeDenseSixteen{}, against \ExtremeSdpaSixteen{} for SDPA. Our kernel computes $QK^\top$ in FP16, while the fused kernels accumulate in FP32.
-At $L{=}8{,}192$ the score matrix dominates memory: dense forward+backward needs 15.1\,GB, SDPA math 8.6\,GB, our tiled kernel 109\,MB and fused SDPA 68\,MB. Tiling gets the memory saving, but without fusion each of the $\sim$2{,}000 tiles is a separate kernel launch, so it takes 2.65\,s against 2.3\,ms (Table~\ref{tab:t2a}).
+At $L{=}8{,}192$ the score matrix dominates memory: dense forward+backward needs 15.1\,GB, SDPA math 8.6\,GB, our tiled kernel 109\,MB and fused SDPA 68\,MB. Tiling gets the memory saving, but without fusion the Python loop runs $\sim$2{,}000 causal tile steps, each with several small kernel launches, so it takes 2.65\,s against 2.3\,ms (Table~\ref{tab:t2a}).
 
 \subsection{Part B results and analysis: associative recall}
 \begin{figure}[t]
@@ -156,7 +156,7 @@ Mechanism & $K$ & Train & Near & Far & Mixed & Mixed per seed & Pairs & State & 
 \end{tabular}}
 \end{table}
 Dense attention solves every trained setting and handles any distance: trained only on near pairs, it still scores 1.00 on far pairs (Table~\ref{tab:t2b}). It does not handle more pairs than it was trained on: the $K{=}4$ model scores 0.33 on mixed $K{=}16$ queries (Fig.~\ref{fig:t2b}a).
-The $W{=}64$ window answers near queries perfectly and far ones at chance (\WinFar). Two layers of this window reach back only 126 positions. If we apply the same mask to the dense models only at test time, we get the same pattern (near \MaskNear, far \MaskFar). So the far-query failure comes from what the window can see, not from what it learned. Keeping each query's 64 \emph{highest-scoring} keys instead loses nothing (mixed \TopkMixed). Training on unreachable queries also hurts. Window and dilated models trained on mixed data never learn, even for reachable distances (loss \WinMixLoss{} vs.\ $\ln 64=\LnSixtyFour$ at chance).
+The $W{=}64$ window answers near queries perfectly and far ones at chance (\WinFar). Two layers of this window reach back only 126 positions. If we apply the same mask to the dense models only at test time, we get the same pattern (near \MaskNear, far \MaskFar). So the far-query failure comes from what the window can see, not from what it learned. Keeping each query's 64 \emph{highest-scoring} keys instead loses nothing (mixed \TopkMixed). Training on unreachable queries also hurts: the window model trained on mixed data never learns, even for reachable distances (near 0.07; loss \WinMixLoss{} vs.\ $\ln 64=\LnSixtyFour$ at chance), and dilated attention stays at 0.06 for $K{=}16$ and 0.35 for $K{=}4$.
 Linear attention does equally well at all distances but drops as $K$ grows (0.99, 0.82, 0.54 for $K=4,8,16$). At $K{=}16$ one seed solves the task and the other two reach 0.47 and 0.16. The limit is its fixed 4.2k-float state.
 \textbf{B3.} Our change mixes, per head and through a learned gate, an 8-token softmax window with a 16-feature ELU+1 memory. Its state stays below the linear model's (4{,}160 vs.\ 4{,}224 floats) and it adds 0.5\% parameters. We committed the prediction that it would beat linear attention at $K{=}16$ before seeing any B3 result. The prediction was wrong: 0.26$\pm$0.23 vs.\ 0.54$\pm$0.42. Halving the feature dimension loses more memory capacity than the local window gives back.
 \textbf{Theory versus measurement.} At $T{=}256$ the window attends to 44\% of the dense pairs, and linear attention keeps $O(1)$ state. In the forward-only sweep at $T{=}8{,}192$, though, the window takes \SwWindowMs\,ms and \SwWindowMB\,MB against \SwDenseMs\,ms and \SwDenseMB\,MB for dense causal SDPA, because its boolean mask forces a non-fused path. Linear attention takes \SwLinearMs\,ms and \SwLinearMB\,MB, since our parallel form builds $[B,H,T,f,d]$ prefix tensors, and top-$k$ takes \SwTopkMs\,ms and \SwTopkMB\,MB.
@@ -164,7 +164,7 @@ Linear attention does equally well at all distances but drops as $K$ grows (0.99
 \subsection{Part C results and analysis: KV-cache compression}
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{2.8pt}
-\caption{Qwen2.5-1.5B-Instruct on 180 retrieval prompts (\KvLctxLo--\KvLctxHi{} context tokens), each policy at the per-prompt serialised size of the uniform INT4 channel-K/token-V cache. EM: exact match (FP16 is always correct, so conditional = unconditional). NLL of the gold code; KL(FP16$\|$policy) at the first answer token and over teacher-forced positions. Evid.: evidence kept in FP16 (layer mean). Live: cache at end of decoding. Peak: allocated, incl.\ dequantized copies.}
+\caption{Qwen2.5-1.5B-Instruct on 180 retrieval prompts (\KvLctxLo--\KvLctxHi{} context tokens), each policy at the per-prompt size of the INT4 channel-K/token-V cache. EM: exact match (FP16 is always correct, so conditional = unconditional). NLL of the gold code; KL(FP16$\|$policy) at the first answer token and over teacher-forced positions. Evid.: evidence kept in FP16 (layer mean). Live: cache at end of decoding. Peak: allocated, incl.\ dequantized copies.}
 \label{tab:kv}
 \begin{tabular}{@{}lrrrrrrrrr@{}}
 \toprule
@@ -176,7 +176,7 @@ Policy & EM\% & NLL & KL$_1$ & KL$_\text{TF}$ & Evid.\% & Packed MB & \% FP16 & 
 \end{table}
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{3.5pt}
-\caption{EM\% by factor (FP16, sink+recent, question-aware, INT4 token-wise, INT4 channel-K, hybrid; columns as Table~\ref{tab:kv}).}
+\caption{EM\% by factor (policies as in Table~\ref{tab:kv}).}
 \label{tab:kvb}
 \begin{tabular}{@{}lrrrrrrr@{}}
 \toprule
@@ -200,8 +200,8 @@ Ctx tokens & Batch & Layout & MB & pack ms & unpack ms & step ms & peak GB\\
 \end{table}
 All C1 checks pass. The rebuilt full cache gives the same greedy output as ordinary generation on 180/180 prompts, and split prefill differs from one forward pass by at most \KvSplit{} in FP16 logits.
 At the matched budget (28.7\% of FP16 bytes; eviction keeps \KvEvictN{} of $\sim$3{,}900 positions), question-aware eviction, INT4 with per-channel keys and the hybrid all retrieve almost perfectly (Table~\ref{tab:kv}). Question-aware eviction beats sink+recent by \KvQaSink\,pp.
-Sink+recent works only when the evidence is recent (Table~\ref{tab:kvb}), and when it fails the model still answers: of the \SinkWrong{} failures, \SinkInCtx{} give a different code from the context and the rest make one up. The question-aware scorer keeps \QaEvLzero\% of the evidence in layer~0 and \QaEvLtwo\% from layer~2 onward.
-For the quantized caches, the grouping decides the result. Token-wise INT4 puts Qwen's outlier key channels in the same 64-feature group as normal channels. This raises the relative key error from \KvKmseKivi{} to \KvKmseTok{} (value error is \KvVmse{} in both), and the model then repeats one word (``river river \dots'') on every prompt.
+Sink+recent works only when the evidence is recent (Table~\ref{tab:kvb}), and when it fails the model still answers: of the \SinkWrong{} failures, \SinkInCtx{} give a different code from the context, 87 give a code not in the context and one gives none. The question-aware scorer keeps \QaEvLzero\% of the evidence in layer~0 and \QaEvLtwo\% on average from layer~2 on (lowest layer \QaEvLtwoMin\%).
+For the quantized caches, the grouping decides the result. Token-wise INT4 puts Qwen's outlier key channels in the same 64-feature group as normal channels. This raises the relative key error from \KvKmseKivi{} to \KvKmseTok{} (value error is \KvVmse{} in both), and the model fails on every prompt: 91 of 180 outputs repeat one or two words (``river river \dots''), 22 are blank and 8 contain a wrong code.
 Exact match is at the ceiling for the three good policies, so we compare them by likelihood. Relative to question-aware eviction, gold-code NLL is \KvNllKiviQa{} higher for channel INT4 and \KvNllHybQa{} higher for the hybrid. The hybrid's INT2 values (relative error \KvVmseHyb) cause one failure, at a middle position.
 \textbf{Systems.} Prefill takes \KvPrefill\,ms and question scoring adds \KvScoring\,ms. Evicting after a full prefill does not lower the prefill peak (\KvPrefillPeak\,GB). Packed caches (Table~\ref{tab:c5}) store exactly the bytes the formula gives. SDPA needs FP16 inputs, though, so every decode step has to unpack. That adds $\sim$12\,ms at batch~1 (step time goes from 34 to 46--49\,ms), and peak memory is \emph{higher} than with FP16 because the packed and unpacked copies exist at the same time.
 
@@ -218,7 +218,7 @@ Off-policy runs take 56\,min, almost all of it for the shared pool of 800 teache
 
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{4pt}
-\caption{Standalone accuracy (\%, greedy decoding; 512/32-token caps). Short form: exact match / answer present.}
+\caption{Standalone accuracy (\%, greedy; 512/32-token caps). Short form: exact / answer present.}
 \label{tab:t3s}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
@@ -230,7 +230,7 @@ Model & GSM8K acc. & GSM8K truncated & Familiar & Shifted\\
 \end{table}
 
 \begin{figure}[t]
-\centering\includegraphics[width=0.82\linewidth]{t3_distill_align.pdf}
+\centering\includegraphics[width=0.78\linewidth]{t3_distill_align.pdf}
 \caption{(a) Distillation KL per teacher-scored token. (b) Expected one-token acceptance on the teacher prefix bank by workload and response position (seed means). (c) Bank-predicted versus measured acceptance in speculative decoding ($n{=}240$ requests per point).}
 \label{fig:t3}
 \end{figure}
@@ -263,19 +263,17 @@ Draft & $\gamma$ & acc/exam & acc/prop & prefix & tgt/tok & drf/tok & time decom
 \end{tabular}}
 \end{table}
 
-\textbf{Alignment.} Distillation lowers forward KL on every common bank, for example from 0.174 to 0.146 (off) and 0.150 (on) on teacher samples. Expected acceptance rises by at most 0.01 (Table~\ref{tab:t3a}).
+\textbf{Alignment.} Distillation lowers forward KL on every common bank, for example from 0.174 to 0.146 (off) and 0.150 (on) on teacher samples. Expected acceptance changes by at most 0.01 (at most +0.008; Table~\ref{tab:t3a}).
 The gain shows up where training data looked like the evaluation data. On familiar short-form templates, early-position acceptance rises from \FamExpOrig{} to \FamExpOff. Math stays the same, and shifted templates do not improve (Fig.~\ref{fig:t3}b), so the gain does not carry over to new formats.
-On-policy drafts have lower forward KL on student rollouts but no higher acceptance; seeds differ by at most 0.001. The biggest decoded disagreement is the first token: the original draft starts familiar answers with ``To'' where the target uses ``The'' (TV 0.73--0.75); after distillation the TV is at most 0.09.
-\textbf{Speculative execution.} Acceptance is high (0.86--0.88 of examined proposals; 1.6 and 2.7 tokens per round at $\gamma=2$ and 4), and target passes drop to 0.39 and 0.27 per output token. Still, every configuration is slower than the target alone: decode speedup is 0.80--0.83, with every interval below 1 (Table~\ref{tab:t3spec}).
-A 0.5B draft step takes \StepDraft\,ms and a target step \StepTarget\,ms; verifying 5 tokens takes \StepVerifyFive\,ms. At batch size 1 in eager mode, time is set by kernel launches and grows with layer count (24 vs.\ 28), not parameters. So $c\approx0.86$--$0.90$ and $v_\gamma\approx1.2$, the model predicts $\hat S=0.82$--$0.88$ and needs $\alpha^*\ge0.96$ to break even. Measured ratios (0.78--0.81) are 0.03--0.06 below $\hat S$ because of host overhead. Drafting takes 54--70\% of request time, verification 26--38\% and rollback under 1\%. Bank-predicted acceptance ranks the drafts correctly but is 1--2 points too high (Fig.~\ref{fig:t3}c).
-Distilled drafts raise throughput over the original by 0.010 to 0.014 at $\gamma{=}2$ (3 of 4 paired CIs exclude 0) and give no significant gain at $\gamma{=}4$. On- and off-policy drafts do not differ in any paired comparison (acceptance differences \OnOffRange; \OnOffAllZero{} intervals include 0).
-\textbf{Workload and cost.} Acceptance is lowest on shifted templates (\ShAccOff{} vs.\ \MathAccOff{} for math). 54\% of requests hit the 64-token cap (math always does). Ignoring EOS (fixed 64) raises speedup only to 0.87--0.88; an unmerged adapter gives $c=1.27$ and speedup 0.56.
-On their own, the distilled students learn the answers but not the format: every familiar answer appears in their replies (67\% for the original draft), but strict exact match stays at 33\% for every model, the teacher included (Table~\ref{tab:t3s}).
-Since no draft beats the target alone, distillation cannot pay off; versus the original draft, only off-s6304 at $\gamma{=}4$ saves time (\BeSave\,ms per request), needing about \BeReq{} requests to recover its \BeCost-minute cost.
+On-policy drafts have lower forward KL on student rollouts but no higher acceptance; seed sd $\le$0.001. Four of the five largest TV drops (on s6304 vs.\ original) are first tokens where the original writes ``To'' and the target ``The'' (TV 0.73--0.75 $\to$ $\le$0.09); the three largest rises are on shifted templates (up to 0.66).
+\textbf{Speculative execution.} Acceptance is high (0.86--0.88 of examined proposals; 1.6 and 2.7 tokens per round at $\gamma=2$ and 4), and target passes drop to 0.39 and 0.27 per output token. Still, every configuration is slower than the target alone (decode speedup 0.80--0.83, all intervals below 1; Table~\ref{tab:t3spec}). A 0.5B draft step takes \StepDraft\,ms, a target step \StepTarget\,ms and a 5-token verification \StepVerifyFive\,ms: at batch size 1 in eager mode, step time follows layer count (24 vs.\ 28) rather than parameters, consistent with launch-bound execution. Hence $c\approx0.86$--$0.90$, $v_\gamma\approx1.2$, $\hat S=0.82$--$0.88$ and break-even $\alpha^*\ge0.96$. Measured ratios (0.78--0.82) are 0.04--0.07 below $\hat S$, which omits prefill ($\sim$4\% of request time) and acceptance and rollback ($<$1\%); drafting takes 57--70\% and verification 26--39\%. Bank-predicted acceptance is 1--2 points too high and only partly preserves the order of the drafts (Spearman 0.8 at $\gamma{=}2$, 0.6 at $\gamma{=}4$; Fig.~\ref{fig:t3}c). Distilled drafts raise throughput over the original by 0.010 to 0.014 at $\gamma{=}2$ (3 of 4 paired CIs exclude 0) and give no significant gain at $\gamma{=}4$. On- and off-policy drafts do not differ in any paired comparison (acceptance differences \OnOffRange; \OnOffAllZero{} intervals include 0).
+\textbf{Workload and cost.} Acceptance is lowest on shifted templates (\ShAccOff{} vs.\ \MathAccOff{} for math). 54--55\% of requests hit the 64-token cap (math in $\ge$237 of 240). Ignoring EOS (fixed 64) raises speedup only to 0.87--0.88; an unmerged adapter gives $c=1.27$ and speedup 0.56.
+Standalone, every familiar answer appears in the distilled students' replies (original 67\%), yet strict exact match is 33\% for every model, teacher included (Table~\ref{tab:t3s}).
+Since no draft beats the target alone, distillation cannot pay off; versus the original draft, only off-s6304 saves time (\BeSaveTwo\,ms per request at $\gamma{=}2$, \BeSave\,ms at $\gamma{=}4$), needing about \BeReqTwo{} or \BeReq{} requests to recover its \BeCost-minute cost.
 
 \FloatBarrier
 \section{Conclusion}
-Nominal ratios predicted storage and correctness but not speed or memory, because dense FP16 kernels, unfused tiling, per-step unpacking and launch-bound decoding absorb the savings. Methods using activations, scores or the question beat position- or magnitude-only ones; adaptive allocation gave small gains, and on-policy distillation was no better than off-policy.
+Nominal ratios predicted storage and correctness but not speed or memory: dense FP16 kernels, unfused tiling, per-step unpacking and launch-bound decoding absorb the savings. Activation-, score- or question-aware methods beat position- or magnitude-only ones. Adaptive allocation always improved likelihood but HellaSwag only at 75\% sparsity; on-policy distillation did not beat off-policy.
 
 \small
 \begin{thebibliography}{99}
@@ -316,13 +314,13 @@ Nominal ratios predicted storage and correctness but not speed or memory, becaus
 \section{Implementation details, constraints and deviations}\label{app:impl}
 \textbf{Reuse and tools.} No external source files were copied. Wanda, AWQ's pseudo-quantizer conventions, OWL, the lm-eval HellaSwag preprocessing~\cite{lmeval} and the FlashAttention-2 recurrences~\cite{flash,flash2} were re-implemented from their papers and reference code. RoPE/GQA helpers come from Transformers~\cite{hf} and LoRA from PEFT~\cite{peft}. The question-aware KV scorer is a simplified fixed policy inspired by SnapKV~\cite{snapkv} (per-layer selection shared by both KV heads, attention mass of the question suffix, average pooling of width 7), and always keeps 8 sink and 64 recent tokens~\cite{streaming}. The published algorithm selects per head; ours does not. Channel-K/token-V grouping follows KIVI~\cite{kivi}; the dilated and linear mechanisms follow~\cite{longformer,linear,zoology,based}.
 \textbf{Course-script deviation.} The course \texttt{setup\_data.py --prefix-banks} fails under the pinned \texttt{transformers==4.57.1} because \texttt{generate()} rejects a \texttt{generator} argument. \texttt{scripts/make\_prefix\_banks.py} reproduces its prompts, seeds, positions, format and path with a seeded ancestral sampler.
-\textbf{Constraints.} Flash/cuDNN SDPA do not accept FP32. Masked mechanisms use dense boolean masks; they are written for correctness and are not sparse kernels. KV quantization stores dequantized values for SDPA. Speculative and target-only timings run with both models resident, so their peak memory (4.19\,GB) is identical by construction. 54\% of speculative requests reach the 64-token cap (math always does), so speed-test outputs are never scored as solutions; answer accuracy uses separate 512-token greedy runs. Speculative and target-only outputs are independent samples with different lengths, so per-request throughput ratios within output-length bins are confounded. We report the ratio of decode time per token instead. The first WikiText-2 continuation prompt is a section heading and produced an empty continuation (the second gave a normal one; both in \texttt{metrics.json}), so qualitative analysis uses HellaSwag cases.
-\textbf{Resumability.} All runs checkpoint to Google Drive with atomic writes. One distillation run resumed from a checkpoint and is verified identical to an uninterrupted run by a unit test.
+\textbf{Constraints.} Flash/cuDNN SDPA do not accept FP32. Masked mechanisms use dense boolean masks; they are written for correctness and are not sparse kernels. KV quantization stores dequantized values for SDPA. Speculative and target-only timings run with both models resident, so their peak memory (4.19\,GB) is identical by construction. 54--55\% of speculative requests reach the 64-token cap (math in $\ge$237 of 240), so speed-test outputs are never scored as solutions; answer accuracy uses separate 512-token greedy runs. Speculative and target-only outputs are independent samples with different lengths, so per-request throughput ratios within output-length bins are confounded. We report the ratio of decode time per token instead. The first WikiText-2 continuation prompt is a section heading and produced an empty continuation (the second gave a normal one; both in \texttt{metrics.json}), so qualitative analysis uses HellaSwag cases.
+\textbf{Resumability.} All runs checkpoint to Google Drive with atomic writes; a unit test checks that an interrupted and resumed run matches an uninterrupted one. None of the reported distillation runs needed to resume.
 \textbf{AI assistance.} An LLM coding assistant (Claude) was used to help write and test the code and to draft text, as permitted by the course policy. \textit{[Edit to match your actual use.]}
 
 \section{Qualitative cases}\label{app:qual}
-\textbf{HellaSwag (Task 1).} The IDs are fixed in advance: the first four diagnostic IDs and the first four where FP16 is correct and P2@50\% is wrong. Candidate log-likelihoods for every condition are in \texttt{results/task1/qualitative.json}. On ID 63 (``He moves closer to the camera\dots''; gold ending 2), FP16 and all three INT3 quantizers choose ending 2, while P1, P2 and P3 at 50\% all switch to ending 0. On ID 16 every compressed model, quantized or pruned, switches away from the gold ending.
-\textbf{KV (Task 2).} Six fixed prompts (first ID of each length$\times$position cell with 8 distractors). In \texttt{KV-2048-middle-8-00} the evidence ``access code \dots{} is 84561'' is recovered by FP16, question-aware eviction, both channel-wise caches and the hybrid. Sink+recent, which discarded the span, answers 20488. Token-wise INT4 outputs no code. Selection masks for layers 0, 14 and 27 are in \texttt{results/task2/kv/aligned.json}.
+\textbf{HellaSwag (Task 1).} Cases are fixed by rule: manifest positions 0--3 and the first four positions where FP16 is correct and P2@50\% is wrong (0, 16, 20, 63), so 7 distinct cases. Candidate log-likelihoods for every condition are in \texttt{results/task1/qualitative.json}. At position 63 (source row 293, ``He moves closer to the camera\dots''; gold ending 2), FP16 and all three INT3 quantizers choose ending 2, while P1, P2 and P3 at 50\% all switch to ending 0. At position 16 all 50\% and 75\% pruned models and all three INT3 quantizers switch away from the gold ending, while the 25\% pruners and every INT4/INT8 quantizer keep it.
+\textbf{KV (Task 2).} Six fixed prompts (first ID of each length$\times$position cell with 8 distractors). In \texttt{KV-2048-middle-8-00} the evidence ``access code \dots{} is 84561'' is recovered by FP16, question-aware eviction, channel-K INT4 and the hybrid. Sink+recent, which discarded the span, answers 20488. Token-wise INT4 outputs no code. Selection masks for layers 0, 14 and 27 are in \texttt{results/task2/kv/aligned.json}.
 \textbf{Speculative decoding (Task 3).} Matched continuations for the first math, familiar and shifted IDs are in \texttt{results/task3/spec/continuations.json}, and decoded prefix disagreements in \texttt{results/task3/align/aligned\_disagreements.json}.
 
 \section{Supplementary results}\label{app:supp}
