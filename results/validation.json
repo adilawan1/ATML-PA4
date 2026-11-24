@@ -1,0 +1,386 @@
+[
+  {
+    "evidence": "18/18 conditions with metrics.json",
+    "item": "All 18 required conditions evaluated",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "196 matrices, 1,310,195,712 eligible weights, tied=True, unique params 1,543,714,304 vs naive 1,777,088,000",
+    "item": "Eligible projections enumerated (28 blocks x 7) and tied embedding counted once",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "N values: [50000]",
+    "item": "Both perplexity suites score exactly 50,000 target tokens for every condition",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "fp16:2000, p1_s25:512, p1_s50:2000, p1_s75:512, p2_s25:512, p2_s50:2000, p2_s75:512, p3_s50:2000, p3_s75:512, p2_24_s50:512, q1_b8:512, q1_b4:2000, q1_b3:2000, q2_b8:512, q2_b4:2000, q2_b3:2000, q3_b4:2000, q3_b3:2000",
+    "item": "HellaSwag: 2,000 IDs for FP16, 50% P1/P2/P3 and all INT4/INT3; first 512 for the rest",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "C4 train manifests; evaluation uses C4 validation / WikiText-2 test / HellaSwag validation (separate splits)",
+    "item": "Calibration (128) and development (32) C4 sequences are disjoint",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "zeros {'p1': 327548928, 'p2': 327548928}; achieved {p1: 0.25000, p2: 0.25000}",
+    "item": "Pruning at 25%: achieved sparsity on target and P1/P2/P3 zero counts equal",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "zeros {'p1': 655097856, 'p2': 655097856, 'p3': 655097856}; achieved {p1: 0.50000, p2: 0.50000, p3: 0.50000}",
+    "item": "Pruning at 50%: achieved sparsity on target and P1/P2/P3 zero counts equal",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "zeros {'p1': 982646784, 'p2': 982646784, 'p3': 982646784}; achieved {p1: 0.75000, p2: 0.75000, p3: 0.75000}",
+    "item": "Pruning at 75%: achieved sparsity on target and P1/P2/P3 zero counts equal",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "achieved 0.500000",
+    "item": "2:4 diagnostic at exactly 50%",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "Q3 1,152,879,616 B vs Q2 1,152,928,768 B (slack 49,152 B, 0.0043%)",
+    "item": "Q3 packed bytes <= Q2 uniform INT4 budget (incl. metadata + uncompressed params)",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "Q3 989,006,848 B vs Q2 989,154,304 B (slack 147,456 B, 0.0149%)",
+    "item": "Q3 packed bytes <= Q2 uniform INT3 budget (incl. metadata + uncompressed params)",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "selected p3_s50_fisher (fisher_knapsack); candidates fisher=2.7976, owl_l0.04=2.8234, owl_l0.08=2.8215; last dev run 2026-11-23 18:05:04 < final 2026-11-23 18:18:04",
+    "item": "p3_s50: design chosen by dev NLL, all candidates evaluated before the final test run",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "selected p3_s75_owl_l0.08 (owl_M5_lambda0.08); candidates fisher=6.5306, owl_l0.04=6.3791, owl_l0.08=5.6034; last dev run 2026-11-23 18:06:45 < final 2026-11-23 18:19:20",
+    "item": "p3_s75: design chosen by dev NLL, all candidates evaluated before the final test run",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "selected q3_b4_fisher (fisher_knapsack); candidates fisher=2.5685, out_err=2.6116; last dev run 2026-11-23 18:11:13 < final 2026-11-23 18:23:11",
+    "item": "q3_b4: design chosen by dev NLL, all candidates evaluated before the final test run",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "selected q3_b3_fisher (fisher_knapsack); candidates fisher=2.7687, out_err=3.7685; last dev run 2026-11-23 18:15:39 < final 2026-11-23 18:27:02",
+    "item": "q3_b3: design chosen by dev NLL, all candidates evaluated before the final test run",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "max relative block-output change after folding = 1.03e-03 over 112 block checks",
+    "item": "AWQ full-precision rescaling preserves block outputs before rounding",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "verified units per quant run: [2, 2, 2, 2, 2, 2, 2, 2]",
+    "item": "Bit packing round-trip verified against dequantized weights",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "reps={5}; GPU=NVIDIA L4",
+    "item": ">= 5 warmed latency repetitions; prefill 512/2048 + 64-token decode + peak memory recorded",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "devices: {'NVIDIA L4'}",
+    "item": "All Task 1 timings on one GPU type",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "p3_s50-p2_s50: dWiki -2.02 [-2.23, -1.83]; p3_s75-p2_s75: dWiki -2484.03 [-2723.27, -2258.89]; q3_b4-q2_b4: dWiki -0.15 [-0.22, -0.08]; q3_b3-q2_b3: dWiki -2.14 [-2.48, -1.85]",
+    "item": "Paired 95% bootstraps (2,000 resamples) for P3-P2 and Q3-Q2 on PPL windows and HellaSwag",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: figures/task1/quality_vs_resource.pdf",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: figures/task1/sensitivity_maps.pdf",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: figures/task1/allocation_maps.pdf",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: figures/task1/calib_vs_heldout.pdf",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: figures/task1/mag_wanda_overlap.pdf",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: task1/qualitative.json",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: task1/calib_vs_heldout.json",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "",
+    "item": "Artifact present: tables/task1_all_conditions.csv",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "acc 0.5040, acc_norm 0.6945; WikiText-2 PPL 16.107, C4 PPL 14.962",
+    "item": "Baseline sanity (HellaSwag acc_norm near published Qwen2.5-1.5B ~0.68)",
+    "status": "PASS",
+    "task": "Task 1"
+  },
+  {
+    "evidence": "84 rows; statuses: ['ok', 'unsupported: No avai']",
+    "item": "2A: 7 implementations x 6 lengths x 2 dtypes benchmarked (incl. unsupported/OOM rows)",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "FP32 tiled max |out err| 7.7e-07, max |grad err| 2.1e-05",
+    "item": "2A: tiled online-softmax matches dense FP32 (output and gradients) at every length",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "72 ok rows",
+    "item": "2A: forward-only and forward+backward timed separately with peak allocated/reserved memory",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "max change before perturbed positions: 0.0e+00 across 5 implementations",
+    "item": "2A: causality verified by perturbing future keys/values",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "{'torch.float16': {'backend': 'FLASH_ATTENTION', 'kernels': ['aten::_flash_attention_forward', 'aten::_scaled_dot_product_flash_attention', 'aten::scaled_dot_pr",
+    "item": "2A: tile-size sweep and default SDPA backend recorded",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "42 runs, 14 configurations",
+    "item": "2B: 14 configurations x 3 seeds trained (B1, B2, B3)",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "dense 437,824, dilated 437,824, hybrid 439,880, linear 437,824, window 437,824",
+    "item": "2B: parameter counts within 5% of the dense model",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "",
+    "item": "2B: full learning curves (50-update loss + 6 dev evaluations) for every run",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "9 cells x 1,024 sequences each",
+    "item": "2B: every model evaluated on the same near/far/mixed test cells for K in {4,8,16}",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "",
+    "item": "2B: train-vs-test mask controls (dense + W=64 / top-64 at test time)",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "",
+    "item": "2B: generator invariants verified; theoretical costs and forward-only sweep present",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "prediction a8537b9 2026-11-22T11:41:09+05:00 (file never edited afterwards: True); first B3 result 0ed460f 2026-11-23T16:53:25+00:00",
+    "item": "2B: B3 prediction committed before any B3 result (git history)",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "180 prompts",
+    "item": "2C: all 180 prompts x 6 policies evaluated",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "max realized fraction of FP16 = 0.2977",
+    "item": "2C: every compressed policy within the per-prompt INT4 byte budget",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "generation match 1.000; split-vs-full max |logit diff| 0.105 (FP16)",
+    "item": "2C/C1: rebuilt 100%-retention cache reproduces ordinary generation; logits finite",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "context tokens 2605-5243",
+    "item": "2C: actual tokenized lengths recorded",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "16 rows, 12/12 byte matches",
+    "item": "2C/C5: packed encode/decode + decode step at batch {1,8} x both lengths; serialized bytes == formula",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "6 prompts",
+    "item": "2C: fixed aligned generations with evidence spans and selection masks",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "",
+    "item": "2C: paired bootstrap CIs for principal differences",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "{'NVIDIA A100-SXM4-80GB'}",
+    "item": "2B timings on one GPU type",
+    "status": "PASS",
+    "task": "Task 2"
+  },
+  {
+    "evidence": "chi2=29.72, dof=26, p=0.279",
+    "item": "100,000-sequence Markov chi^2: exact sampler accepted (p >= 0.01)",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "chi2=19372, p=0.0e+00",
+    "item": "Negative control (residual := p) rejected",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "EOS p=0.580, gamma=1 p=0.724",
+    "item": "EOS-aware and gamma=1 variants pass",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "max |prob diff| 9.0e-04; bonus tokens 9, EOS 2",
+    "item": "Real-model cache rollback / split prefill / crop-refeed agree with full recomputation",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "920 prompts, 0 mismatches",
+    "item": "Tokenizer and chat-template agreement (teacher vs student)",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "{'familiar': 30, 'math': 60, 'shifted': 30}",
+    "item": "No train/test prompt overlap; 60 math + 30 familiar + 30 shifted test prompts",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "off_s6304: 157 updates, 0 skipped, off_s6305: 157 updates, 0 skipped, on_s6304: 157 updates, 1 skipped, on_s6305: 157 updates, 0 skipped",
+    "item": "Distillation: exact 30,000 + 10,000 teacher-scored tokens per run",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "adapter 1,081,344; backbone 494032768",
+    "item": "Distillation: adapter/model parameter counts and cost breakdown recorded",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "off_s6304 0.287, off_s6305 0.293, on_s6304 0.414, on_s6305 0.281",
+    "item": "Merged vs unmerged adapter logits compared (FP16)",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "exact_spec_original_gamma4.jsonl.gz, own_off_s6304.jsonl.gz, own_off_s6305.jsonl.gz, own_on_s6304.jsonl.gz, own_on_s6305.jsonl.gz",
+    "item": "Banks: exact-speculative (original, gamma=4) + 4 own-rollout banks generated",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "diff +0.0030 [-0.0098, +0.0158]",
+    "item": "Target vs exact-speculative bank consistency (CI includes 0)",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "{'original': (480, 480), 'off_s6304': (480, 480), 'off_s6305': (480, 480), 'on_s6304': (480, 480), 'on_s6305': (480, 480), 'original_fixed64': (96, 96), 'on_s6304_unmerged': (20, 20)}",
+    "item": "Speculative benchmark complete (5 drafts x gamma {2,4} x 2 reps x 120 prompts, + fixed-64 + unmerged)",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "",
+    "item": "Paired bootstrap CIs over prompts for throughput and acceptance comparisons",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "{'teacher': 120, 'on_s6304': 120, 'off_s6304': 120, 'original': 120, 'off_s6305': 120, 'on_s6305': 120}",
+    "item": "Standalone answer accuracy for teacher + 5 drafts (120 prompts each)",
+    "status": "PASS",
+    "task": "Task 3"
+  },
+  {
+    "evidence": "{'NVIDIA L4'}",
+    "item": "Task 3 timings on one GPU type",
+    "status": "PASS",
+    "task": "Task 3"
+  }
+]
