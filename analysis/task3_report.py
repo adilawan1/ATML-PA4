@@ -2,6 +2,7 @@
 """Task 3 tables/figures: sampler checks, distillation, prefix-bank alignment, speculative execution, costs."""
 from __future__ import annotations
 
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -47,7 +48,8 @@ def distillation():
         y = pd.Series([l["kl_per_token"] for l in r["logs"]]).rolling(10, min_periods=1).mean()
         ax.plot(x, y, color=cm[n], label=n, ls="-" if n.startswith("on") else "--")
     ax.set_xlabel("teacher-scored response tokens"); ax.set_ylabel("forward KL / token (10-update mean)")
-    ax.legend(); fig.tight_layout(); save(fig, "task3", "distill_curves")
+    ax.set_title("Training KL on each method's own training prefixes\n(teacher samples vs student samples: not comparable across methods)", fontsize=7)
+    ax.legend(ncol=4, loc="upper center", bbox_to_anchor=(0.5, -0.2)); fig.tight_layout(); save(fig, "task3", "distill_curves")
     pc = read_json(d / "teacher_pool_cost.json") if (d / "teacher_pool_cost.json").exists() else {}
     rows = []
     for n, r in res.items():
@@ -230,7 +232,11 @@ def speculative(align_df=None):
                 q = sub[(sub.draft == d) & (sub.gamma == g)]
                 if len(q) and d in exp:
                     ax.scatter(exp[d], q.accept_examined.iloc[0], color=cm[d], marker=mk, label=f"{d} γ={g}")
-        ax.plot([0, 1], [0, 1], color="#52514e", lw=0.8, ls="--")
+        xs = [exp[d] for d in DRAFTS if d in exp]
+        ys = sub.accept_examined.tolist()
+        lo, hi = min(xs + ys) - 0.01, max(xs + ys) + 0.01
+        ax.plot([lo, hi], [lo, hi], color="#52514e", lw=0.8, ls="--", label="y = x")
+        ax.set_xlim(lo, hi); ax.set_ylim(lo, hi)
         ax.set_xlabel("expected acceptance E[1-TV] (teacher bank)"); ax.set_ylabel("measured accepted/examined")
         ax.legend(fontsize=5); fig.tight_layout(); save(fig, "task3", "expected_vs_measured_acceptance")
     # time decomposition figure
@@ -263,6 +269,10 @@ def standalone_and_breakeven(spec_df, dist_df):
                 row["math_truncated"] = np.mean([r["truncated"] for r in s])
             else:
                 row[f"{split}_format_ok"] = np.mean([r["format_ok"] for r in s])
+                # lenient: the gold answer appears as a whole word anywhere in the response (separates knowing the
+                # answer from complying with the "return only ..." format; exact match requires both)
+                row[f"{split}_answer_present"] = np.mean([bool(re.search(r"(?<![\w])" + re.escape(r["gold"]) + r"(?![\w])", r["text"]))
+                                                          for r in s])
         rows.append(row)
     if rows:
         write_table(pd.DataFrame(rows), "task3_standalone_accuracy")
