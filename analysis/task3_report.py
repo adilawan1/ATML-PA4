@@ -153,6 +153,14 @@ def speculative(align_df=None):
             pp[r["prompt_id"]].append((r["spec"]["tokens_per_s"], r["target"]["tokens_per_s"]))
         ratio = np.array([np.mean([a / b for a, b in v]) for v in pp.values()])
         boot[f"{tag}_g{g}_throughput_ratio"] = paired_bootstrap(lambda idx: float(ratio[idx].mean()), len(ratio))
+        # decode-only per-token latency ratio (target / speculative), excluding the one-off prefill: robust to the
+        # output-length mismatch between the independent speculative and target-only samples of a prompt
+        dd = defaultdict(list)
+        for r in rs:
+            dd[r["prompt_id"]].append((r["target"]["t_decode"] / r["target"]["n_out"]) /
+                                      ((r["spec"]["t_total"] - r["spec"]["t_prefill"]) / r["spec"]["n_out"]))
+        dratio = np.array([np.mean(v) for v in dd.values()])
+        boot[f"{tag}_g{g}_decode_speedup"] = paired_bootstrap(lambda idx: float(dratio[idx].mean()), len(dratio))
         acc_pp = np.array([np.mean([x["spec"]["accepted"] / max(x["spec"]["examined"], 1) for x in rs if x["prompt_id"] == p]) for p in pp])
         boot[f"{tag}_g{g}_accept_examined"] = paired_bootstrap(lambda idx: float(acc_pp[idx].mean()), len(acc_pp))
         dec = {k: np.mean([s[k] for s in sp]) * 1000 for k in ("t_prefill", "t_draft", "t_verify", "t_accept", "t_rollback", "t_host_other", "t_total")}
@@ -161,6 +169,8 @@ def speculative(align_df=None):
                    draft_passes_per_token=sum(s["draft_calls"] for s in sp) / nout.sum(),
                    spec_tok_s=np.mean([s["tokens_per_s"] for s in sp]), target_tok_s=np.mean([t["tokens_per_s"] for t in tg]),
                    throughput_ratio=ratio.mean(), ratio_ci=(boot[f"{tag}_g{g}_throughput_ratio"]["ci_low"], boot[f"{tag}_g{g}_throughput_ratio"]["ci_high"]),
+                   decode_speedup=dratio.mean(), decode_speedup_ci_low=boot[f"{tag}_g{g}_decode_speedup"]["ci_low"],
+                   decode_speedup_ci_high=boot[f"{tag}_g{g}_decode_speedup"]["ci_high"],
                    eos_rate=np.mean([s["eos"] for s in sp]), truncated_rate=np.mean([s["truncated"] for s in sp]),
                    peak_spec_GB=np.mean([s["peak_alloc_bytes"] for s in sp]) / 1e9, peak_target_GB=np.mean([t["peak_alloc_bytes"] for t in tg]) / 1e9,
                    **{f"{k}_ms": v for k, v in dec.items()})
