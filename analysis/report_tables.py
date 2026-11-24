@@ -247,6 +247,9 @@ def task2():
                             f"{r['pack_ms']:.1f} & {r['unpack_ms']:.1f} & {r['decode_step_with_unpack_ms']:.1f} / {ref['decode_step_ms']:.1f} & "
                             f"{r['peak_alloc_bytes'] / 1e9:.2f} / {ref['peak_alloc_bytes'] / 1e9:.2f} \\\\")
     write("t2_c5", "\n".join(rows))
+    # main-text subset: longest context only (full grid in the appendix)
+    longest = max(r.split(" & ")[0] for r in rows if " & " in r)
+    write("t2_c5_main", "\n".join(r for r in rows if r.startswith(longest + " & ")))
     mac("GPUtwo", runs[0]["env"].get("cuda_device", "?").replace("NVIDIA ", ""))
 
 
