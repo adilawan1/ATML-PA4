@@ -63,8 +63,9 @@ def task1():
         dc = q["c4val"]["ppl"] - b["quality"]["c4val"]["ppl"]
         fmt = lambda x: f"{x:,.0f}" if x >= 1000 else f"{x:.2f}"
         rows.append(" & ".join([
-            name, budget, fmt(q["wikitext2"]["ppl"]), fmt(q["c4val"]["ppl"]),
-            f"{100 * q['hellaswag']['acc_norm']:.1f} ({q['hellaswag']['n']})",
+            name, budget, f"{fmt(q['wikitext2']['ppl'])} ({q['wikitext2']['mean_nll']:.3f})",
+            f"{fmt(q['c4val']['ppl'])} ({q['c4val']['mean_nll']:.3f})",
+            f"{100 * q['hellaswag']['acc']:.1f} / {100 * q['hellaswag']['acc_norm']:.1f} ({q['hellaswag']['n']})",
             "--" if c == "fp16" else f"{d_pp:+.1f}",
             f"{mb:,.0f}", "--" if m.get("calib_out_err_rel_mean") is None else f"{m['calib_out_err_rel_mean']:.3f}",
             "--" if c == "fp16" else f"{m['compression']['compression_seconds_total']:.0f}"]) + " \\\\")

@@ -29,10 +29,10 @@
 \maketitle
 
 \begin{abstract}
-We test three groups of inference-efficiency methods on Qwen2.5 models and report quality next to stored bytes, GPU memory and time.
-(1)~Pruning and weight-only quantization of Qwen2.5-1.5B. At 50\% sparsity, an activation-aware (Wanda) mask lowers WikiText-2 perplexity from 127.8 to 25.4. Fisher (50\%) or OWL (75\%) layer budgets and Fisher-guided mixed precision lower it further at the same budgets.
-HellaSwag changes are within noise except at 75\% sparsity, and since every model runs on dense FP16 kernels, latency and memory do not change.
-(2)~Our tiled attention matches dense FP32 to $10^{-6}$ with 140 times less peak memory but runs about 1{,}000$\times$ slower than fused SDPA. In associative recall, sliding windows fail on queries out of their reach, linear attention degrades as stored pairs grow, and training on unreachable queries stops learning altogether.
+We test inference-efficiency methods on Qwen2.5 models, reporting quality next to stored bytes, memory and time.
+(1)~Pruning Qwen2.5-1.5B to 50\% sparsity, an activation-aware (Wanda) mask lowers WikiText-2 perplexity from 127.8 to 25.4. Fisher (50\%) or OWL (75\%) layer budgets and Fisher-guided mixed precision lower it further at the same budgets.
+HellaSwag changes are within noise except at 75\%, and with dense FP16 kernels latency and memory do not change.
+(2)~Our tiled attention matches dense FP32 to $10^{-6}$ with 140 times less peak memory but runs about 1{,}000$\times$ slower than fused SDPA. In associative recall, sliding windows fail on queries out of reach and linear attention degrades as stored pairs grow.
 At an INT4 KV-cache byte budget, question-aware eviction and per-channel-key INT4 keep 100\% retrieval, while token-wise INT4 drops to 0\% because of key outlier channels.
 (3)~Our exact speculative sampler passes a $\chi^2$ test on 100{,}000 sequences, but a 0.5B draft step costs 0.86--0.90 of a 1.5B target step, so speculative decoding is 18--20\% \emph{slower} per token. Off- and on-policy distillation give small gains that we cannot tell apart.
 Code and results: \url{https://github.com/adilawan1/ATML-PA4}
@@ -51,28 +51,29 @@ Uncertainty comes from a paired bootstrap over prompts, examples or whole evalua
 \texttt{scripts/validate\_results.py} checks the handout requirements against the saved results, and all 64 checks pass.
 
 \section{Task 1: Pruning and weight-only quantization}\label{sec:t1}
-\textbf{Methods.} The 196 eligible projections (\NElig{}B weights; tied embeddings, norms and biases, \OtherMB{}\,MB in FP16, untouched) are compressed one block at a time on the 128 calibration sequences. Each block sees the outputs of the already-compressed blocks.
+\subsection{Methods}
+The 196 eligible projections (\NElig{}B weights; tied embeddings, norms and biases, \OtherMB{}\,MB in FP16, untouched) are compressed one block at a time on the 128 calibration sequences. Each block sees the outputs of the already-compressed blocks.
 P1 removes the smallest $|W_{ij}|$ per output row; P2 uses Wanda scores $|W_{ij}|\,\|X_j\|_2$~\cite{wanda}.
 For P3 we fixed two candidate designs before running any evaluation: (i) an empirical-Fisher (OBD-style~\cite{obd,molchanov}) cost $\tfrac12\sum F_{ij}W_{ij}^2$ over each projection's Wanda-pruned set, allocated by a greedy knapsack on a 0.025 grid within [0.10,\,0.85]; (ii) OWL block sparsities~\cite{owl} ($M{=}5$, $\lambda\in\{0.04,0.08\}$).
-We picked the design by development NLL (50\%: \SelFifty; 75\%: \SelSeventyFive). Per-row rounding was redistributed so that P1, P2 and P3 zero exactly the same number of weights (e.g.\ \ZerosFifty{} at 50\%).
+We picked the design by development NLL (50\%: \SelFifty; 75\%: \SelSeventyFive). Per-row rounding was redistributed so that P1, P2 and P3 zero exactly the same number of weights (e.g.\ \ZerosFifty{} at 50\%), and Q3 stays within the Q2 packed size (49\,KB and 147\,KB below it at INT4 and INT3).
 The quantizer is asymmetric min/max over groups of 128 input columns. Each group stores an FP16 scale and a uint8 zero-point (3 bytes); rounding is half-to-even and bits are really packed, LSB first.
 Q2 is AWQ-style~\cite{awq}: per-channel scales $s=\overline{|x|}^{\alpha}$ with $\alpha\in\{0,0.1,\dots,1\}$ minimise $\|(W-Q(Ws)/s)X\|^2$ per input group and are folded into the RMSNorm gains and up\_proj rows. Folding in full precision changes block outputs by at most \FoldErr.
 With GQA the $v{\to}o$ fold does not work, so we store o\_proj scales in FP16 and count their bytes. We did not reproduce AWQ's clipping search or its fused kernels.
 Q3 assigns $\{2,3,4,8\}$ bits per projection by knapsack under the exact Q2 INT4/INT3 packed-byte budget, using a Fisher-weighted perturbation cost (HAWQ-style~\cite{hawq}). This cost beat a calibration-output-error cost on development NLL (INT3: \SelQthree).
 
 \begin{figure}[t]
-\centering\includegraphics[width=0.92\linewidth]{t1_tradeoff.pdf}
+\centering\includegraphics[width=0.85\linewidth]{t1_tradeoff.pdf}
 \caption{Held-out WikiText-2 perplexity (50{,}000 scored tokens) of Qwen2.5-1.5B versus (a) achieved sparsity and (b) total packed bytes including group metadata and uncompressed FP16 parameters. FP16 reference dashed.}
 \label{fig:t1}
 \end{figure}
 
 \begin{table}[t]
-\centering\footnotesize\setlength{\tabcolsep}{3.4pt}
-\caption{Task 1 summary (Qwen2.5-1.5B, \GPUone). HellaSwag: zero-shot acc\_norm (lm-eval preprocessing, character-length normalisation); $n$ = 2{,}000 IDs or the first 512. $\Delta$ is the paired change versus FP16 on the same IDs (percentage points). Size = total bytes in the representation stated (FP16 dense; sparse: 1 mask bit/weight + 16 bits/nonzero; quantized: packed). All conditions run with dense FP16 kernels, so prefill latency at 2,048 tokens was \PrefillLo--\PrefillHi\,ms, decode \DecLo--\DecHi\,ms/token and peak allocated memory \PeakGB\,GB for every row.}
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Task 1 summary (Qwen2.5-1.5B, \GPUone). Perplexity with mean token NLL in parentheses, $N=50{,}000$ scored tokens per suite. HellaSwag: zero-shot raw accuracy / acc\_norm (lm-eval \texttt{hellaswag} v1.0 preprocessing, character-length normalisation); $n$ = 2{,}000 IDs or the first 512. $\Delta$HS: paired acc\_norm change versus FP16 on the same IDs (percentage points). Size: total bytes (FP16 dense; sparse: 1 mask bit/weight + 16 bits/nonzero; quantized: packed). With dense FP16 kernels, every row has prefill (2,048 tokens) \PrefillLo--\PrefillHi\,ms, decode \DecLo--\DecHi\,ms/token, peak allocated memory \PeakGB\,GB.}
 \label{tab:t1}
 \begin{tabular}{@{}llrrrrrrr@{}}
 \toprule
-Condition & Budget & Wiki PPL & C4 PPL & HS (n) & $\Delta$HS & Size MB & Calib.\ err & Compr.\ s\\
+Condition & Budget & Wiki PPL (NLL) & C4 PPL (NLL) & HS acc / norm (n) & $\Delta$HS & Size MB & Calib.\ err & Compr.\ s\\
 \midrule
 \gentab{t1_summary}
 \bottomrule
@@ -80,7 +81,7 @@ Condition & Budget & Wiki PPL & C4 PPL & HS (n) & $\Delta$HS & Size MB & Calib.\
 \end{table}
 
 \begin{table}[t]
-\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
 \caption{Paired 95\% bootstrap intervals at matched budgets (2{,}000 resamples; PPL resamples whole evaluation windows). HellaSwag in percentage points over the IDs scored for both conditions ($n$).}
 \label{tab:t1boot}
 \begin{tabular}{@{}lrrr@{}}
@@ -98,6 +99,7 @@ Comparison & $\Delta$ WikiText-2 PPL & $\Delta$ C4 PPL & $\Delta$ HellaSwag acc\
 \label{fig:t1maps}
 \end{figure}
 
+\subsection{Results and analysis}
 \textbf{Magnitude, activation and removal impact.} Magnitude and Wanda masks mostly keep the same weights (Jaccard \JacTwentyFive{} at 25\% and \JacSeventyFive{} at 75\%; at 50\% the overlap is lowest for o\_proj, \JacO, and highest for gate\_proj, \JacGate). The weights they disagree on matter a lot. Some input channels reach norms of \ActMax{} (down\_proj in blocks 1--2 and 26), so a small weight on such a channel can still produce a large output.
 Weighting by $\|X_j\|$ lowers 50\% perplexity by 102 points, adds 17.8\,pp HellaSwag (Table~\ref{tab:t1boot}) and halves the calibration layer-output error from 0.064 to 0.027 (Table~\ref{tab:t1}). At 75\% every uniform method breaks down (PPL $>$3{,}600, HellaSwag near chance).
 
@@ -113,14 +115,14 @@ The AWQ-style scaling matters more than the allocation: at INT3 it removes 14.5 
 \textbf{Theoretical versus practical savings.} Packed INT3 takes 989\,MB against 3{,}087\,MB in FP16 (32\%). The eligible weights alone shrink to 20\%; the uncompressed \OtherMB\,MB embedding limits the overall ratio. With 50\% sparsity, the mask+value format saves only 37\% (1.125 vs.\ 2 bytes per weight). Latency and memory are the same for all 18 conditions, because zeros and dequantized weights still run as dense FP16 GEMMs. The 2:4 format, which hardware can accelerate, costs +42 PPL and $-9.8$\,pp HellaSwag against unstructured Wanda. Compression takes 31--35\,s for pruning or 131\,s for the AWQ search, plus a one-off \ProbeS\,s sensitivity probe (Fisher pass \FisherS\,s).
 
 \section{Task 2: Efficient attention and context memory}\label{sec:t2}
-\subsection{Exact attention}
+\subsection{Part A results and analysis: exact attention}
 \begin{figure}[t]
-\centering\includegraphics[width=0.92\linewidth]{t2_attention.pdf}
+\centering\includegraphics[width=0.86\linewidth]{t2_attention.pdf}
 \caption{Exact causal attention, $B{=}2$, $H{=}4$, $d{=}64$, \GPUtwo, 10 warmed repetitions. (a) gradient error against dense FP32; (b) FP16 latency; (c) FP16 forward+backward peak allocated memory. Our tiled kernel is a Python loop over $128\times128$ tiles with a recomputation backward that stores only $O$ and the log-sum-exp, not a fused FlashAttention kernel.}
 \label{fig:t2a}
 \end{figure}
 \begin{table}[t]
-\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
 \caption{Backends at $L{=}8{,}192$, FP16 (errors vs dense FP32). Flash and cuDNN SDPA reject FP32 inputs. Default dispatch: FP16 $\to$ \DefaultSixteen, FP32 $\to$ \DefaultThirtyTwo{} (from profiler kernel names).}
 \label{tab:t2a}
 \begin{tabular}{@{}lcrrrrr@{}}
@@ -135,15 +137,15 @@ In FP32 our tiled online-softmax attention matches dense attention to \TiledErrO
 When queries are scaled by 30, our dense FP16 kernel is off from FP64 by \ExtremeDenseSixteen{}, against \ExtremeSdpaSixteen{} for SDPA. Our kernel computes $QK^\top$ in FP16, while the fused kernels accumulate in FP32.
 At $L{=}8{,}192$ the score matrix dominates memory: dense forward+backward needs 15.1\,GB, SDPA math 8.6\,GB, our tiled kernel 109\,MB and fused SDPA 68\,MB. Tiling gets the memory saving, but without fusion each of the $\sim$2{,}000 tiles is a separate kernel launch, so it takes 2.65\,s against 2.3\,ms (Table~\ref{tab:t2a}).
 
-\subsection{Associative recall (MQAR)}
+\subsection{Part B results and analysis: associative recall}
 \begin{figure}[t]
-\centering\includegraphics[width=0.92\linewidth]{t2_mqar.pdf}
-\caption{MQAR, 2-layer $d{=}128$ models (0.44M parameters, all within 0.5\%), 4{,}500 updates, 3 seeds. (a) Test accuracy by source--query distance and test-time number of pairs $K$ (1{,}024 sequences per $K\times$regime); label chance 1/64. (b) Development accuracy curves for all 14 configurations.}
+\centering\includegraphics[width=0.88\linewidth]{t2_mqar.pdf}
+\caption{MQAR, 2-layer $d{=}128$ models (0.44M parameters, all within 0.5\%), 4{,}500 updates, 3 seeds. (a) Test accuracy by source--query distance and test-time number of pairs $K$ (1{,}024 sequences per $K\times$regime); chance 1/64 over labels and $1/K$ over values present (0.0625 at $K{=}16$). (b) Development accuracy curves for all 14 configurations.}
 \label{fig:t2b}
 \end{figure}
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{2.6pt}
-\caption{MQAR test accuracy at the trained $K$ (mean$\pm$sd over seeds; per-seed mixed accuracy listed), theoretical attended pairs per head and decoding state (floats per layer) at $T{=}256$, and measured training cost (\GPUtwo).}
+\caption{MQAR test accuracy at the trained $K$ (mean$\pm$sd over seeds; per-seed mixed accuracy listed), theoretical attended pairs per head and decoding state at $T{=}256$ (floats per layer; 4 bytes each in FP32), and measured training cost (\GPUtwo).}
 \label{tab:t2b}
 \resizebox{\linewidth}{!}{\begin{tabular}{@{}lrlrrrlrrrr@{}}
 \toprule
@@ -159,18 +161,18 @@ Linear attention does equally well at all distances but drops as $K$ grows (0.99
 \textbf{B3.} Our change mixes, per head and through a learned gate, an 8-token softmax window with a 16-feature ELU+1 memory. Its state stays below the linear model's (4{,}160 vs.\ 4{,}224 floats) and it adds 0.5\% parameters. We committed the prediction that it would beat linear attention at $K{=}16$ before seeing any B3 result. The prediction was wrong: 0.26$\pm$0.23 vs.\ 0.54$\pm$0.42. Halving the feature dimension loses more memory capacity than the local window gives back.
 \textbf{Theory versus measurement.} At $T{=}256$ the window attends to 44\% of the dense pairs, and linear attention keeps $O(1)$ state. In the forward-only sweep at $T{=}8{,}192$, though, the window takes \SwWindowMs\,ms and \SwWindowMB\,MB against \SwDenseMs\,ms and \SwDenseMB\,MB for dense causal SDPA, because its boolean mask forces a non-fused path. Linear attention takes \SwLinearMs\,ms and \SwLinearMB\,MB, since our parallel form builds $[B,H,T,f,d]$ prefix tensors, and top-$k$ takes \SwTopkMs\,ms and \SwTopkMB\,MB.
 
-\subsection{KV-cache compression at a matched INT4 byte budget}
+\subsection{Part C results and analysis: KV-cache compression}
 \begin{table}[t]
-\centering\footnotesize\setlength{\tabcolsep}{2.8pt}
-\caption{Qwen2.5-1.5B-Instruct on 180 retrieval prompts (\KvLctxLo--\KvLctxHi{} context tokens), each policy at the per-prompt serialised size of the uniform INT4 channel-K/token-V cache. EM: exact match (FP16 is correct on all prompts, so conditional = unconditional). NLL of the gold code; KL(FP16$\|$policy) at the first answer token and over teacher-forced positions. Evid.: evidence tokens kept in FP16 (layer mean). Live: cache at end of decoding. Peak: allocated memory incl.\ dequantized copies.}
+\centering\scriptsize\setlength{\tabcolsep}{2.8pt}
+\caption{Qwen2.5-1.5B-Instruct on 180 retrieval prompts (\KvLctxLo--\KvLctxHi{} context tokens), each policy at the per-prompt serialised size of the uniform INT4 channel-K/token-V cache. EM: exact match (FP16 is always correct, so conditional = unconditional). NLL of the gold code; KL(FP16$\|$policy) at the first answer token and over teacher-forced positions. Evid.: evidence kept in FP16 (layer mean). Live: cache at end of decoding. Peak: allocated, incl.\ dequantized copies.}
 \label{tab:kv}
-\resizebox{\linewidth}{!}{\begin{tabular}{@{}lrrrrrrrrr@{}}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
 \toprule
 Policy & EM\% & NLL & KL$_1$ & KL$_\text{TF}$ & Evid.\% & Packed MB & \% FP16 & Live MB & Peak GB\\
 \midrule
 \gentab{t2_kv}
 \bottomrule
-\end{tabular}}
+\end{tabular}
 \end{table}
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{3.5pt}
@@ -186,13 +188,13 @@ Factor & $n$ & FP16 & S+R & QA & Tok & Chan & Hyb\\
 \end{table}
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{4pt}
-\caption{C5: real bit packing at 5{,}217 context tokens, 10 repetitions (\GPUtwo; 2{,}633 tokens in Appendix~\ref{app:supp}). Serialised bytes match the handout formula exactly. Size, decode step (including unpacking) and peak allocated memory: packed / FP16.}
+\caption{C5: real bit packing, 10 repetitions (\GPUtwo). Serialised bytes match the handout formula exactly. Size, decode step (including unpacking) and peak allocated memory: packed / FP16.}
 \label{tab:c5}
 \begin{tabular}{@{}rrlrrrrr@{}}
 \toprule
 Ctx tokens & Batch & Layout & MB & pack ms & unpack ms & step ms & peak GB\\
 \midrule
-\gentab{t2_c5_main}
+\gentab{t2_c5}
 \bottomrule
 \end{tabular}
 \end{table}
@@ -204,11 +206,14 @@ Exact match is at the ceiling for the three good policies, so we compare them by
 \textbf{Systems.} Prefill takes \KvPrefill\,ms and question scoring adds \KvScoring\,ms. Evicting after a full prefill does not lower the prefill peak (\KvPrefillPeak\,GB). Packed caches (Table~\ref{tab:c5}) store exactly the bytes the formula gives. SDPA needs FP16 inputs, though, so every decode step has to unpack. That adds $\sim$12\,ms at batch~1 (step time goes from 34 to 46--49\,ms), and peak memory is \emph{higher} than with FP16 because the packed and unpacked copies exist at the same time.
 
 \section{Task 3: Draft distillation and exact speculative decoding}\label{sec:t3}
-\textbf{Sampler correctness.} The sampler~\cite{leviathan,chen2023} checks all $\gamma$ proposals in one target pass, samples corrections from $\mathrm{norm}([p-q]_+)$, adds a bonus token when every proposal is accepted, stops at EOS and crops both KV caches.
-On 100{,}000 length-3 sequences from a 3-symbol Markov target ($\gamma{=}2$), the sample frequencies match the exact distribution ($\chi^2=\ChiStat$, 26 dof, $p=\ChiP$). Sampling corrections from $p$ instead of the residual is rejected ($\chi^2=\ChiNeg$). The EOS ($p=\ChiEos$) and $\gamma{=}1$ ($p=\ChiGone$) versions also pass.
+\subsection{Methods}
+Our sampler~\cite{leviathan,chen2023} checks all $\gamma$ proposals in one target pass, samples corrections from $\mathrm{norm}([p-q]_+)$, adds a bonus token when every proposal is accepted, stops at EOS and crops both KV caches.
+LoRA~\cite{lora} ($r{=}8$ on q/k/v/o, \AdapterParams{} parameters, 0.22\% of \StudentParams) is trained with forward token-level KL against the frozen \TeacherParams{} teacher~\cite{distillspec,gkd}, on teacher responses (off-policy) or the student's own rollouts (on-policy).
+\subsection{Results and analysis}
+\textbf{Sampler correctness.} On 100{,}000 length-3 sequences from a 3-symbol Markov target ($\gamma{=}2$), the sample frequencies match the exact distribution ($\chi^2=\ChiStat$, 26 dof, $p=\ChiP$). Sampling corrections from $p$ instead of the residual is rejected ($\chi^2=\ChiNeg$). The EOS ($p=\ChiEos$) and $\gamma{=}1$ ($p=\ChiGone$) versions also pass, and unit tests cover bonus tokens, cache rollback and EOS stops.
 On the real models, cached and recomputed next-token distributions agree to \CacheDiff{} after rollbacks. The 120-prompt prefix bank built with exact speculative sampling matches the target's own samples: paired $\Delta\mathbb{E}[1-\mathrm{TV}]=$ \ConsDiff, and the mean target log-probability of sampled tokens is \ConsLogpS{} vs.\ \ConsLogpT.
-\textbf{Distillation.} LoRA~\cite{lora} ($r{=}8$ on q/k/v/o, \AdapterParams{} parameters, 0.22\% of \StudentParams) is trained with forward token-level KL against the frozen \TeacherParams{} teacher~\cite{distillspec,gkd}. Each run used exactly 30{,}000 GSM8K and 10{,}000 short-form teacher-scored tokens in 157 updates; one run skipped a single step because of FP16 overflow.
-Off-policy runs take 56\,min, almost all of it for the shared pool of 800 teacher responses (52.6\,min; \PoolLen{} of them hit the 192-token cap). On-policy runs take 36\,min, mostly student rollouts (32.6\,min). Scoring and training take under 4\,min, merging changes logits by at most 0.41, and peak memory is 5.3\,GB (Table~\ref{tab:t3d}, appendix). Training KL (Fig.~\ref{fig:t3}a) is measured on each method's own prefixes, so it is not comparable across methods.
+\textbf{Distillation.} Each run used exactly 30{,}000 GSM8K and 10{,}000 short-form teacher-scored tokens in 157 updates; one run skipped a single step because of FP16 overflow.
+Off-policy runs take 56\,min, almost all of it for the shared pool of 800 teacher responses (52.6\,min; \PoolLen{} of them hit the 192-token cap). On-policy runs take 36\,min, mostly student rollouts (32.6\,min). Scoring and training take under 4\,min, merging changes logits by at most 0.41, and peak memory is 5.3\,GB (Table~\ref{tab:t3d}, appendix). Training KL (Fig.~\ref{fig:t3}a) uses each method's own prefixes and is not comparable across methods.
 
 
 \begin{table}[t]
@@ -225,29 +230,29 @@ Model & GSM8K acc. & GSM8K truncated & Familiar & Shifted\\
 \end{table}
 
 \begin{figure}[t]
-\centering\includegraphics[width=0.92\linewidth]{t3_distill_align.pdf}
+\centering\includegraphics[width=0.82\linewidth]{t3_distill_align.pdf}
 \caption{(a) Distillation KL per teacher-scored token. (b) Expected one-token acceptance on the teacher prefix bank by workload and response position (seed means). (c) Bank-predicted versus measured acceptance in speculative decoding ($n{=}240$ requests per point).}
 \label{fig:t3}
 \end{figure}
 
 \begin{table}[t]
-\centering\footnotesize\setlength{\tabcolsep}{3pt}
-\caption{Common-prefix alignment with the 1.5B target: forward KL, reverse KL, $\mathbb{E}[1-\mathrm{TV}]$ (positions; trained drafts: mean $\pm$ sd over 2 seeds).}
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Common-prefix alignment with the 1.5B target (positions in parentheses; trained drafts: mean $\pm$ sd, 2 seeds).}
 \label{tab:t3a}
-\resizebox{\linewidth}{!}{\begin{tabular}{@{}l rrr rrr rrr@{}}
+\begin{tabular}{@{}l rrr rrr rrr@{}}
 \toprule
 & \multicolumn{3}{c}{Original 0.5B} & \multicolumn{3}{c}{Off-policy} & \multicolumn{3}{c}{On-policy}\\
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
-Prefix bank & fKL & rKL & E[acc] & fKL & rKL & E[acc] & fKL & rKL & E[acc]\\
+Prefix bank & fKL & rKL & $\mathbb{E}[1{-}\mathrm{TV}]$ & fKL & rKL & $\mathbb{E}[1{-}\mathrm{TV}]$ & fKL & rKL & $\mathbb{E}[1{-}\mathrm{TV}]$\\
 \midrule
 \gentab{t3_align}
 \bottomrule
-\end{tabular}}
+\end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering\scriptsize\setlength{\tabcolsep}{2.2pt}
-\caption{Speculative decoding, 120 prompts $\times$ 2 counterbalanced repetitions, EOS-aware 64-token cap, temperature 1, \GPUthree. Times: ms/request (draft / verify / accept+rollback / prefill). tok/s: speculative / adjacent target-only. Decode speedup: target over speculative decode time per output token [paired 95\% CI]. $c$, $v_\gamma$: costs relative to a target step; $\hat S$: predicted speedup; $\alpha^*$: break-even acceptance. ``Fixed 64'' ignores EOS.}
+\caption{Speculative decoding, 120 prompts $\times$ 2 counterbalanced runs, EOS-aware 64-token cap, temperature 1, \GPUthree. Times: ms/request (draft / verify / accept+rollback / prefill). tok/s: speculative / adjacent target-only. Decode speedup: target / speculative decode time per token [paired 95\% CI]. $c$, $v_\gamma$: costs relative to a target step; $\hat S$: predicted speedup; $\alpha^*$: break-even acceptance. ``Fixed 64'' ignores EOS. Peak memory: 4.19\,GB in both modes.}
 \label{tab:t3spec}
 \resizebox{\linewidth}{!}{\begin{tabular}{@{}lrrrrrrlrlrrrr@{}}
 \toprule
@@ -263,16 +268,14 @@ The gain shows up where training data looked like the evaluation data. On famili
 On-policy drafts have lower forward KL on student rollouts but no higher acceptance; seeds differ by at most 0.001. The biggest decoded disagreement is the first token: the original draft starts familiar answers with ``To'' where the target uses ``The'' (TV 0.73--0.75); after distillation the TV is at most 0.09.
 \textbf{Speculative execution.} Acceptance is high (0.86--0.88 of examined proposals; 1.6 and 2.7 tokens per round at $\gamma=2$ and 4), and target passes drop to 0.39 and 0.27 per output token. Still, every configuration is slower than the target alone: decode speedup is 0.80--0.83, with every interval below 1 (Table~\ref{tab:t3spec}).
 A 0.5B draft step takes \StepDraft\,ms and a target step \StepTarget\,ms; verifying 5 tokens takes \StepVerifyFive\,ms. At batch size 1 in eager mode, time is set by kernel launches and grows with layer count (24 vs.\ 28), not parameters. So $c\approx0.86$--$0.90$ and $v_\gamma\approx1.2$, the model predicts $\hat S=0.82$--$0.88$ and needs $\alpha^*\ge0.96$ to break even. Measured ratios (0.78--0.81) are 0.03--0.06 below $\hat S$ because of host overhead. Drafting takes 54--70\% of request time, verification 26--38\% and rollback under 1\%. Bank-predicted acceptance ranks the drafts correctly but is 1--2 points too high (Fig.~\ref{fig:t3}c).
-Distilled drafts raise throughput over the original by 0.010 to 0.014 at $\gamma{=}2$ (\PairOffOrig) and give no significant gain at $\gamma{=}4$. On- and off-policy drafts do not differ in any paired comparison (acceptance differences \OnOffRange; \OnOffAllZero{} intervals include 0).
-\textbf{Workload and cost.} Acceptance is lowest on shifted templates (\ShAccOff{} vs.\ \MathAccOff{} for math). Ignoring EOS (fixed 64) raises speedup only to 0.87--0.88; an unmerged adapter gives $c=1.27$ and speedup 0.56.
+Distilled drafts raise throughput over the original by 0.010 to 0.014 at $\gamma{=}2$ (3 of 4 paired CIs exclude 0) and give no significant gain at $\gamma{=}4$. On- and off-policy drafts do not differ in any paired comparison (acceptance differences \OnOffRange; \OnOffAllZero{} intervals include 0).
+\textbf{Workload and cost.} Acceptance is lowest on shifted templates (\ShAccOff{} vs.\ \MathAccOff{} for math). 54\% of requests hit the 64-token cap (math always does). Ignoring EOS (fixed 64) raises speedup only to 0.87--0.88; an unmerged adapter gives $c=1.27$ and speedup 0.56.
 On their own, the distilled students learn the answers but not the format: every familiar answer appears in their replies (67\% for the original draft), but strict exact match stays at 33\% for every model, the teacher included (Table~\ref{tab:t3s}).
-No draft beats target-only decoding, so distillation cannot pay for itself. Compared with the original draft, only off-s6304 at $\gamma{=}4$ saves time (\BeSave\,ms per request); recovering its \BeCost-minute training cost would take about \BeReq{} requests.
+Since no draft beats the target alone, distillation cannot pay off; versus the original draft, only off-s6304 at $\gamma{=}4$ saves time (\BeSave\,ms per request), needing about \BeReq{} requests to recover its \BeCost-minute cost.
 
 \FloatBarrier
 \section{Conclusion}
-Nominal ratios predicted storage and correctness well, but not measured speed or memory. Compressed weights still run as dense FP16. Tiled attention saves memory but is slow without fusion, packed KV caches must be unpacked at every step, and a small draft is not cheap when decoding is launch-bound.
-Methods that use activations, attention scores or the question beat methods that use only position or weight size: activation-aware masks, score-based attention selection, question-aware eviction and per-channel key groups.
-Adaptive allocation gave small gains, and on-policy distillation was no better than off-policy.
+Nominal ratios predicted storage and correctness but not speed or memory, because dense FP16 kernels, unfused tiling, per-step unpacking and launch-bound decoding absorb the savings. Methods using activations, scores or the question beat position- or magnitude-only ones; adaptive allocation gave small gains, and on-policy distillation was no better than off-policy.
 
 \small
 \begin{thebibliography}{99}
@@ -313,7 +316,7 @@ Adaptive allocation gave small gains, and on-policy distillation was no better t
 \section{Implementation details, constraints and deviations}\label{app:impl}
 \textbf{Reuse and tools.} No external source files were copied. Wanda, AWQ's pseudo-quantizer conventions, OWL, the lm-eval HellaSwag preprocessing~\cite{lmeval} and the FlashAttention-2 recurrences~\cite{flash,flash2} were re-implemented from their papers and reference code. RoPE/GQA helpers come from Transformers~\cite{hf} and LoRA from PEFT~\cite{peft}. The question-aware KV scorer is a simplified fixed policy inspired by SnapKV~\cite{snapkv} (per-layer selection shared by both KV heads, attention mass of the question suffix, average pooling of width 7), and always keeps 8 sink and 64 recent tokens~\cite{streaming}. The published algorithm selects per head; ours does not. Channel-K/token-V grouping follows KIVI~\cite{kivi}; the dilated and linear mechanisms follow~\cite{longformer,linear,zoology,based}.
 \textbf{Course-script deviation.} The course \texttt{setup\_data.py --prefix-banks} fails under the pinned \texttt{transformers==4.57.1} because \texttt{generate()} rejects a \texttt{generator} argument. \texttt{scripts/make\_prefix\_banks.py} reproduces its prompts, seeds, positions, format and path with a seeded ancestral sampler.
-\textbf{Constraints.} Flash/cuDNN SDPA do not accept FP32. Masked mechanisms use dense boolean masks; they are written for correctness and are not sparse kernels. KV quantization stores dequantized values for SDPA. Speculative and target-only timings run with both models resident, so their peak memory (4.19\,GB) is identical by construction. 54\% of speculative requests reach the 64-token cap (math always does), so speed-test outputs are never scored as solutions; answer accuracy uses separate 512-token greedy runs. Speculative and target-only outputs are independent samples with different lengths, so per-request throughput ratios within output-length bins are confounded. We report the ratio of decode time per token instead. The first WikiText-2 windows are section headings, so the planned model-continuation probe produced empty continuations; qualitative analysis therefore uses HellaSwag cases.
+\textbf{Constraints.} Flash/cuDNN SDPA do not accept FP32. Masked mechanisms use dense boolean masks; they are written for correctness and are not sparse kernels. KV quantization stores dequantized values for SDPA. Speculative and target-only timings run with both models resident, so their peak memory (4.19\,GB) is identical by construction. 54\% of speculative requests reach the 64-token cap (math always does), so speed-test outputs are never scored as solutions; answer accuracy uses separate 512-token greedy runs. Speculative and target-only outputs are independent samples with different lengths, so per-request throughput ratios within output-length bins are confounded. We report the ratio of decode time per token instead. The first WikiText-2 continuation prompt is a section heading and produced an empty continuation (the second gave a normal one; both in \texttt{metrics.json}), so qualitative analysis uses HellaSwag cases.
 \textbf{Resumability.} All runs checkpoint to Google Drive with atomic writes. One distillation run resumed from a checkpoint and is verified identical to an uninterrupted run by a unit test.
 \textbf{AI assistance.} An LLM coding assistant (Claude) was used to help write and test the code and to draft text, as permitted by the course policy. \textit{[Edit to match your actual use.]}
 
@@ -335,18 +338,7 @@ Run & Updates & Pool & Rollouts & Scoring & Train & Merge s & Total & Logit err.
 \bottomrule
 \end{tabular}
 \end{table}
-\begin{table}[h]
-\centering\footnotesize\setlength{\tabcolsep}{4pt}
-\caption{C5 packing at both context lengths (complement to Table~\ref{tab:c5}); columns as there.}
-\label{tab:c5full}
-\begin{tabular}{@{}rrlrrrrr@{}}
-\toprule
-Ctx tokens & Batch & Layout & MB & pack ms & unpack ms & step ms & peak GB\\
-\midrule
-\gentab{t2_c5}
-\bottomrule
-\end{tabular}
-\end{table}
+
 
 Complete numerical grids: \texttt{results/tables/*.csv} (e.g.\ \texttt{task1\_all\_conditions}, \texttt{task2b\_mqar\_per\_seed}, \texttt{task2c\_kv\_cells}, \texttt{task3\_spec\_workload}, \texttt{task3\_spec\_paired\_comparisons}). Per-condition and per-example records are in \texttt{results/task*/}.
 \begin{figure}[h]

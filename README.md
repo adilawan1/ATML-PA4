@@ -28,7 +28,7 @@ analysis/        task{1,2,3}_report.py -> results/tables/*.csv|.tex and results/
 configs/         fixed hyper-parameters of every task (kept in sync with code by tests/test_configs.py)
 notebooks/       Colab notebooks: 00 setup+tests, task1, task2, task3, 99 sync results to the repo
 tests/           CPU unit tests on tiny random Qwen2 models + a synthetic-results smoke test for analysis
-report/          NeurIPS-format report skeleton (main.tex) wired to the generated tables/figures
+report/          NeurIPS-format report (main.tex, compiled main.pdf) built from the generated tables/figures
 results/         machine-readable per-condition / per-example outputs (committed after the runs)
 ```
 
