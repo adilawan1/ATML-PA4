@@ -1,0 +1,482 @@
+[
+  {
+    "prompt_id": "GSM8K-0000",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0001",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0002",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0003",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0004",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0005",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0006",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0007",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0008",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0009",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0010",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0011",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0012",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0013",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0014",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0015",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0016",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0017",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0018",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0019",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0020",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0021",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0022",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0023",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0024",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0025",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0026",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0027",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0028",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0029",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0030",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0031",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0032",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0033",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0034",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0035",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0036",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0037",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0038",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0039",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0040",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0041",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0042",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0043",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0044",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0045",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0046",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0047",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0048",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0049",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0050",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0051",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0052",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0053",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0054",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0055",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0056",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0057",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0058",
+    "split": "math"
+  },
+  {
+    "prompt_id": "GSM8K-0059",
+    "split": "math"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0000",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0001",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0002",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0003",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0004",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0005",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0006",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0007",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0008",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0009",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0010",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0011",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0012",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0013",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0014",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0015",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0016",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0017",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0018",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0019",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0020",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0021",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0022",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0023",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0024",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0025",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0026",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0027",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0028",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-familiar-0029",
+    "split": "familiar"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0000",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0001",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0002",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0003",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0004",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0005",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0006",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0007",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0008",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0009",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0010",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0011",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0012",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0013",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0014",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0015",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0016",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0017",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0018",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0019",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0020",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0021",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0022",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0023",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0024",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0025",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0026",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0027",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0028",
+    "split": "shifted"
+  },
+  {
+    "prompt_id": "SHORT-shifted-0029",
+    "split": "shifted"
+  }
+]

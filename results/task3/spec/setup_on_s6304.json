@@ -1,0 +1,10 @@
+{
+  "sessions": [
+    {
+      "already_done": 0,
+      "model_load_s": 3.5865547499997774,
+      "warmup_calls": "2 x (spec gamma=4 + target-only), 16 tokens",
+      "warmup_s": 2.8896679889985535
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "exact_spec_original_gamma4": {
+    "exp_accept_original": 0.8788201177980134,
+    "fkl_original": 0.1836930217678637,
+    "mean_target_logp_of_sampled": -0.45515603725285114,
+    "n_positions": 3535
+  },
+  "prompt_paired_diff_exp_accept": {
+    "ci_high": 0.015809613794975735,
+    "ci_low": -0.009773117827344904,
+    "n_items": 120,
+    "n_resamples": 2000,
+    "point": 0.003046284054203113,
+    "se": 0.006362227995879384
+  },
+  "teacher": {
+    "exp_accept_original": 0.8826660051075526,
+    "fkl_original": 0.17382285385601393,
+    "mean_target_logp_of_sampled": -0.4413570209708948,
+    "n_positions": 3440
+  }
+}

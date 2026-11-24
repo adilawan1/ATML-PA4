@@ -1,0 +1,13 @@
+\begin{table}
+\label{tab:task3_distill_costs}
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+\toprule
+run & updates & skipped & adapter\_params & math\_tokens & short\_tokens & presentations & final\_kl & teacher\_pool\_s & student\_rollout\_s & teacher\_scoring\_s & student\_fwd\_bwd\_s & optimizer\_s & train\_wall\_s & merge\_s & merge\_max\_abs\_logit\_err & total\_cost\_s & peak\_GB & mean\_math\_rollout\_len \\
+\midrule
+off\_s6304 & 157 & 0 & 1081344 & 30000 & 10000 & 884 & 0.1001 & 3157 & 0 & 51.33 & 159.3 & 1.169 & 214.6 & 2.289 & 0.2871 & 3374 & 5.317 & 181.9 \\
+off\_s6305 & 157 & 0 & 1081344 & 30000 & 10000 & 884 & 0.1003 & 3157 & 0 & 50.13 & 160.5 & 1.05 & 214.6 & 0.5938 & 0.293 & 3372 & 5.317 & 181.9 \\
+on\_s6304 & 157 & 1 & 1081344 & 30000 & 10000 & 810 & 0.168 & 0 & 1955 & 45.37 & 147.3 & 1.048 & 2151 & 0.6217 & 0.4141 & 2152 & 5.349 & 185.5 \\
+on\_s6305 & 157 & 0 & 1081344 & 30000 & 10000 & 809 & 0.1532 & 0 & 1948 & 45.3 & 147.7 & 1.141 & 2145 & 0.7582 & 0.2812 & 2146 & 5.293 & 184.1 \\
+\bottomrule
+\end{tabular}
+\end{table}

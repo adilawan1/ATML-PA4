@@ -1,0 +1,12 @@
+{
+  "n": 800,
+  "seconds": 3156.9292189079997,
+  "terminations": {
+    "eos": 355,
+    "length": 445
+  },
+  "tokens": {
+    "math": 90623,
+    "short": 4167
+  }
+}

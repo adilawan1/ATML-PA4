@@ -1,0 +1,90 @@
+[
+  {
+    "on_policy_argmax": " is",
+    "original_argmax": " \"",
+    "position": 8,
+    "prefix_tail": "The destination code for the shipping label",
+    "prompt_id": "SHORT-familiar-0026",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": " is",
+    "tv_on_s6304": 0.18534798920154572,
+    "tv_original": 0.8860306739807129
+  },
+  {
+    "on_policy_argmax": "The",
+    "original_argmax": "To",
+    "position": 1,
+    "prefix_tail": "",
+    "prompt_id": "SHORT-familiar-0019",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": "The",
+    "tv_on_s6304": 0.05587546154856682,
+    "tv_original": 0.7457209229469299
+  },
+  {
+    "on_policy_argmax": "The",
+    "original_argmax": "To",
+    "position": 1,
+    "prefix_tail": "",
+    "prompt_id": "SHORT-familiar-0007",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": "The",
+    "tv_on_s6304": 0.053120046854019165,
+    "tv_original": 0.7301161289215088
+  },
+  {
+    "on_policy_argmax": "The",
+    "original_argmax": "To",
+    "position": 1,
+    "prefix_tail": "",
+    "prompt_id": "SHORT-familiar-0022",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": "The",
+    "tv_on_s6304": 0.06179507076740265,
+    "tv_original": 0.7385795712471008
+  },
+  {
+    "on_policy_argmax": "The",
+    "original_argmax": "To",
+    "position": 1,
+    "prefix_tail": "",
+    "prompt_id": "SHORT-familiar-0025",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": "The",
+    "tv_on_s6304": 0.09417249262332916,
+    "tv_original": 0.7273064851760864
+  },
+  {
+    "on_policy_argmax": " extracted",
+    "original_argmax": " for",
+    "position": 5,
+    "prefix_tail": "The two-letter code",
+    "prompt_id": "SHORT-shifted-0014",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": " for",
+    "tv_on_s6304": 0.5577924847602844,
+    "tv_original": 0.16798025369644165
+  },
+  {
+    "on_policy_argmax": "FR",
+    "original_argmax": "FR",
+    "position": 9,
+    "prefix_tail": "The two-letter country code for France (",
+    "prompt_id": "SHORT-shifted-0029",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": "FR",
+    "tv_on_s6304": 0.6642560958862305,
+    "tv_original": 0.26189133524894714
+  },
+  {
+    "on_policy_argmax": " country",
+    "original_argmax": " country",
+    "position": 8,
+    "prefix_tail": "The two-letter code for the entry",
+    "prompt_id": "SHORT-shifted-0011",
+    "selection": "5 largest TV improvements + 3 largest TV regressions (on_s6304 vs original), teacher bank",
+    "target_argmax": " country",
+    "tv_on_s6304": 0.5387490391731262,
+    "tv_original": 0.050351567566394806
+  }
+]

@@ -1,0 +1,34 @@
+\begin{table}
+\caption{Paired 95% bootstrap CIs over prompts (2000 resamples); training seeds reported separately.}
+\label{tab:task3_spec_paired_comparisons}
+\begin{tabular}{rllrrrr}
+\toprule
+gamma & comparison & metric & n\_prompts & diff & ci\_low & ci\_high \\
+\midrule
+2 & off\_s6304 - original & throughput\_ratio & 120 & 0.01367 & 0.002666 & 0.02465 \\
+2 & off\_s6304 - original & accept\_examined & 120 & -0.0006481 & -0.02031 & 0.01592 \\
+2 & off\_s6305 - original & throughput\_ratio & 120 & 0.01006 & -0.0005039 & 0.02064 \\
+2 & off\_s6305 - original & accept\_examined & 120 & -0.0004865 & -0.01987 & 0.0163 \\
+2 & on\_s6304 - original & throughput\_ratio & 120 & 0.0134 & 0.002471 & 0.0246 \\
+2 & on\_s6304 - original & accept\_examined & 120 & -0.0008658 & -0.01635 & 0.01415 \\
+2 & on\_s6305 - original & throughput\_ratio & 120 & 0.009517 & 0.0004409 & 0.01941 \\
+2 & on\_s6305 - original & accept\_examined & 120 & -0.003719 & -0.01832 & 0.009796 \\
+2 & on\_s6304 - off\_s6304 & throughput\_ratio & 120 & -0.000272 & -0.01004 & 0.009867 \\
+2 & on\_s6304 - off\_s6304 & accept\_examined & 120 & -0.0002177 & -0.01102 & 0.01072 \\
+2 & on\_s6305 - off\_s6305 & throughput\_ratio & 120 & -0.0005414 & -0.007257 & 0.007004 \\
+2 & on\_s6305 - off\_s6305 & accept\_examined & 120 & -0.003233 & -0.0138 & 0.008323 \\
+4 & off\_s6304 - original & throughput\_ratio & 120 & 0.01155 & -0.006144 & 0.0301 \\
+4 & off\_s6304 - original & accept\_examined & 120 & 0.002465 & -0.0135 & 0.01831 \\
+4 & off\_s6305 - original & throughput\_ratio & 120 & 0.01237 & -0.004036 & 0.0295 \\
+4 & off\_s6305 - original & accept\_examined & 120 & 0.003579 & -0.01117 & 0.01854 \\
+4 & on\_s6304 - original & throughput\_ratio & 120 & 0.008545 & -0.009211 & 0.02653 \\
+4 & on\_s6304 - original & accept\_examined & 120 & -0.001656 & -0.01594 & 0.01331 \\
+4 & on\_s6305 - original & throughput\_ratio & 120 & 0.003899 & -0.01251 & 0.02098 \\
+4 & on\_s6305 - original & accept\_examined & 120 & 3.612e-08 & -0.01251 & 0.014 \\
+4 & on\_s6304 - off\_s6304 & throughput\_ratio & 120 & -0.003006 & -0.01644 & 0.01063 \\
+4 & on\_s6304 - off\_s6304 & accept\_examined & 120 & -0.004121 & -0.01488 & 0.006207 \\
+4 & on\_s6305 - off\_s6305 & throughput\_ratio & 120 & -0.008474 & -0.02093 & 0.003055 \\
+4 & on\_s6305 - off\_s6305 & accept\_examined & 120 & -0.003579 & -0.01309 & 0.006027 \\
+\bottomrule
+\end{tabular}
+\end{table}
